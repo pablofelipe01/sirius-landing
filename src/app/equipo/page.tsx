@@ -16,17 +16,17 @@ const TeamPage = () => {
     },
     {
       id: 2,
-      name: 'Carlos Mendoza',
-      role: 'Director de Investigación',
-      bio: 'Doctor en Microbiología del Suelo, Carlos lidera nuestro equipo de investigación, desarrollando nuevas fórmulas y mejorando constantemente nuestros productos para maximizar sus beneficios.',
-      imageSrc: '/foto2.png',
+      name: 'Pablo Acebedo',
+      role: 'CTO',
+      bio: 'Publicista y Matemático con experiencia desde 1984, cuando escribió su primera línea de código. Experto en IA y machine learning, combinando análisis de datos y creatividad para desarrollar soluciones innovadoras.',
+      imageSrc: '/1a.png',
     },
     {
       id: 3,
       name: 'Laura Sánchez',
       role: 'Directora de Operaciones',
       bio: 'Con experiencia en gestión de producción sostenible, Laura asegura que todos nuestros procesos sean eficientes y respeten nuestros altos estándares medioambientales.',
-      imageSrc: '/foto3.png',
+      imageSrc: '/foto6.png',
     },
     {
       id: 4,

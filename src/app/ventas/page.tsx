@@ -49,7 +49,7 @@ const SalesPage = () => {
       price: 199.90,
       discountPrice: 159.90,
       quantity: '5kg Biochar Blend + 2kg Star Dust',
-      imageSrc: '/foto3.png',
+      imageSrc: '/foto5.png',
       features: [
         'Solución integral para cualquier tipo de cultivo',
         'Tratamiento completo para suelos altamente degradados',

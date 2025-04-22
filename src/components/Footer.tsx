@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -25,21 +25,32 @@ const Footer = () => {
               que nutren el suelo y potencian tus cultivos.
             </p>
             <div className="flex space-x-4 mt-6">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" 
-                 className="text-gray-400 hover:text-white transition-colors">
-                <FaFacebook size={24} />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                 className="text-gray-400 hover:text-white transition-colors">
+              <a 
+                href="https://www.instagram.com/sirius.colombia" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-pink-400 transition-colors"
+                aria-label="Instagram"
+              >
                 <FaInstagram size={24} />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
-                 className="text-gray-400 hover:text-white transition-colors">
-                <FaTwitter size={24} />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                 className="text-gray-400 hover:text-white transition-colors">
+              <a 
+                href="https://www.linkedin.com/company/sirius-regenerative" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-blue-400 transition-colors"
+                aria-label="LinkedIn"
+              >
                 <FaLinkedin size={24} />
+              </a>
+              <a 
+                href="https://wa.me/573132121019" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-green-400 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp size={24} />
               </a>
             </div>
           </div>
@@ -56,6 +67,11 @@ const Footer = () => {
               <li>
                 <Link href="/productos" className="text-gray-400 hover:text-white transition-colors">
                   Productos
+                </Link>
+              </li>
+              <li>
+                <Link href="/calculadora" className="text-gray-400 hover:text-white transition-colors">
+                  Calculadora de Carbono
                 </Link>
               </li>
               <li>
@@ -103,7 +119,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2">📞</span>
-                <span className="text-gray-400">+123 456 7890</span>
+                <span className="text-gray-400">+57 313 212 1019</span>
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2">✉️</span>
