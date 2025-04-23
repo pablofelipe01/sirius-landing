@@ -1,40 +1,27 @@
 'use client';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const VideoHero = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Para YouTube no necesitamos la referencia de video local
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePlayClick = () => {
     setIsModalOpen(true);
-    
-    // Pequeña demora para asegurar que el modal esté completamente renderizado
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play();
-        setIsPlaying(true);
-      }
-    }, 100);
   };
 
   const closeModal = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
     setIsModalOpen(false);
   };
 
   return (
     <>
-      <div className="relative w-full">
+      <div className="relative w-auto">
         <motion.button
-          className="relative z-10 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-full flex items-center shadow-lg"
-          whileHover={{ scale: 1.05 }}
+          className="relative z-10 bg-green-600/80 hover:bg-green-700 text-white text-sm font-medium py-2.5 px-6 rounded-full flex items-center shadow-lg backdrop-blur-sm border border-green-500/30"
+          whileHover={{ y: -3, scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handlePlayClick}
           initial={{ opacity: 0, y: 50 }}
@@ -42,7 +29,7 @@ const VideoHero = () => {
           transition={{ delay: 0.5, duration: 0.5 }}
         >
           <svg
-            className="w-6 h-6 mr-2"
+            className="w-4 h-4 mr-1.5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -65,7 +52,7 @@ const VideoHero = () => {
         </motion.button>
       </div>
 
-      {/* Video Modal */}
+      {/* YouTube Video Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
           <div className="relative w-full max-w-4xl mx-auto">
@@ -93,15 +80,16 @@ const VideoHero = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="rounded-lg overflow-hidden shadow-2xl"
+              className="rounded-lg overflow-hidden shadow-2xl aspect-video"
             >
-              <video
-                ref={videoRef}
-                className="w-full h-auto"
-                controls
-                playsInline
-                src="/video1.mp4"
-              ></video>
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/2DKYsf8W0GM?autoplay=1"
+                title="Sirius historia"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             </motion.div>
           </div>
         </div>

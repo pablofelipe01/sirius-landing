@@ -98,51 +98,12 @@ const HeroSection = () => {
         </ScrollAnimation>
         
         <ScrollAnimation direction="up" delay={0.7}>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-8">
-            <VideoHero />
-            
-            {/* Iconos de redes sociales */}
-            <div className="flex items-center space-x-4">
-              <motion.a 
-                href="https://www.instagram.com/sirius.colombia" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-3.5 rounded-full shadow-lg transition-all transform hover:scale-110"
-                whileHover={{ y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="Instagram"
-              >
-                <FaInstagram size={24} />
-              </motion.a>
-              
-              <motion.a 
-                href="https://www.linkedin.com/company/sirius-regenerative" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-white text-blue-700 hover:bg-blue-700 hover:text-white p-3.5 rounded-full shadow-lg transition-all transform hover:scale-110"
-                whileHover={{ y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin size={24} />
-              </motion.a>
-              
-              <motion.a 
-                href="https://wa.me/573132121019" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-white text-green-600 hover:bg-green-600 hover:text-white p-3.5 rounded-full shadow-lg transition-all transform hover:scale-110"
-                whileHover={{ y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="WhatsApp"
-              >
-                <FaWhatsapp size={24} />
-              </motion.a>
-            </div>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-4">
+            {/* El VideoHero ahora se muestra en el diseño original pero no en la posición inferior */}
           </div>
         </ScrollAnimation>
         
-        {/* Imagen animada en lugar de la flecha - AHORA MÁS GRANDE */}
+        {/* Imagen animada en lugar de la flecha */}
         <motion.div 
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
           animate={{ y: [0, -10, 0] }}
@@ -162,6 +123,52 @@ const HeroSection = () => {
             />
           </a>
         </motion.div>
+
+        {/* VideoHero reposicionado a la izquierda */}
+        <div className="absolute bottom-2 left-8 z-20 w-auto">
+          <VideoHero />
+        </div>
+
+        {/* Iconos de redes sociales - ahora posicionados debajo de img3 pero en la derecha */}
+        <div className="absolute bottom-2 right-8 z-20">
+          <div className="flex items-center space-x-3">
+            <motion.a 
+              href="https://www.instagram.com/sirius.colombia" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-2.5 rounded-full shadow-lg transition-all transform hover:scale-110"
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Instagram"
+            >
+              <FaInstagram size={20} />
+            </motion.a>
+            
+            <motion.a 
+              href="https://www.linkedin.com/company/sirius-regenerative" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white text-blue-700 hover:bg-blue-700 hover:text-white p-2.5 rounded-full shadow-lg transition-all transform hover:scale-110"
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin size={20} />
+            </motion.a>
+            
+            <motion.a 
+              href="https://wa.me/573132121019" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white text-green-600 hover:bg-green-600 hover:text-white p-2.5 rounded-full shadow-lg transition-all transform hover:scale-110"
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="WhatsApp"
+            >
+              <FaWhatsapp size={20} />
+            </motion.a>
+          </div>
+        </div>
       </div>
     </div>
   );
