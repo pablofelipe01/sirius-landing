@@ -2,14 +2,13 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 import ScrollAnimation from './ScrollAnimation';
 
 const SustainabilitySection = () => {
   const ref = useRef(null);
-  const graphRef = useRef(null);
+  const videoRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const isGraphInView = useInView(graphRef, { once: true, margin: '-100px' });
+  const isVideoInView = useInView(videoRef, { once: true, margin: '-100px' });
 
   // Variantes para animaciones
   const textVariants = {
@@ -47,13 +46,13 @@ const SustainabilitySection = () => {
           </div>
         </ScrollAnimation>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div ref={ref}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+          <div ref={ref} className="flex">
             <motion.div
               variants={textVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="bg-white rounded-xl shadow-lg p-8"
+              className="bg-white rounded-xl shadow-lg p-8 flex flex-col h-full"
             >
               <p className="text-lg mb-6">
                 Vivimos en un planeta que lleva décadas acumulando CO₂. Y aunque reducir las emisiones 
@@ -84,28 +83,35 @@ const SustainabilitySection = () => {
                 </div>
               </div>
               
-              <p className="text-lg">
+              <p className="text-lg mt-auto">
                 En Sirius llevamos 5 años transformando residuos orgánicos en biochar, una forma estable 
                 de carbono que puede permanecer en el suelo por siglos, nutriendo ecosistemas y regenerando suelos.
               </p>
             </motion.div>
           </div>
           
-          <div ref={graphRef}>
+          <div ref={videoRef} className="flex">
             <motion.div
               initial={{ opacity: 0, x: 50 }}
-              animate={isGraphInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              animate={isVideoInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ duration: 0.8 }}
-              className="relative"
+              className="relative rounded-xl overflow-hidden shadow-lg w-full flex flex-col bg-gray-800"
             >
-              <Image 
-                src="/foto10.png" 
-                alt="Proceso de biochar" 
-                width={600} 
-                height={400} 
-                className="rounded-xl shadow-lg w-full h-auto object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-green-900/60 to-transparent rounded-xl flex items-end">
+              <div className="flex-grow flex items-center justify-center">
+                <iframe 
+                  width="560" 
+                  height="315" 
+                  src="https://www.youtube.com/embed/hqCqPQWPdk0?si=FVoJNKdranbC3nBY" 
+                  title="YouTube video player" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  referrerPolicy="strict-origin-when-cross-origin" 
+                  allowFullScreen
+                  className="w-full h-full"
+                  style={{ maxHeight: '100%' }}
+                ></iframe>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 to-transparent pointer-events-none flex items-end">
                 <div className="p-6 text-white">
                   <h3 className="text-2xl font-bold mb-2">Biochar: Captura de carbono</h3>
                   <p className="text-white/80">

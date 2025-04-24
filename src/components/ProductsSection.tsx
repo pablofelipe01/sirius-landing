@@ -16,7 +16,7 @@ const ProductsSection = () => {
       id: 'biochar-blend',
       title: 'BIOCHAR BLEND',
       description: 'Una mezcla potente de biochar premium, compost enriquecido y microorganismos poderosos. Suelos más vivos = cultivos más sanos.',
-      imageSrc: '/foto1.png',
+      imageSrc: '/biocharblend.jpg',
       tag: 'Bestseller',
       link: '/productos#biochar-blend'
     },
@@ -24,7 +24,7 @@ const ProductsSection = () => {
       id: 'star-dust',
       title: 'STAR DUST',
       description: 'El nuevo polvo de estrellas: biochar ultra poroso, fortificado con Trichoderma y bacterias benéficas. Regenera el suelo y potencia tus cultivos.',
-      imageSrc: '/foto2.png',
+      imageSrc: '/biodust.png',
       tag: 'Nuevo',
       link: '/productos#star-dust'
     }

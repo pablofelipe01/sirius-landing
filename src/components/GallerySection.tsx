@@ -12,22 +12,22 @@ const GallerySection = () => {
 
   const galleryImages = [
     {
-      src: '/foto4.png',
+      src: '/imagen1.png',
       alt: 'Naturaleza y tecnología',
       caption: 'Biodiversidad en armonía con innovación'
     },
     {
-      src: '/foto5.png',
+      src: '/imagen2.png',
       alt: 'Proceso de biochar',
       caption: 'Ciencia aplicada a procesos naturales'
     },
     {
-      src: '/foto6.png',
+      src: '/imagen3.png',
       alt: 'Cultivos saludables',
       caption: 'Resultados visibles en nuestros cultivos'
     },
     {
-      src: '/foto7.png',
+      src: '/imagen4.png',
       alt: 'Equipo Sirius',
       caption: 'Nuestro equipo trabajando en campo'
     }

@@ -9,10 +9,10 @@ const TeamPage = () => {
   const teamMembers = [
     {
       id: 1,
-      name: 'María Rodríguez',
-      role: 'Fundadora y CEO',
+      name: 'Fundador y CEO',
+      role: 'Fundador y CEO',
       bio: 'Ingeniera agrónoma con más de 15 años de experiencia en agricultura regenerativa. María fundó Sirius con la visión de transformar la industria agrícola hacia prácticas más sostenibles y regenerativas.',
-      imageSrc: '/foto1.png',
+      imageSrc: '/martin.png',
     },
     {
       id: 2,

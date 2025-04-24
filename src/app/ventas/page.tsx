@@ -15,7 +15,7 @@ const SalesPage = () => {
       price: 129.90,
       discountPrice: 99.90,
       quantity: '5kg',
-      imageSrc: '/foto1.png',
+      imageSrc: '/biocharblend.jpg',
       features: [
         'Mejora la estructura del suelo',
         'Aumenta la retención de agua',
@@ -32,7 +32,7 @@ const SalesPage = () => {
       price: 99.90,
       discountPrice: 79.90,
       quantity: '3kg',
-      imageSrc: '/foto2.png',
+      imageSrc: '/biodust.png',
       features: [
         'Regenera suelos degradados',
         'Control natural de patógenos',
@@ -49,7 +49,7 @@ const SalesPage = () => {
       price: 199.90,
       discountPrice: 159.90,
       quantity: '5kg Biochar Blend + 2kg Star Dust',
-      imageSrc: '/foto5.png',
+      imageSrc: '/combo.png',
       features: [
         'Solución integral para cualquier tipo de cultivo',
         'Tratamiento completo para suelos altamente degradados',
@@ -64,27 +64,27 @@ const SalesPage = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Manuel Gutiérrez',
-      role: 'Agricultor de café orgánico',
-      comment: 'Desde que empecé a usar Biochar Blend, la salud de mis cafetales mejoró notablemente. Mayor producción y mejor calidad en los granos. Definitivamente vale la inversión.',
+      name: 'HCIENDA LA CABAÑA S.A',
+      role: 'Palma Africana',
+      comment: 'Desde que empecé a usar Biochar Blend, la salud de mis palmas mejoró notablemente. Mayor producción y mejor calidad en los granos. Definitivamente vale la inversión.',
       rating: 5,
-      imageSrc: '/foto4.png',
+      imageSrc: '/log1.png',
     },
     {
       id: 2,
-      name: 'Carolina Pérez',
-      role: 'Gestora de viñedos',
-      comment: 'El Star Dust ha sido un descubrimiento increíble. Nuestros suelos retienen mejor el agua y hemos reducido un 40% el uso de químicos. ¡Nuestras uvas nunca habían tenido tanto sabor!',
+      name: 'GUAICARAMO',
+      role: 'Palma Africana',
+      comment: 'El Star Dust ha sido un descubrimiento increíble. Nuestros suelos retienen mejor el agua y hemos reducido un 40% el uso de químicos. ¡Nuestras palmas nunca habían tenido tanto sabor!',
       rating: 5,
-      imageSrc: '/foto5.png',
+      imageSrc: '/log2.png',
     },
     {
       id: 3,
-      name: 'Jorge Mendoza',
-      role: 'Productor de hortalizas',
+      name: 'SAPUGA',
+      role: 'Palma Africana',
       comment: 'Probé el Combo Regenerativo en un área que considerábamos casi perdida. En tres meses vimos un cambio radical, ahora es una de nuestras parcelas más productivas.',
       rating: 5,
-      imageSrc: '/foto6.png',
+      imageSrc: '/log3.png',
     }
   ];
 
