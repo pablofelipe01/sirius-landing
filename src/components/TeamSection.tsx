@@ -88,11 +88,12 @@ const TeamSection = () => {
             variants={itemVariants}
             className="col-span-1 relative rounded-xl overflow-hidden shadow-lg group"
           >
-            <Image 
-              src="/foto6.png" 
-              alt="Miembro del equipo" 
-              width={400} 
-              height={400}
+            <video 
+              src="/video/video2.mp4" 
+              autoPlay
+              muted
+              loop
+              playsInline
               className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end">
