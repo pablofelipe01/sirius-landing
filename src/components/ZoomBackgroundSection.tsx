@@ -108,18 +108,19 @@ const ZoomBackgroundSection = () => {
       }}
     >
       <div 
-        id="zoom-element"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          willChange: 'transform',
-          transformOrigin: 'center center',
-          transition: 'transform 0.05s linear' // Add subtle smoothing
-        }}
-      >
+  id="zoom-element"
+  style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    willChange: 'transform',
+    transformOrigin: 'center center',
+    transition: 'transform 0.6s ease-out' // <-- más smooth
+  }}
+>
+
         {/* Background image */}
         <img 
           src="/agricultura-regenerativa.png" 
@@ -157,57 +158,45 @@ const ZoomBackgroundSection = () => {
           padding: '0 1rem'
         }}
       >
-        {/* <h2 
-          style={{
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            marginBottom: '1.5rem',
-            textAlign: 'center'
-          }}
-        >
-          Innovación Regenerativa
-        </h2>
-        <p 
-          style={{
-            fontSize: '1.25rem',
-            maxWidth: '48rem',
-            margin: '0 auto',
-            textAlign: 'center'
-          }}
-        >
-          Descubre cómo nuestras soluciones están transformando la agricultura y regenerando ecosistemas
-        </p> */}
+     
       </div>
       
       {/* Cards container - positioned on the right side */}
       <div
-        style={{
-          position: 'absolute',
-          right: '2rem',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: '100%',
-          maxWidth: '400px',
-          zIndex: 20,
-          pointerEvents: 'none' // prevent cards from intercepting mouse events
-        }}
-      >
+  style={{
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '90%', // que se adapte en mobile
+    maxWidth: '400px',
+    zIndex: 20,
+    pointerEvents: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '0 1rem', // pequeño padding lateral
+  }}
+>
+
+
         {visibleCards.map(card => (
-          <div
-            key={card.id}
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.357)',
-              borderLeft: `4px solid ${card.borderColor}`,
-              borderRadius: '0.5rem',
-              padding: '1.5rem',
-              marginBottom: '1rem',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-              opacity: card.opacity,
-              transform: card.transform,
-              transition: 'opacity 0.3s, transform 0.3s',
-              backdropFilter: 'blur(10px)'
-            }}
-          >
+         <div
+         key={card.id}
+         style={{
+           backgroundColor: 'rgba(255, 255, 255, 0.052)',
+           borderLeft: `4px solid ${card.borderColor}`,
+           borderRadius: '0.5rem',
+           padding: '1.5rem',
+           marginBottom: '1rem',
+           boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+           opacity: card.opacity,
+           transform: card.transform,
+           transition: 'opacity 0.6s ease-out, transform 0.6s ease-out', // <-- más suave
+           backdropFilter: 'blur(10px)'
+         }}
+       >
+       
             <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#000000' }}>
               {card.title}
             </h3>
