@@ -3,6 +3,7 @@ import ProductsSection from '@/components/ProductsSection';
 import BenefitsSection from '@/components/BenefitsSection';
 import SustainabilitySection from '@/components/SustainabilitySection';
 import GallerySection from '@/components/GallerySection';
+import ZoomBackgroundSection from '@/components/ZoomBackgroundSection';
 import TeamSection from '@/components/TeamSection';
 import ContactSection from '@/components/ContactSection';
 
@@ -12,6 +13,7 @@ export default function Home() {
       <HeroSection />
       <ProductsSection />
       <BenefitsSection />
+      <ZoomBackgroundSection /> {/* New section added here */}
       <SustainabilitySection />
       <GallerySection />
       <TeamSection />
