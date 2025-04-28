@@ -25,13 +25,7 @@ const memoCards = [
     borderColor: "#eab308", // yellow-500
     threshold: 0.6 // appears at 60% scroll
   },
-  {
-    id: 4,
-    title: "Eficiencia Hídrica",
-    content: "Reducción comprobada del 40% en necesidades de riego, gracias a la mayor retención de agua en el suelo.",
-    borderColor: "#a855f7", // purple-500
-    threshold: 0.8 // appears at 80% scroll
-  }
+  
 ];
 
 const ZoomBackgroundSection = () => {
