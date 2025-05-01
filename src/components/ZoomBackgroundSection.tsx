@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Asegurarnos de registrar el plugin
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Cards data
 const memoCards = [
@@ -9,91 +16,104 @@ const memoCards = [
     title: "Regeneración Natural",
     content: "El biochar restaura la vitalidad de los suelos más degradados, activando procesos naturales de regeneración.",
     borderColor: "#22c55e", // green-500
-    threshold: 0.2 // appears at 20% scroll
   },
   {
     id: 2,
     title: "Captura de Carbono",
     content: "Cada hectárea tratada con nuestros productos puede secuestrar hasta 10 toneladas de CO2 equivalente por año.",
     borderColor: "#3b82f6", // blue-500
-    threshold: 0.4 // appears at 40% scroll
   },
   {
     id: 3,
     title: "Biodiversidad Microbiológica",
     content: "Nuestros bioinsumos introducen más de 200 especies de microorganismos benéficos para tu suelo.",
     borderColor: "#eab308", // yellow-500
-    threshold: 0.6 // appears at 60% scroll
   },
-  
 ];
 
 const ZoomBackgroundSection = () => {
-  const [visibleCards, setVisibleCards] = useState([]);
+  const sectionRef = useRef(null);
+  const bgRef = useRef(null);
+  const cardsRef = useRef([]);
   
-  // Set up the scroll listener after the component mounts
+  // Set up GSAP animations after the component mounts
   useEffect(() => {
-    // Find the elements
-    const container = document.getElementById('zoom-container');
-    const element = document.getElementById('zoom-element');
+    // Asegurarnos que los refs están disponibles
+    if (!sectionRef.current || !bgRef.current) return;
     
-    if (!container || !element) return;
-    
-    // Function to update the zoom effect and visible cards
-    const updateZoom = () => {
-      // Get the position of the container relative to the viewport
-      const rect = container.getBoundingClientRect();
+    // Crear contexto para limpiar las animaciones cuando se desmonte el componente
+    const ctx = gsap.context(() => {
+      // Timeline principal
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true, // Fija la sección mientras se hace scroll
+          start: "top top", // Comienza cuando la parte superior de la sección llega a la parte superior de la ventana
+          end: "+=300%", // Continúa durante 3 veces la altura de la sección
+          scrub: 1, // Suavizado con 1 segundo de retraso
+          // markers: true, // Útil para depuración
+        }
+      });
       
-      // Calculate how far the section has been scrolled through
-      // 0 when at the top of the viewport, 1 when at the bottom
-      const scrollProgress = 1 - Math.max(0, Math.min(1, rect.top / window.innerHeight));
+      // Leve efecto de zoom al inicio
+      tl.to(bgRef.current, {
+        scale: 1.2, 
+        duration: 1,
+        ease: "power1.inOut",
+      }, 0);
       
-      // Apply a more dramatic zoom from 1 to 2.5 (150% larger at end)
-      const scale = 1 + (scrollProgress * 1.5);
-      
-      // Apply the transform
-      element.style.transform = `scale(${scale})`;
-      
-      // Update visible cards based on scroll progress
-      const newVisibleCards = memoCards
-        .filter(card => scrollProgress >= card.threshold)
-        .map(card => {
-          // Calculate how far past the threshold we've scrolled (0 to 1)
-          const cardProgress = Math.min(1, (scrollProgress - card.threshold) / 0.2);
-          
-          // Calculate card opacity - only fade in, stay visible until the end
-          // Only fade out at the very end of the section (> 95% scrolled)
-          const opacity = scrollProgress > 0.95 
-            ? Math.max(0, 5 * (1 - scrollProgress)) // Quick fade out at the very end
-            : Math.min(1, cardProgress * 5); // Quick fade in
-          
-          return {
-            ...card,
-            opacity,
-            transform: `translateY(${(1 - cardProgress) * 30}px)`
-          };
+      // Animar cada tarjeta secuencialmente
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+        
+        // Cada tarjeta aparece después de la anterior
+        tl.fromTo(card, 
+          { 
+            x: 100, // Comienza 100px a la derecha
+            opacity: 0,
+            scale: 0.8
+          },
+          {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.7, // La duración es relativa a la línea de tiempo total
+            ease: "power2.out",
+          }, 
+          index * 0.3 // Comienza la animación con retraso según el índice
+        );
+        
+        // Cada tarjeta permanece visible por un tiempo
+        tl.to(card, { 
+          opacity: 1, 
+          duration: 0.5
         });
+        
+        // Y luego se desvanece gradualmente
+        tl.to(card, {
+          opacity: 0,
+          x: -50, // Sale hacia la izquierda
+          duration: 0.5,
+          ease: "power2.in",
+        }, "+=0.2"); // Pequeña pausa antes de desvanecerse
+      });
       
-      setVisibleCards(newVisibleCards);
-    };
+      // Ligero zoom final antes de terminar
+      tl.to(bgRef.current, {
+        scale: 1.25, 
+        duration: 1,
+        ease: "power1.inOut",
+      }, "-=1");
+    }, sectionRef);
     
-    // Initial calculation
-    updateZoom();
-    
-    // Add event listeners
-    window.addEventListener('scroll', updateZoom);
-    window.addEventListener('resize', updateZoom);
-    
-    // Clean up
-    return () => {
-      window.removeEventListener('scroll', updateZoom);
-      window.removeEventListener('resize', updateZoom);
-    };
+    // Limpiar todas las animaciones cuando se desmonte
+    return () => ctx.revert();
   }, []);
   
   return (
     <section 
-      id="zoom-container" 
+      ref={sectionRef}
+      className="pin-section"
       style={{
         height: '100vh',
         position: 'relative',
@@ -102,19 +122,18 @@ const ZoomBackgroundSection = () => {
       }}
     >
       <div 
-  id="zoom-element"
-  style={{
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    willChange: 'transform',
-    transformOrigin: 'center center',
-    transition: 'transform 0.6s ease-out' // <-- más smooth
-  }}
->
-
+        ref={bgRef}
+        className="background"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          willChange: 'transform',
+          transformOrigin: 'center center',
+        }}
+      >
         {/* Background image */}
         <img 
           src="/agricultura-regenerativa.png" 
@@ -130,71 +149,51 @@ const ZoomBackgroundSection = () => {
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.4)'
+            backgroundColor: 'rgba(0, 0, 0, 0.3)' // Overlay sutil
           }}
         ></div>
       </div>
       
-      {/* Content overlay */}
-      <div 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          color: 'white',
-          zIndex: 10,
-          padding: '0 1rem'
-        }}
-      >
-     
-      </div>
-      
       {/* Cards container - positioned on the right side */}
       <div
-  style={{
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '90%', // que se adapte en mobile
-    maxWidth: '400px',
-    zIndex: 20,
-    pointerEvents: 'none',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '0 1rem', // pequeño padding lateral
-  }}
->
-
-
-        {visibleCards.map(card => (
-         <div
-         key={card.id}
-         style={{
-           backgroundColor: 'rgba(255, 255, 255, 0.052)',
-           borderLeft: `4px solid ${card.borderColor}`,
-           borderRadius: '0.5rem',
-           padding: '1.5rem',
-           marginBottom: '1rem',
-           boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-           opacity: card.opacity,
-           transform: card.transform,
-           transition: 'opacity 0.6s ease-out, transform 0.6s ease-out', // <-- más suave
-           backdropFilter: 'blur(10px)'
-         }}
-       >
-       
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '0.75rem', color: '#000000' }}>
+        className="cards-container"
+        style={{
+          position: 'absolute',
+          top: '50%',
+          right: '5%',
+          transform: 'translateY(-50%)',
+          width: '35%',
+          maxWidth: '400px',
+          zIndex: 20,
+          pointerEvents: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-end',
+          padding: '0 1rem',
+        }}
+      >
+        {memoCards.map((card, index) => (
+          <div
+            key={card.id}
+            ref={el => cardsRef.current[index] = el}
+            className="card"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.03)',
+              borderLeft: `3px solid ${card.borderColor}`,
+              borderRadius: '0.5rem',
+              padding: '1rem',
+              marginBottom: '1rem',
+              width: '85%',
+              boxShadow: '0 8px 15px -3px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(8px)',
+              opacity: 0, // Inicialmente invisible
+              transform: 'translateX(100px) scale(0.8)', // Posición inicial
+            }}
+          >
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#ffffff' }}>
               {card.title}
             </h3>
-            <p style={{ fontSize: '1rem', color: '#000000', fontWeight: '500' }}>
+            <p style={{ fontSize: '0.875rem', color: '#ffffff', fontWeight: '400', lineHeight: '1.4' }}>
               {card.content}
             </p>
           </div>

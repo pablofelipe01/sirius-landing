@@ -10,6 +10,8 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    // Mantenemos el tracking de scroll para otras posibles animaciones,
+    // pero no cambiará el fondo
     const handleScroll = () => {
       const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
@@ -27,9 +29,7 @@ const NavBar = () => {
 
   return (
     <nav 
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/90 backdrop-blur-sm shadow-md py-2' : 'bg-transparent py-4'
-      }`}
+      className="fixed w-full z-50 transition-all duration-300 bg-transparent py-4"
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
@@ -51,26 +51,26 @@ const NavBar = () => {
 
           {/* Desktop Navigation */}
           <motion.div 
-            className="hidden md:flex space-x-8 items-center"
+            className="hidden md:flex space-x-4 items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Link href="/" className={`${scrolled ? 'text-gray-800' : 'text-white'} hover:text-green-400 transition-colors`}>
+            <Link href="/" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Inicio
             </Link>
-            <Link href="/productos" className={`${scrolled ? 'text-gray-800' : 'text-white'} hover:text-green-400 transition-colors`}>
+            <Link href="/productos" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Productos
             </Link>
-            <Link href="/equipo" className={`${scrolled ? 'text-gray-800' : 'text-white'} hover:text-green-400 transition-colors`}>
+            <Link href="/equipo" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Equipo
             </Link>
-            <Link href="/contacto" className={`${scrolled ? 'text-gray-800' : 'text-white'} hover:text-green-400 transition-colors`}>
+            <Link href="/contacto" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Contacto
             </Link>
             <Link 
               href="/ventas" 
-              className="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-colors"
+              className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition-colors"
             >
               Comprar Ahora
             </Link>
@@ -80,7 +80,7 @@ const NavBar = () => {
           <div className="md:hidden">
             <button 
               onClick={toggleMenu}
-              className={`${scrolled ? 'text-gray-800' : 'text-white'} focus:outline-none`}
+              className="text-white focus:outline-none"
             >
               <svg 
                 className="w-6 h-6" 
@@ -113,44 +113,44 @@ const NavBar = () => {
       {/* Mobile Navigation */}
       {isOpen && (
         <motion.div 
-          className="md:hidden bg-white shadow-lg"
+          className="md:hidden bg-black/80 backdrop-blur-sm"
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+          <div className="container mx-auto px-4 py-4 flex flex-col space-y-3">
             <Link 
               href="/" 
-              className="text-gray-800 hover:text-green-600 transition-colors py-2"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Inicio
             </Link>
             <Link 
               href="/productos" 
-              className="text-gray-800 hover:text-green-600 transition-colors py-2"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Productos
             </Link>
             <Link 
               href="/equipo" 
-              className="text-gray-800 hover:text-green-600 transition-colors py-2"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Equipo
             </Link>
             <Link 
               href="/contacto" 
-              className="text-gray-800 hover:text-green-600 transition-colors py-2"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Contacto
             </Link>
             <Link 
               href="/ventas" 
-              className="bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700 transition-colors inline-block text-center"
+              className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition-colors inline-block text-center"
               onClick={() => setIsOpen(false)}
             >
               Comprar Ahora

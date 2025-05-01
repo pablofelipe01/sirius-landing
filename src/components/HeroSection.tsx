@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import ScrollAnimation from './ScrollAnimation';
 import VideoHero from './VideoHero';
-import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const HeroSection = () => {
   const { scrollY } = useScroll();
@@ -65,33 +64,24 @@ const HeroSection = () => {
         <ScrollAnimation direction="down" delay={0.2}>
           <Link href="/calculadora">
             <motion.div 
-              className="inline-flex items-center bg-white/15 backdrop-blur-sm hover:bg-white/25 px-5 py-3 pr-6 rounded-full mb-8 transition-all border border-white/30"
-              whileHover={{ y: -3, scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center bg-white/10 backdrop-blur-sm hover:bg-white/20 px-3 py-2 rounded-full mb-4 transition-all border border-white/20"
+              whileHover={{ y: -2, scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <div className="mr-3 relative w-10 h-10">
-                <Image 
-                  src="/img8.png"
-                  alt="CO2 Hero"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <span className="text-white font-medium">¡Hemos removido <span className="font-bold">100+ toneladas</span> de CO2!</span>
-              <div className="ml-2 bg-green-500 text-xs font-bold px-2 py-0.5 rounded-full text-white">Ver</div>
+              <span className="text-white text-sm">100+ toneladas CO2 removidas</span>
+              <div className="ml-2 bg-green-500/80 text-xs px-1.5 py-0.5 rounded-full text-white">Ver</div>
             </motion.div>
           </Link>
         </ScrollAnimation>
         
         <ScrollAnimation direction="up" delay={0.3}>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
             Regenera tu suelo y potencializa tus cultivos
           </h1>
         </ScrollAnimation>
         
         <ScrollAnimation direction="up" delay={0.5}>
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto">
             Es momento de complementar tu siembra con nuestros bioinsumos revolucionarios. 
             En Sirius traemos productos que están cambiando la agricultura convencional desde la raíz.
           </p>
@@ -103,24 +93,31 @@ const HeroSection = () => {
           </div>
         </ScrollAnimation>
         
-        {/* Imagen animada en lugar de la flecha */}
+        {/* Icono de flecha animado en lugar de la imagen grande */}
         <motion.div 
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, -10, 0] }}
+          animate={{ y: [0, -5, 0] }}
           transition={{ 
             repeat: Infinity, 
-            duration: 2, 
+            duration: 1.5, 
             ease: "easeInOut" 
           }}
         >
           <a href="#productos" aria-label="Ir a productos">
-            <Image 
-              src="/img3.png" 
-              alt="Navegar hacia abajo" 
-              width={120} 
-              height={120}
-              className="w-24 h-24 md:w-28 md:h-28 drop-shadow-lg"
-            />
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-8 w-8 text-white opacity-80 hover:opacity-100" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+              />
+            </svg>
           </a>
         </motion.div>
 
@@ -156,7 +153,7 @@ const HeroSection = () => {
               <FaLinkedin size={20} />
             </motion.a>
             
-            <motion.a 
+            {/* <motion.a 
               href="https://wa.me/573132121019" 
               target="_blank" 
               rel="noopener noreferrer"
@@ -166,7 +163,7 @@ const HeroSection = () => {
               aria-label="WhatsApp"
             >
               <FaWhatsapp size={20} />
-            </motion.a>
+            </motion.a> */}
           </div>
         </div>
       </div>
