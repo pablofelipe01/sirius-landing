@@ -1,15 +1,26 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import ScrollAnimation from './ScrollAnimation';
+import { useRef, useEffect } from 'react';
+// import { motion } from 'framer-motion';
+// import ScrollAnimation from './ScrollAnimation';
 import ProductCard from './ProductCard';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Image from 'next/image';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+
+// Asegurarnos de registrar los plugins
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+}
 
 const ProductsSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const cardsContainerRef = useRef(null);
+  const productRefs = useRef([]);
+  const lineRef = useRef(null);
 
   const products = [
     {
@@ -30,28 +41,72 @@ const ProductsSection = () => {
     }
   ];
 
-  // Variantes para la animación de las tarjetas
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6 }
-    }
-  };
+  useEffect(() => {
+    if (!sectionRef.current || !cardsContainerRef.current || !titleRef.current || !lineRef.current) return;
+    
+    const ctx = gsap.context(() => {
+      // Creamos una línea de tiempo para coordinar las animaciones
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true, // Fija la sección mientras se hace scroll
+          start: "top top", // Comienza cuando la parte superior de la sección llega a la parte superior de la ventana
+          end: "+=100%", // Continúa durante el equivalente a 1 altura de pantalla
+          scrub: 0.5, // Suavizado con medio segundo de retraso
+          // markers: true, // Útil para depuración
+        }
+      });
+      
+      // Animación del título
+      tl.from(titleRef.current, {
+        scale: 0.7, 
+        opacity: 0,
+        rotation: 5,
+        y: -50,
+        ease: "power2.out"
+      }, 0);
+      
+      // Animación de la línea
+      tl.from(lineRef.current, {
+        scaleX: 0,
+        transformOrigin: "left center",
+        ease: "none"
+      }, 0);
+      
+      // Cambio de color de fondo gradual
+      tl.to(sectionRef.current, {
+        backgroundColor: "rgba(236, 253, 245, 1)", // Un color verde muy claro
+        ease: "none"
+      }, 0);
+      
+      // Animación de cada tarjeta de producto
+      productRefs.current.forEach((card, index) => {
+        if (!card) return;
+        
+        // Calculamos un retraso basado en el índice para animación escalonada
+        const delay = index * 0.15;
+        
+        tl.from(card, {
+          scale: 0.6,
+          opacity: 0,
+          rotation: index % 2 === 0 ? 5 : -5, // Alternar la dirección de rotación
+          y: 100,
+          ease: "power2.out"
+        }, delay);
+      });
+      
+    }, sectionRef);
+    
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="productos" className="py-20 bg-gray-50 relative overflow-hidden">
+    <section 
+      id="productos" 
+      ref={sectionRef}
+      className="py-20 bg-gray-50 relative overflow-hidden transition-colors duration-500"
+      style={{minHeight: '100vh'}} // Asegurar altura mínima para el pin
+    >
       {/* Elementos decorativos de fondo */}
       <div className="absolute top-0 right-0 -mr-40 -mt-40">
         <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="text-green-300 opacity-20">
@@ -66,24 +121,26 @@ const ProductsSection = () => {
       </div>
 
       <div className="container mx-auto px-4">
-        <ScrollAnimation direction="up">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">Nuestros Productos</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Productos revolucionarios que están cambiando la agricultura convencional desde la raíz.
-            </p>
-          </div>
-        </ScrollAnimation>
+        {/* Línea animada (similar al ejemplo) */}
+        <div className="w-full max-w-4xl mx-auto mb-10 h-1 bg-green-500" ref={lineRef}></div>
         
-        <motion.div 
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+        <div ref={titleRef} className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4 text-gray-800">Nuestros Productos</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Productos revolucionarios que están cambiando la agricultura convencional desde la raíz.
+          </p>
+        </div>
+        
+        <div 
+          ref={cardsContainerRef}
           className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto"
         >
-          {products.map(product => (
-            <motion.div key={product.id} variants={cardVariants}>
+          {products.map((product, index) => (
+            <div 
+              key={product.id} 
+              ref={el => productRefs.current[index] = el}
+              className="product-card-wrapper"
+            >
               <ProductCard
                 title={product.title}
                 description={product.description}
@@ -91,11 +148,11 @@ const ProductsSection = () => {
                 tag={product.tag}
                 link={product.link}
               />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
         
-        <ScrollAnimation direction="up" delay={0.2} className="mt-16 text-center">
+        <div className="mt-16 text-center">
           <div className="inline-block bg-green-100 border border-green-200 rounded-lg p-4 md:p-6">
             <p className="text-lg md:text-xl text-green-800 font-bold mb-2">
               ¡APROVECHA NUESTROS DESCUENTOS POR TEMPORADA DE SIEMBRA!
@@ -107,7 +164,7 @@ const ProductsSection = () => {
               Ver ofertas
             </a>
           </div>
-        </ScrollAnimation>
+        </div>
       </div>
     </section>
   );
