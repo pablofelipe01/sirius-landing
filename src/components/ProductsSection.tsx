@@ -38,6 +38,22 @@ const ProductsSection = () => {
       imageSrc: '/biodust.png',
       tag: 'Nuevo',
       link: '/productos#star-dust'
+    },
+    {
+      id: ' TRATAMIENTO PREVENTIVO DE PLAGAS',
+      title: ' TRATAMIENTO PREVENTIVO DE PLAGAS',
+      description: 'Tú escudo natural contra plagas. Una fórmula de productos biologicos a la medida.  Tratamiento preventivo con extractos vegetales y microorganismos aliados. Protege tus cultivos sin agredir la vida del suelo. Aplicación fácil, resultados visibles',
+      imageSrc: '/tratamiento.png',
+      tag: 'Nuevo',
+      link: '/productos#star-dust'
+    },
+    {
+      id: 'SIRIUS_BACTER',
+      title: 'SIRIUS BACTER',
+      description: 'Millones de bacterias trabajando por tu cultivo. Consorcio de bacterias benéficas que regeneran, nutren y protegen. Mejora la disponibilidad de nutrientes, estimula raíces y fortalece tu suelo desde lo invisible.',
+      imageSrc: '/bacter.png',
+      tag: 'Nuevo',
+      link: '/productos#star-dust'
     }
   ];
 
