@@ -15,8 +15,8 @@ export default function Home() {
       {/* <BenefitsSection /> */}
       <ZoomBackgroundSection /> 
       <SustainabilitySection />
-      <TeamSection />
       <GallerySection />
+      <TeamSection />
       <ContactSection />
     </main>
   );
