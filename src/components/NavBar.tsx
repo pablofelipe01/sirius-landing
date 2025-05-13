@@ -65,8 +65,8 @@ const NavBar = () => {
             <Link href="/equipo" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Equipo
             </Link>
-            <Link href="/contacto" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
-              Contacto
+            <Link href="/inovacion" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
+              Innovación
             </Link>
             <Link 
               href="/ventas" 
@@ -142,11 +142,11 @@ const NavBar = () => {
               Equipo
             </Link>
             <Link 
-              href="/contacto" 
+              href="/inovacion" 
               className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
               onClick={() => setIsOpen(false)}
             >
-              Contacto
+              Innovación
             </Link>
             <Link 
               href="/ventas" 
