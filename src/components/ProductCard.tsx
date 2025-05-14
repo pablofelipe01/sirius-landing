@@ -1,13 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 interface ProductCardProps {
   title: string;
   description: string;
-  imageSrc: string;
+  videoSrc: string; // Changed from imageSrc to videoSrc
   tag?: string;
   link: string;
 }
@@ -15,7 +14,7 @@ interface ProductCardProps {
 const ProductCard = ({
   title,
   description,
-  imageSrc,
+  videoSrc, // Updated parameter name
   tag = "Nuevo",
   link
 }: ProductCardProps) => {
@@ -26,11 +25,12 @@ const ProductCard = ({
       transition={{ duration: 0.3 }}
     >
       <div className="relative">
-        <Image 
-          src={imageSrc} 
-          alt={title}
-          width={600}
-          height={400}
+        <video 
+          src={videoSrc} 
+          autoPlay
+          loop
+          muted
+          playsInline
           className="w-full h-64 object-cover"
         />
         {tag && (

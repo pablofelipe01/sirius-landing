@@ -100,6 +100,13 @@ const TeamPage = () => {
       bio: 'Asisto en la pirólisis con energía y atención. Aquí he crecido como persona, aprendiendo a transformar residuos en vida y a confiar en mi proceso.',
       imageSrc: '/ser8.png',
     },
+    {
+      id: 13,
+      name: 'Yeison',
+      role: 'Pirólisis',
+      bio: 'Lidero la planta desde lo humano y técnico. Mi rol es guiar, escuchar y sostener procesos que producen biochar y transforman vidas con propósito regenerativo.',
+      imageSrc: '/santi.png',
+    },
   ];
 
   return (

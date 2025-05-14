@@ -27,7 +27,7 @@ const ProductsSection = () => {
       id: 'biochar-blend',
       title: 'BIOCHAR BLEND',
       description: 'Una mezcla potente de biochar premium, compost enriquecido y microorganismos poderosos. Suelos más vivos = cultivos más sanos.',
-      imageSrc: '/biocharblend.jpg',
+      videoSrc: '/sirius-bacter.mp4', // Ya era un MP4
       tag: 'Bestseller',
       link: '/productos#biochar-blend'
     },
@@ -35,7 +35,7 @@ const ProductsSection = () => {
       id: 'star-dust',
       title: 'STAR DUST',
       description: 'El nuevo polvo de estrellas: biochar ultra poroso, fortificado con Trichoderma y bacterias benéficas. Regenera el suelo y potencia tus cultivos.',
-      imageSrc: '/biodust.png',
+      videoSrc: '/biodust.mp4', // Cambiado de .png a .mp4
       tag: 'Nuevo',
       link: '/productos#star-dust'
     },
@@ -43,7 +43,7 @@ const ProductsSection = () => {
       id: ' TRATAMIENTO PREVENTIVO DE PLAGAS',
       title: ' TRATAMIENTO PREVENTIVO DE PLAGAS',
       description: 'Tú escudo natural contra plagas. Una fórmula de productos biologicos a la medida.  Tratamiento preventivo con extractos vegetales y microorganismos aliados. Protege tus cultivos sin agredir la vida del suelo. Aplicación fácil, resultados visibles',
-      imageSrc: '/tratamiento.png',
+      videoSrc: '/tratamiento.mp4', // Cambiado de .png a .mp4
       tag: 'Nuevo',
       link: '/productos#star-dust'
     },
@@ -51,7 +51,7 @@ const ProductsSection = () => {
       id: 'SIRIUS_BACTER',
       title: 'SIRIUS BACTER',
       description: 'Millones de bacterias trabajando por tu cultivo. Consorcio de bacterias benéficas que regeneran, nutren y protegen. Mejora la disponibilidad de nutrientes, estimula raíces y fortalece tu suelo desde lo invisible.',
-      imageSrc: '/bacter.png',
+      videoSrc: '/bacter.mp4', // Cambiado de .png a .mp4
       tag: 'Nuevo',
       link: '/productos#star-dust'
     }
@@ -160,7 +160,7 @@ const ProductsSection = () => {
               <ProductCard
                 title={product.title}
                 description={product.description}
-                imageSrc={product.imageSrc}
+                videoSrc={product.videoSrc} // Cambiado de imageSrc a videoSrc
                 tag={product.tag}
                 link={product.link}
               />
