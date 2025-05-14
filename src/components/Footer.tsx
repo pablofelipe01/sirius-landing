@@ -44,7 +44,7 @@ const Footer = () => {
                 <FaLinkedin size={24} />
               </a>
               <a 
-                href="https://wa.me/573132121019" 
+                href="https://wa.me/573208653324" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-green-400 transition-colors"
@@ -111,21 +111,28 @@ const Footer = () => {
 
           {/* Contacto */}
           <div className="col-span-1">
-            <h4 className="text-xl font-bold mb-4 text-green-400">Contacto</h4>
+            <h4 className="text-xl font-bold mb-4 text-green-400">Información de contacto</h4>
             <ul className="space-y-2">
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2">📍</span>
-                <span className="text-gray-400">Av. Siempreverde 123, Ciudad Verde</span>
+                <span className="text-gray-400">Kl-7 Via Cabuyaro Barranca de Upía</span>
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2">📞</span>
-                <span className="text-gray-400">+57 313 212 1019</span>
+                <span className="text-gray-400">+57 320 865 3324</span>
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2">✉️</span>
-                <a href="mailto:info@siriusregenerative.com" className="text-gray-400 hover:text-white transition-colors">
-                  info@siriusregenerative.com
+                <a href="mailto:marketingsirius@siriusregenerative.com" className="text-gray-400 hover:text-white transition-colors">
+                  marketingsirius@siriusregenerative.com
                 </a>
+              </li>
+              <li className="flex items-start mt-4">
+                <span className="text-gray-400 mr-2">🕒</span>
+                <div className="text-gray-400">
+                  <p>Lunes a Viernes: 9am - 6pm</p>
+                  <p>Sábados: 9am - 1pm</p>
+                </div>
               </li>
             </ul>
           </div>
