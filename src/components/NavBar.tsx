@@ -127,13 +127,13 @@ const NavBar = () => {
             >
               Inicio
             </Link>
-            <Link 
+            {/* <Link 
               href="/productos" 
               className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Productos
-            </Link>
+            </Link> */}
             <Link 
               href="/equipo" 
               className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
