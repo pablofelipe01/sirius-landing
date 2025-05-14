@@ -3,8 +3,7 @@
 import { useRef, useEffect } from 'react';
 // import { motion } from 'framer-motion';
 // import ScrollAnimation from './ScrollAnimation';
-import ProductCard from './ProductCard';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import ProductCard from '../../components/ProductCard';// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

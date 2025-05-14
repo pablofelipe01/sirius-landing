@@ -14,19 +14,19 @@ const memoCards = [
   {
     id: 1,
     title: "Regeneración Natural",
-    content: "El biochar restaura la vitalidad de los suelos más degradados, activando procesos naturales de regeneración.",
+    content: "La simbiosis entre microorganismos, raíces, plantas e insectos permite un equilibrio natural, regenerando los suelos, cultivos y ecosistemas de nuestros clientes",
     borderColor: "#22c55e", // green-500
   },
   {
     id: 2,
     title: "Captura de Carbono",
-    content: "Cada hectárea tratada con nuestros productos puede secuestrar hasta 10 toneladas de CO2 equivalente por año.",
+    content: "Al aplicar nuestro biochar en el suelo, estamos capturando carbono (CO₂) y reduciendo la emisión de GEI en la atmósfera durante más de 100 años.",
     borderColor: "#3b82f6", // blue-500
   },
   {
     id: 3,
     title: "Biodiversidad Microbiológica",
-    content: "Nuestros bioinsumos introducen más de 200 especies de microorganismos benéficos para tu suelo.",
+    content: "Desde nuestro laboratorio producimos bioinsumos que inyectan más de 200 especies de microorganismos benéficos para tu suelo.",
     borderColor: "#eab308", // yellow-500
   },
 ];

@@ -134,11 +134,10 @@ const HorizontalGallerySection = () => {
       <ScrollAnimation direction="up">
         <div className="text-center py-10">
           <h2 className="text-4xl font-bold mb-4 text-gray-800">
-            Naturaleza, tecnología y conservación en armonía 🚜💡
+            Biodiversidad y agroindustria
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Detrás de cada imagen hay una historia. En este recap, te llevamos detrás de cámaras 
-            para mostrar cómo la biodiversidad y la innovación pueden coexistir.
+            Una convergencia posible a través de la tecnología regenerativa.
           </p>
         </div>
       </ScrollAnimation>

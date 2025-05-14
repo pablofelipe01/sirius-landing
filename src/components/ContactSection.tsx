@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import ScrollAnimation from './ScrollAnimation';
 
@@ -222,7 +223,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700">Dirección</h4>
-                    <p className="text-gray-600">Av. Siempreverde 123, Ciudad Verde</p>
+                    <p className="text-gray-600">Kl-7 Via Cabuyaro Barranca de Upía</p>
                   </div>
                 </div>
                 
@@ -234,7 +235,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700">Teléfono</h4>
-                    <p className="text-gray-600">+57 313 212 1019</p>
+                    <p className="text-gray-600">+57 320 865 3324</p>
                   </div>
                 </div>
                 
@@ -246,7 +247,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700">Correo</h4>
-                    <p className="text-gray-600">info@siriusregenerative.com</p>
+                    <p className="text-gray-600">marketingsirius@siriusregenerative.com</p>
                   </div>
                 </div>
                 
@@ -286,7 +287,7 @@ const ContactSection = () => {
                 >
                   <FaLinkedin className="w-6 h-6" />
                 </a>
-                <a 
+                {/* <a 
                   href="https://wa.me/573132121019" 
                   target="_blank" 
                   rel="noopener noreferrer" 
@@ -294,7 +295,7 @@ const ContactSection = () => {
                   aria-label="WhatsApp"
                 >
                   <FaWhatsapp className="w-6 h-6" />
-                </a>
+                </a> */}
               </div>
               
               <p className="mt-6 text-white/80">
