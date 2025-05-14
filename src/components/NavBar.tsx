@@ -59,9 +59,9 @@ const NavBar = () => {
             <Link href="/" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Inicio
             </Link>
-            <Link href="/productos" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
+            {/* <Link href="/productos" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Productos
-            </Link>
+            </Link> */}
             <Link href="/equipo" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
               Equipo
             </Link>
