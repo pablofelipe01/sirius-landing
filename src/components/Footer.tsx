@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 
 const Footer = () => {
@@ -43,7 +44,7 @@ const Footer = () => {
               >
                 <FaLinkedin size={24} />
               </a>
-              <a 
+              {/* <a 
                 href="https://wa.me/573208653324" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -51,7 +52,7 @@ const Footer = () => {
                 aria-label="WhatsApp"
               >
                 <FaWhatsapp size={24} />
-              </a>
+              </a> */}
             </div>
           </div>
 
