@@ -24,7 +24,7 @@ const HorizontalGallerySection = () => {
     },
     {
       src: '/imagen2.png',
-      alt: 'Proceso de biochar',
+      alt: 'Formulación a la Medida',
       caption: 'Ciencia aplicada a procesos naturales'
     },
     {

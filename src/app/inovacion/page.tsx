@@ -74,7 +74,7 @@ const TeamSection = () => {
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end">
               <div className="p-8 text-white">
-                <h3 className="text-3xl font-bold mb-3">Nuestro Equipo Completo</h3>
+                <h3 className="text-3xl font-bold mb-3">Semillero de Conciencia</h3>
                 <p className="text-white/90 text-lg">
                   Un equipo unido transforma desafíos en oportunidades y construye un futuro más sostenible.
                 </p>
@@ -117,7 +117,7 @@ const TeamSection = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end">
               <div className="p-6 text-white">
-                <h3 className="text-xl font-bold mb-1">Investigación</h3>
+                <h3 className="text-xl font-bold mb-1">Biotecnología</h3>
                 <p className="text-white/90">El corazón de nuestro trabajo</p>
               </div>
             </div>
@@ -137,7 +137,7 @@ const TeamSection = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end">
               <div className="p-6 text-white">
-                <h3 className="text-xl font-bold mb-1">Innovación</h3>
+                <h3 className="text-xl font-bold mb-1">Agentics</h3>
                 <p className="text-white/90">Buscando nuevas fronteras</p>
               </div>
             </div>
@@ -157,7 +157,7 @@ const TeamSection = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end">
               <div className="p-6 text-white">
-                <h3 className="text-xl font-bold mb-1">Aplicación</h3>
+                <h3 className="text-xl font-bold mb-1">Formulación a la Medida</h3>
                 <p className="text-white/90">Llevando la teoría al campo</p>
               </div>
             </div>

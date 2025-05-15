@@ -1,13 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
+import { FaInstagram, FaLinkedin,  } from 'react-icons/fa';
 import ScrollAnimation from './ScrollAnimation';
 
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  subject: string;
+}
+
 const ContactSection = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -15,10 +22,11 @@ const ContactSection = () => {
     subject: 'Información general'
   });
   
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -26,13 +34,26 @@ const ContactSection = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage('');
     
-    // Simulación de envío de formulario
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Hubo un error al enviar el mensaje');
+      }
+      
       setIsSubmitted(true);
       
       // Resetear el formulario después de mostrarse el mensaje de éxito
@@ -45,8 +66,13 @@ const ContactSection = () => {
           subject: 'Información general'
         });
         setIsSubmitted(false);
-      }, 3000);
-    }, 1500);
+      }, 5000);
+    } catch (error) {
+      console.error('Error al enviar el mensaje:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -101,6 +127,12 @@ const ContactSection = () => {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {errorMessage && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 mb-4">
+                    {errorMessage}
+                  </div>
+                )}
+                
                 <div>
                   <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
                     Nombre completo

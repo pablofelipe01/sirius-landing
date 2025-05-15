@@ -6,16 +6,16 @@ import ScrollAnimation from '@/components/ScrollAnimation';
 import { motion } from 'framer-motion';
 
 const SalesPage = () => {
-  // Datos ficticios de productos y ofertas - reemplazar con datos reales
+  // Datos de productos y ofertas
   const products = [
     {
-      id: 'biochar-blend-5kg',
-      name: 'Biochar Blend',
-      description: 'Mezcla potente de biochar premium, compost enriquecido y microorganismos poderosos.',
+      id: 'biochar-blend',
+      name: 'BIOCHAR BLEND',
+      description: 'Una mezcla de biochar premium, compost enriquecido y microorganismos benéficos. Mejora la estructura del suelo, activa la vida microbiana y nutre tus cultivos desde la raíz.',
       price: 129.90,
       discountPrice: 99.90,
       quantity: '5kg',
-      imageSrc: '/biocharblend.jpg',
+      imageSrc: '/blend.png',
       features: [
         'Mejora la estructura del suelo',
         'Aumenta la retención de agua',
@@ -23,16 +23,17 @@ const SalesPage = () => {
         'Potencia el crecimiento de raíces',
         'Reduce la necesidad de fertilizantes químicos'
       ],
-      tag: 'Bestseller'
+      tag: 'Bestseller',
+      link: '/productos#biochar-blend'
     },
     {
-      id: 'star-dust-3kg',
-      name: 'Star Dust',
-      description: 'Biochar ultra poroso, fortificado con Trichoderma y bacterias benéficas para un impulso inmediato.',
+      id: 'star-dust',
+      name: 'STAR DUST',
+      description: 'Nuestro nuevo polvo de estrellas: biochar ultraporozo, fortificado con Trichoderma y bacterias benéficas. Regenera tu suelo con nuestro Star Dust, formulado a tu medida.',
       price: 99.90,
       discountPrice: 79.90,
       quantity: '3kg',
-      imageSrc: '/biodust.png',
+      imageSrc: '/dust.png',
       features: [
         'Regenera suelos degradados',
         'Control natural de patógenos',
@@ -40,31 +41,51 @@ const SalesPage = () => {
         'Mejora la salud general de las plantas',
         'Aplicación sencilla y directa'
       ],
-      tag: 'Nuevo'
+      tag: 'Nuevo',
+      link: '/productos#star-dust'
     },
     {
-      id: 'biochar-combo',
-      name: 'Combo Regenerativo',
-      description: 'La combinación perfecta de nuestros productos estrella para una solución completa.',
-      price: 199.90,
-      discountPrice: 159.90,
-      quantity: '5kg Biochar Blend + 2kg Star Dust',
-      imageSrc: '/combo.png',
+      id: 'tratamiento-plagas',
+      name: 'TRATAMIENTO PREVENTIVO DE PLAGAS',
+      description: 'Tu escudo natural contra plagas. Fórmula biológica a la medida con extractos vegetales y microorganismos aliados. Protege tus cultivos mientras cuidas la biodiversidad.',
+      price: 149.90,
+      discountPrice: 119.90,
+      quantity: '2L',
+      imageSrc: '/plaga2.png',
       features: [
-        'Solución integral para cualquier tipo de cultivo',
-        'Tratamiento completo para suelos altamente degradados',
-        'Resultados visibles en menor tiempo',
-        'Ahorro significativo frente a la compra individual',
-        'Incluye guía de aplicación especializada'
+        'Protección natural contra múltiples plagas',
+        'Preserva la biodiversidad del ecosistema',
+        'No genera resistencia en los patógenos',
+        'Compatible con cultivos orgánicos',
+        'Aplicación preventiva y curativa'
       ],
-      tag: 'Mejor valor'
+      tag: 'Nuevo',
+      link: '/productos#tratamiento-plagas'
+    },
+    {
+      id: 'sirius-bacter',
+      name: 'SIRIUS BACTER',
+      description: 'Millones de bacterias y hongos entomopatógenos trabajando juntos por tu cultivo. Mejora la disponibilidad de nutrientes, estimula raíces y fortalece tu suelo desde lo invisible.',
+      price: 109.90,
+      discountPrice: 89.90,
+      quantity: '1L',
+      imageSrc: '/bacter2.png',
+      features: [
+        'Estimula el crecimiento radicular',
+        'Mejora la absorción de nutrientes',
+        'Incrementa la resistencia a enfermedades',
+        'Promueve la salud general del suelo',
+        'Reduce los requerimientos de fertilizantes'
+      ],
+      tag: 'Nuevo',
+      link: '/productos#sirius-bacter'
     }
   ];
 
   const testimonials = [
     {
       id: 1,
-      name: 'HCIENDA LA CABAÑA S.A',
+      name: 'HACIENDA LA CABAÑA S.A',
       role: 'Palma Africana',
       comment: 'Desde que empecé a usar Biochar Blend, la salud de mis palmas mejoró notablemente. Mayor producción y mejor calidad en los granos. Definitivamente vale la inversión.',
       rating: 5,
@@ -116,20 +137,33 @@ const SalesPage = () => {
         </div>
       </div>
       
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section
+        className="py-16 relative"
+        style={{
+          backgroundImage: "url('/ventas.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      >
+        {/* Overlay para mejorar la legibilidad del texto */}
+        <div className="absolute inset-0 bg-white/80"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <ScrollAnimation direction="up">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4 text-gray-800">
-                Nuestros Productos en Oferta
-              </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Selecciona el producto perfecto para tus necesidades y comienza a regenerar tus suelos hoy mismo.
-              </p>
+              <div className="bg-white/90 rounded-xl shadow-lg p-8 mb-8 max-w-3xl mx-auto border border-green-100">
+                <h2 className="text-3xl font-bold mb-4 text-green-700">
+                  Nuestros Productos en Oferta
+                </h2>
+                <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+                  Selecciona el producto perfecto para tus necesidades y comienza a regenerar tus suelos hoy mismo.
+                </p>
+              </div>
             </div>
           </ScrollAnimation>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product, index) => (
               <ScrollAnimation 
                 key={product.id} 
@@ -138,7 +172,7 @@ const SalesPage = () => {
                 className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 transform transition-transform duration-300 hover:-translate-y-2"
               >
                 <div className="relative">
-                  <div className="relative h-64">
+                  <div className="relative h-48">
                     <Image 
                       src={product.imageSrc} 
                       alt={product.name}
@@ -156,41 +190,44 @@ const SalesPage = () => {
                   </div>
                 </div>
                 
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-1 text-gray-800">{product.name}</h3>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold mb-1 text-gray-800">{product.name}</h3>
                   <p className="text-green-600 font-medium mb-2">{product.quantity}</p>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
+                  <p className="text-gray-600 mb-4 text-sm h-20 overflow-y-auto">{product.description}</p>
                   
-                  <div className="mb-6">
-                    <h4 className="font-bold text-gray-700 mb-2">Beneficios:</h4>
+                  <div className="mb-4">
+                    <h4 className="font-bold text-gray-700 mb-2 text-sm">Beneficios:</h4>
                     <ul className="space-y-1">
                       {product.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start">
-                          <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <svg className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
-                          <span className="text-gray-600">{feature}</span>
+                          <span className="text-gray-600 text-xs">{feature}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  <div className="flex items-end justify-between mb-6">
+                  <div className="flex items-end justify-between mb-4">
                     <div>
-                      <span className="text-gray-400 line-through text-lg">${product.price.toFixed(2)}</span>
-                      <div className="text-3xl font-bold text-gray-800">${product.discountPrice.toFixed(2)}</div>
+                      <span className="text-gray-400 line-through text-sm">${product.price.toFixed(2)}</span>
+                      <div className="text-2xl font-bold text-gray-800">${product.discountPrice.toFixed(2)}</div>
                     </div>
-                    <span className="bg-green-100 text-green-800 text-sm px-2 py-1 rounded">
+                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
                       Ahorras ${(product.price - product.discountPrice).toFixed(2)}
                     </span>
                   </div>
                   
-                  <button className="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg font-bold transition-colors flex items-center justify-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <a 
+                    href={product.link}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-bold transition-colors flex items-center justify-center text-sm"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     Añadir al carrito
-                  </button>
+                  </a>
                 </div>
               </ScrollAnimation>
             ))}
