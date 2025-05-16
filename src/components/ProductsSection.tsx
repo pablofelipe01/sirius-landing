@@ -29,7 +29,7 @@ const ProductsSection = () => {
       description: 'Una mezcla de biochar premium, compost enriquecido y microorganismos benéficos. Mejora la estructura del suelo, activa la vida microbiana y nutre tus cultivos desde la raíz. Fórmula diseñada para regenerar y fortalecer.',
       videoSrc: '/sirius-bacter.mp4', // Ya era un MP4
       tag: 'Bestseller',
-      link: '/productos#biochar-blend'
+      link: '/dashboard'
     },
     {
       id: 'star-dust',
@@ -37,7 +37,7 @@ const ProductsSection = () => {
       description: 'Nuestro nuevo polvo de estrellas: biochar ultraporozo, fortificado con Trichoderma y bacterias benéficas. Regenera tu suelo con nuestro Star Dust, formulado a tu medida para potenciar tus cultivos.',
       videoSrc: '/biodust.mp4', // Cambiado de .png a .mp4
       tag: 'Nuevo',
-      link: '/productos#star-dust'
+      link: '/dashboard'
     },
     {
       id: ' TRATAMIENTO PREVENTIVO DE PLAGAS',
@@ -45,7 +45,7 @@ const ProductsSection = () => {
       description: 'Tu escudo natural contra plagas. Fórmula biológica a la medida con extractos vegetales y microorganismos aliados. Protege tus cultivos mientras cuidas la biodiversidad y el equilibrio de cada hábitat. Aplicación fácil, resultados visibles.',
       videoSrc: '/tratamiento.mp4', // Cambiado de .png a .mp4
       tag: 'Nuevo',
-      link: '/productos#star-dust'
+      link: '/dashboard'
     },
     {
       id: 'SIRIUS_BACTER',
@@ -53,7 +53,7 @@ const ProductsSection = () => {
       description: 'Millones de bacterias y hongos entomopatógenos trabajando juntos por tu cultivo. Sirius Bacter es un consorcio rico en bacterias benéficas que mejora la disponibilidad de nutrientes, estimula raíces y fortalece tu suelo desde lo invisible',
       videoSrc: '/bacter.mp4', // Cambiado de .png a .mp4
       tag: 'Nuevo',
-      link: '/productos#star-dust'
+      link: '/dashboard'
     }
   ];
 
