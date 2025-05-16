@@ -13,9 +13,9 @@ const SalesPage = () => {
       name: 'BIOCHAR BLEND',
       description:
         'Una mezcla de biochar premium, compost enriquecido y microorganismos benéficos. Mejora la estructura del suelo, activa la vida microbiana y nutre tus cultivos desde la raíz.',
-      price: 129.9,
-      discountPrice: 99.9,
-      quantity: '5kg',
+      // price: 129.9,
+      // discountPrice: 99.9,
+      // quantity: '5kg',
       imageSrc: '/blend.png',
       features: [
         'Mejora la estructura del suelo',
@@ -31,9 +31,9 @@ const SalesPage = () => {
       name: 'STAR DUST',
       description:
         'Nuestro nuevo polvo de estrellas: biochar ultraporozo, fortificado con Trichoderma y bacterias benéficas. Regenera tu suelo con nuestro Star Dust, formulado a tu medida.',
-      price: 99.9,
-      discountPrice: 79.9,
-      quantity: '3kg',
+      // price: 99.9,
+      // discountPrice: 79.9,
+      // quantity: '3kg',
       imageSrc: '/dust.png',
       features: [
         'Regenera suelos degradados',
@@ -49,9 +49,9 @@ const SalesPage = () => {
       name: 'TRATAMIENTO PREVENTIVO DE PLAGAS',
       description:
         'Tu escudo natural contra plagas. Fórmula biológica a la medida con extractos vegetales y microorganismos aliados. Protege tus cultivos mientras cuidas la biodiversidad.',
-      price: 149.9,
-      discountPrice: 119.9,
-      quantity: '2L',
+      // price: 149.9,
+      // discountPrice: 119.9,
+      // quantity: '2L',
       imageSrc: '/plaga2.png',
       features: [
         'Protección natural contra múltiples plagas',
@@ -67,9 +67,9 @@ const SalesPage = () => {
       name: 'SIRIUS BACTER',
       description:
         'Millones de bacterias y hongos entomopatógenos trabajando juntos por tu cultivo. Mejora la disponibilidad de nutrientes, estimula raíces y fortalece tu suelo desde lo invisible.',
-      price: 109.9,
-      discountPrice: 89.9,
-      quantity: '1L',
+      // price: 109.9,
+      // discountPrice: 89.9,
+      // quantity: '1L',
       imageSrc: '/bacter2.png',
       features: [
         'Estimula el crecimiento radicular',
@@ -193,14 +193,14 @@ const SalesPage = () => {
                       {product.tag}
                     </div>
                   )}
-                  <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                    {Math.round(
+                  {/* <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold"> */}
+                    {/* {Math.round(
                       ((product.price - product.discountPrice) / product.price) *
                         100
                     )}
-                    % OFF
+                    % OFF */}
                   </div>
-                </div>
+                {/* </div> */}
 
                 {/* Info */}
                 <div className="p-5">
@@ -248,16 +248,16 @@ const SalesPage = () => {
                   <div className="flex items-end justify-between mb-4">
                     <div>
                       <span className="text-gray-400 line-through text-sm">
-                        ${product.price.toFixed(2)}
+                        {/* ${product.price.toFixed(2)} */}
                       </span>
                       <div className="text-2xl font-bold text-gray-800">
-                        ${product.discountPrice.toFixed(2)}
+                        {/* ${product.discountPrice.toFixed(2)} */}
                       </div>
                     </div>
-                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-                      Ahorras $
-                      {(product.price - product.discountPrice).toFixed(2)}
-                    </span>
+                    {/* <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded"> */}
+                      {/* Ahorras $ */}
+                      {/* {(product.price - product.discountPrice).toFixed(2)} */}
+                    {/* </span> */}
                   </div>
 
                   {/* BOTÓN – ahora va a /dashboard */}
