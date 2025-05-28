@@ -102,7 +102,7 @@ const TeamPage = () => {
     },
     {
       id: 13,
-      name: 'Yeison',
+      name: 'Santi',
       role: 'Pirólisis',
       bio: 'Lidero la planta desde lo humano y técnico. Mi rol es guiar, escuchar y sostener procesos que producen biochar y transforman vidas con propósito regenerativo.',
       imageSrc: '/santi.png',
