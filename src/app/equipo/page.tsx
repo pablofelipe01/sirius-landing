@@ -11,7 +11,7 @@ const TeamPage = () => {
       id: 1,
       name: 'Martín',
       role: 'Fundador y CEO',
-      bio: 'Ingeniera agrónoma con más de 15 años de experiencia en agricultura regenerativa. María fundó Sirius con la visión de transformar la industria agrícola hacia prácticas más sostenibles y regenerativas.',
+      bio: 'Sirius es un sueño hecho realidad. Surgió de un proceso profundo de sanación interior y me dio la oportunidad de alinear mi vida con un propósito verdadero. Hoy, Sirius es un vehículo de expansión para muchos: una puerta hacia el liderazgo auténtico que nace del corazón.',
       imageSrc: '/martin.png',
     },
     {
