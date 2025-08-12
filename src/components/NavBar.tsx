@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -25,7 +26,8 @@ const NavBar = () => {
     };
   }, [scrolled]);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMobileMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <nav 
@@ -56,30 +58,71 @@ const NavBar = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Link href="/" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
-              Inicio
-            </Link>
-            {/* <Link href="/productos" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
-              Productos
-            </Link> */}
-            <Link href="/equipo" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
-              Equipo
-            </Link>
-            <Link href="/inovacion" className="px-3 py-1.5 bg-black/30 backdrop-blur-sm rounded-lg text-white hover:bg-black/50 transition-all">
-              Innovación
-            </Link>
+            {/* Contáctenos */}
             <Link 
-              href="/ventas" 
-              className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition-colors"
+              href="/contacto" 
+              className="px-4 py-2 bg-[#5A7836]/80 backdrop-blur-sm rounded-lg text-white hover:bg-[#5A7836] transition-all"
             >
-              Comprar Ahora
+              Contáctenos
             </Link>
+            
+            {/* Dropdown Menu */}
+            <div className="relative">
+              <button
+                onClick={toggleMenu}
+                className="px-4 py-2 bg-[#5A7836]/80 backdrop-blur-sm rounded-lg text-white hover:bg-[#5A7836] transition-all flex items-center gap-2"
+              >
+                Menú
+                <svg 
+                  className={`w-4 h-4 transition-transform ${isMenuOpen ? 'rotate-180' : ''}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {/* Dropdown Content */}
+              {isMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full right-0 mt-2 w-48 bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-white/10"
+                >
+                  <div className="py-2">
+                    <Link 
+                      href="/equipo" 
+                      className="block px-4 py-2 text-white hover:bg-[#5A7836]/30 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Equipo
+                    </Link>
+                    <Link 
+                      href="/inovacion" 
+                      className="block px-4 py-2 text-white hover:bg-[#5A7836]/30 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Innovación
+                    </Link>
+                    <Link 
+                      href="/ventas" 
+                      className="block px-4 py-2 text-[#5A7836] hover:bg-[#5A7836]/30 transition-colors font-medium"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Comprar Ahora
+                    </Link>
+                  </div>
+                </motion.div>
+              )}
+            </div>
           </motion.div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button 
-              onClick={toggleMenu}
+              onClick={toggleMobileMenu}
               className="text-white focus:outline-none"
             >
               <svg 
@@ -121,36 +164,29 @@ const NavBar = () => {
         >
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-3">
             <Link 
-              href="/" 
-              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
+              href="/contacto" 
+              className="text-white bg-[#5A7836]/80 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-[#5A7836] transition-all"
               onClick={() => setIsOpen(false)}
             >
-              Inicio
+              Contáctenos
             </Link>
-            {/* <Link 
-              href="/productos" 
-              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
-              onClick={() => setIsOpen(false)}
-            >
-              Productos
-            </Link> */}
             <Link 
               href="/equipo" 
-              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-[#5A7836]/30 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Equipo
             </Link>
             <Link 
               href="/inovacion" 
-              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-black/60 transition-all"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-[#5A7836]/30 transition-all"
               onClick={() => setIsOpen(false)}
             >
               Innovación
             </Link>
             <Link 
               href="/ventas" 
-              className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition-colors inline-block text-center"
+              className="bg-[#5A7836] text-white px-5 py-2 rounded-lg hover:bg-[#5A7836]/80 transition-colors inline-block text-center"
               onClick={() => setIsOpen(false)}
             >
               Comprar Ahora

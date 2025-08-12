@@ -1,5 +1,5 @@
 import HeroSection from '@/components/HeroSection';
-import ProductsSection from '@/components/ProductsSection';
+import HistorySection from '@/components/HistorySection';
 // import BenefitsSection from '@/components/BenefitsSection';
 import SustainabilitySection from '@/components/SustainabilitySection';
 import GallerySection from '@/components/GallerySection';
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <main className="overflow-hidden">
       <HeroSection />
-      <ProductsSection />
+      <HistorySection />
       {/* <BenefitsSection /> */}
       <ZoomBackgroundSection /> 
       <SustainabilitySection />
