@@ -6,7 +6,12 @@ module.exports = {
       './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
-      extend: {},
+      extend: {
+        colors: {
+          'sirius-blue': '#0154AC',
+          'sirius-gray': '#3C4858',
+        },
+      },
     },
     plugins: [],
   }
