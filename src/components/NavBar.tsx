@@ -107,7 +107,7 @@ const NavBar = () => {
                       Innovación
                     </Link>
                     <Link 
-                      href="/ventas" 
+                      href="https://pedidos-sirius.vercel.app/" 
                       className="block px-4 py-2 text-[#5A7836] hover:bg-[#5A7836]/30 transition-colors font-medium"
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -185,7 +185,7 @@ const NavBar = () => {
               Innovación
             </Link>
             <Link 
-              href="/ventas" 
+              href="https://pedidos-sirius.vercel.app/" 
               className="bg-[#5A7836] text-white px-5 py-2 rounded-lg hover:bg-[#5A7836]/80 transition-colors inline-block text-center"
               onClick={() => setIsOpen(false)}
             >
