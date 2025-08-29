@@ -41,7 +41,7 @@ const TeamSection = () => {
           <span className="inline-block bg-green-100 text-green-700 px-3 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4">
             BIOFABRICA SIRIUS
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-gray-800">
+          <h2 className="text-4xl font-bold mb-3 sm:mb-4 text-gray-800">
             Donde la ciencia se encuentra con la regeneración ♻️
           </h2>
           <p className="text-base sm:text-xl text-gray-600 max-w-4xl mx-auto px-4">
@@ -74,7 +74,7 @@ const TeamSection = () => {
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end">
               <div className="p-4 sm:p-6 lg:p-8 text-white">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 sm:mb-3">Semillero de Conciencia</h3>
+                <h3 className="text-2xl font-bold mb-2 sm:mb-3">Semillero de Conciencia</h3>
                 <p className="text-sm sm:text-base lg:text-lg text-white/90">
                   Un equipo unido transforma desafíos en oportunidades y construye un futuro más sostenible.
                 </p>

@@ -169,7 +169,7 @@ const SustainabilitySection = () => {
             
             <div className="caption-container absolute bottom-0 left-0 w-full p-8 opacity-0 transform translate-y-10">
               <div className="max-w-3xl mx-auto">
-                <h3 className="text-3xl font-bold mb-2 text-white">Biochar: Tecnología milenaria</h3>
+                <h3 className="text-2xl font-bold mb-2 text-white">Biochar: Tecnología milenaria</h3>
                 <p className="text-xl text-white/90">Una forma ancestral de capturar carbono y regenerar suelos</p>
               </div>
             </div>
@@ -210,7 +210,7 @@ const SustainabilitySection = () => {
             
             <div className="caption-container absolute bottom-0 left-0 w-full p-8 opacity-0 transform translate-y-10">
               <div className="max-w-3xl mx-auto">
-                <h3 className="text-3xl font-bold mb-2 text-white">Lo que para muchos es desecho,  </h3>
+                <h3 className="text-2xl font-bold mb-2 text-white">Lo que para muchos es desecho,  </h3>
                 <p className="text-xl text-white/90">para SIRIUS es un tesoro: del residuo al renacimiento a través de la pirólisis</p>
               </div>
             </div>
@@ -227,7 +227,7 @@ const SustainabilitySection = () => {
       <ScrollAnimation direction="up" delay={0.3} className="mt-16">
         <div className="text-center max-w-4xl mx-auto">
           <div className="bg-white/60 px-6 py-4 rounded-lg shadow-sm inline-block">
-            <h3 className="text-2xl font-bold mb-4 text-gray-800">
+            <h3 className="text-xl font-bold mb-4 text-gray-800">
               Una sinergia única entre pirolisis milenaria.
             </h3>
             <p className="text-xl text-gray-700 mb-0">

@@ -222,6 +222,8 @@ const ZoomBackgroundSection = () => {
 
       {/* Overlay */}
       <div ref={overlayRef} className="absolute inset-0 flex flex-col items-center justify-start opacity-0 p-2 sm:p-4 font-sans">
+        {/* Gradiente inferior para transición suave */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
         {/* Título superior */}
         <motion.div
           className="mt-20 sm:mt-32 text-center px-4"

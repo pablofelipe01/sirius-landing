@@ -10,9 +10,9 @@ if (typeof window !== 'undefined') {
 }
 
 const VideoProductsSection = () => {
-  const sectionRef = useRef(null);
-  const videoRef = useRef(null);
-  const ctaRef = useRef(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [videoPlayed, setVideoPlayed] = useState(false);
   const [scrollEnabled, setScrollEnabled] = useState(false);
@@ -120,7 +120,7 @@ const VideoProductsSection = () => {
       
       {/* Título y descripción */}
       <div className="absolute top-1/4 left-0 w-full text-center px-4">
-        <h2 className="text-5xl font-bold mb-4 text-white">
+        <h2 className="text-4xl font-bold mb-4 text-white">
           Transforma tu agricultura
         </h2>
         <p className="text-xl text-white/90 max-w-2xl mx-auto">
