@@ -14,12 +14,17 @@ if (typeof window !== 'undefined') {
 }
 
 const SustainabilitySection = () => {
-  const sectionRef = useRef(null);
-  const containerRef = useRef(null);
-  const panelsRef = useRef([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    if (!sectionRef.current || !containerRef.current) return;
+    // Verificar que todos los elementos necesarios existen
+    if (!sectionRef.current || !containerRef.current || !panelsRef.current || panelsRef.current.length === 0) return;
+    
+    // Verificar que todos los paneles tienen elementos válidos
+    const validPanels = panelsRef.current.filter(panel => panel && panel.parentNode);
+    if (validPanels.length === 0) return;
     
     const ctx = gsap.context(() => {
       // Configurar el desplazamiento horizontal con scroll vertical
@@ -31,69 +36,85 @@ const SustainabilitySection = () => {
           pin: true,
           scrub: 0.5,
           start: "top top",
-          end: () => `+=${containerRef.current.offsetWidth * (panelsRef.current.length - 1)}`,
+          end: () => `+=${containerRef.current?.offsetWidth ? containerRef.current.offsetWidth * (panelsRef.current.length - 1) : 0}`,
           invalidateOnRefresh: true,
         }
       });
       
       // Animaciones para cada panel cuando está en el centro
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       panelsRef.current.forEach((panel, i) => {
+        if (!panel) return;
+
+        const captionContainer = panel.querySelector('.caption-container');
+        if (!captionContainer) return;
+
         ScrollTrigger.create({
           trigger: panel,
           containerAnimation: scrollTween,
           start: "center right",
           end: "center center",
           onEnter: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out"
-            });
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+            }
           },
           onLeave: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 0,
-              y: 50,
-              duration: 0.5,
-              ease: "power2.in"
-            });
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 0,
+                y: 50,
+                duration: 0.5,
+                ease: "power2.in"
+              });
+            }
           },
           onEnterBack: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out"
-            });
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+            }
           },
           onLeaveBack: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 0,
-              y: 50,
-              duration: 0.5,
-              ease: "power2.in"
-            });
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 0,
+                y: 50,
+                duration: 0.5,
+                ease: "power2.in"
+              });
+            }
           }
         });
       });
       
       // Indicadores en pantalla (puntos)
-      const indicators = document.querySelectorAll('.gallery-indicator');
+      const indicators = gsap.utils.toArray('.gallery-indicator');
       panelsRef.current.forEach((panel, i) => {
+        if (!panel) return;
+
         ScrollTrigger.create({
           trigger: panel,
           containerAnimation: scrollTween,
           start: "center 60%",
           end: "center 40%",
           onToggle: self => {
-            if (self.isActive) {
+            if (self.isActive && indicators[i]) {
               indicators.forEach((ind, idx) => {
-                if (idx === i) {
-                  ind.classList.add('active');
-                } else {
-                  ind.classList.remove('active');
+                if (ind && typeof ind === 'object' && 'classList' in ind && ind instanceof HTMLElement && ind.parentNode) {
+                  if (idx === i) {
+                    ind.classList.add('active');
+                  } else {
+                    ind.classList.remove('active');
+                  }
                 }
               });
             }
@@ -102,7 +123,11 @@ const SustainabilitySection = () => {
       });
     }, sectionRef);
     
-    return () => ctx.revert();
+    return () => {
+      // Limpiar todas las animaciones de ScrollTrigger antes de revertir el contexto
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ctx.revert();
+    };
   }, []);
 
   return (

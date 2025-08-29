@@ -56,22 +56,22 @@ const HeroSection = () => {
       </div>
       
       {/* Contenido principal */}
-      <div className="relative z-20 container mx-auto px-4 pt-32 pb-20 md:pt-40 md:pb-32 text-center">
+      <div className="relative z-20 container mx-auto px-4 pt-20 sm:pt-32 pb-16 sm:pb-20 text-center">
         <ScrollAnimation direction="up" delay={0.3}>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Despierta tu alma: Regenera el mundo
           </h1>
         </ScrollAnimation>
         
         <ScrollAnimation direction="up" delay={0.5}>
-          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
             Sirius es más que una marca; es un movimiento vivo que une el alma humana con la tierra.
           </p>
         </ScrollAnimation>
         
         {/* Scroll to explore */}
         <motion.div 
-          className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-center"
+          className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 text-center"
           animate={{ y: [0, -5, 0] }}
           transition={{ 
             repeat: Infinity, 
@@ -82,12 +82,12 @@ const HeroSection = () => {
           <a 
             href="#movimiento" 
             aria-label="Descubre el movimiento"
-            className="flex flex-col items-center gap-3 text-white/80 hover:text-white transition-colors"
+            className="flex flex-col items-center gap-2 sm:gap-3 text-white/80 hover:text-white transition-colors"
           >
-            <span className="text-base md:text-lg font-medium">Scroll to explore</span>
+            <span className="text-sm sm:text-base md:text-lg font-medium">Scroll to explore</span>
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
-              className="h-7 w-7" 
+              className="h-6 w-6 sm:h-7 sm:w-7" 
               fill="none" 
               viewBox="0 0 24 24" 
               stroke="currentColor"

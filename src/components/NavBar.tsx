@@ -46,7 +46,7 @@ const NavBar = () => {
                 alt="Sirius Regenerative" 
                 width={150} 
                 height={50} 
-                className="h-auto max-w-[150px] drop-shadow-md" 
+                className="h-auto max-w-[120px] sm:max-w-[150px] drop-shadow-md" 
               />
             </motion.div>
           </Link>

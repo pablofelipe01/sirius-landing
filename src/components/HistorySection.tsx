@@ -245,27 +245,27 @@ const HistorySection = () => {
         <div className="absolute inset-0 bg-slate-900/10"></div>
       </div>
 
-      {/* Elementos decorativos */}
-      <div className="absolute top-10 right-10 opacity-5 pointer-events-none hidden lg:block">
+      {/* Elementos decorativos - solo en desktop grande */}
+      <div className="absolute top-10 right-10 opacity-5 pointer-events-none hidden xl:block">
         <div className="w-64 h-64 border border-green-400/30 rounded-full animate-pulse"></div>
         <div className="absolute inset-8 border border-green-300/20 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
       </div>
-      
-      <div className="absolute bottom-10 left-10 opacity-5 pointer-events-none hidden lg:block">
+
+      <div className="absolute bottom-10 left-10 opacity-5 pointer-events-none hidden xl:block">
         <div className="w-48 h-48 border border-green-400/30 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-20">
+      <div className="container mx-auto px-4 sm:px-6 relative z-20">
         {/* Título principal */}
-        <div ref={titleRef} className="text-center mb-24 relative">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light mb-8 text-white tracking-tight">
+        <div ref={titleRef} className="text-center mb-12 sm:mb-16 md:mb-24 relative">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-light mb-4 sm:mb-6 md:mb-8 text-white tracking-tight">
             Nuestra
             <span className="block font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-green-500 to-emerald-400">
               Historia
             </span>
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-emerald-400 mx-auto mb-8 rounded-full"></div>
-          <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+          <div className="w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-gradient-to-r from-green-400 to-emerald-400 mx-auto mb-6 sm:mb-8 rounded-full"></div>
+          <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed font-light px-4">
             Desde 2018, un viaje de innovación continua en pirólisis y biotecnología 
             que ha revolucionado la agricultura regenerativa.
           </p>
@@ -273,47 +273,50 @@ const HistorySection = () => {
 
         {/* Timeline */}
         <div className="relative max-w-5xl mx-auto">
-          {/* Línea de tiempo central */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-green-400/50 via-green-500/30 to-green-400/50"></div>
-          
-          <div className="space-y-24">
+          {/* Línea de tiempo central - solo visible en desktop */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-green-400/50 via-green-500/30 to-green-400/50"></div>
+
+          <div className="space-y-12 sm:space-y-16 md:space-y-24">
             {historyMilestones.map((milestone, index) => (
               <div
                 key={milestone.id}
                 ref={(el) => { storyRefs.current[index] = el; }}
-                className={`relative flex items-center ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                className={`relative flex flex-col md:flex-row items-center ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
-                {/* Punto de la timeline */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-4 border-white shadow-lg z-10">
+                {/* Punto de la timeline - solo visible en desktop */}
+                <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-4 border-white shadow-lg z-10">
                   <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-40"></div>
                 </div>
 
                 {/* Contenido del milestone */}
-                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-16' : 'pl-16'}`}>
+                <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}>
                   <div className="group hover:scale-105 transition-all duration-300 cursor-pointer">
-                    <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-green-400/40 transition-all duration-300 hover:shadow-2xl hover:shadow-green-400/20">
+                    <div className="bg-white/10 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-white/20 hover:border-green-400/40 transition-all duration-300 hover:shadow-2xl hover:shadow-green-400/20">
                       {/* Icono */}
-                      <div className={`inline-flex items-center justify-center w-20 h-20 mb-6 rounded-2xl bg-gradient-to-br from-green-400/20 to-emerald-500/20 border border-green-400/30`}>
-                        <span className="text-3xl">{milestone.icon}</span>
+                      <div className={`inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-green-400/20 to-emerald-500/20 border border-green-400/30`}>
+                        <span className="text-2xl sm:text-3xl">{milestone.icon}</span>
                       </div>
-                      
-                      <div className="mb-4">
-                        <span className="inline-block px-4 py-2 text-sm font-semibold text-green-400 bg-green-400/10 rounded-full border border-green-400/20 mb-3">
+
+                      <div className="mb-3 sm:mb-4">
+                        <span className="inline-block px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-semibold text-green-400 bg-green-400/10 rounded-full border border-green-400/20 mb-2 sm:mb-3">
                           {milestone.year}
                         </span>
-                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-green-400 transition-colors duration-300">
+                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3 group-hover:text-green-400 transition-colors duration-300">
                           {milestone.title}
                         </h3>
                       </div>
-                      
-                      <p className="text-white/80 leading-relaxed font-light">
+
+                      <p className="text-sm sm:text-base text-white/80 leading-relaxed font-light">
                         {milestone.description}
                       </p>
                     </div>
                   </div>
                 </div>
+
+                {/* Espaciador para desktop */}
+                <div className="hidden md:block w-5/12"></div>
               </div>
             ))}
           </div>

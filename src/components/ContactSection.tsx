@@ -96,20 +96,20 @@ const ContactSection = () => {
             <span className="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold mb-4">
               CONTACTO
             </span>
-            <h2 className="text-4xl font-bold mb-4 text-gray-800">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-800">
               Conéctate con nosotros
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-4">
               ¿Quieres saber más sobre nuestros productos o servicios? Estamos aquí para ayudarte 
               a regenerar tus suelos y potenciar tus cultivos.
             </p>
           </div>
         </ScrollAnimation>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           {/* Formulario de contacto */}
-          <ScrollAnimation direction="left" className="bg-white rounded-xl shadow-lg p-8">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800">Envíanos un mensaje</h3>
+          <ScrollAnimation direction="left" className="bg-white rounded-xl shadow-lg p-6 sm:p-8">
+            <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Envíanos un mensaje</h3>
             
             {isSubmitted ? (
               <motion.div
@@ -134,7 +134,7 @@ const ContactSection = () => {
                 )}
                 
                 <div>
-                  <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+                  <label htmlFor="name" className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Nombre completo
                   </label>
                   <input
@@ -144,14 +144,14 @@ const ContactSection = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors text-sm sm:text-base"
                     placeholder="Tu nombre"
                   />
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
-                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                       Correo electrónico
                     </label>
                     <input
@@ -161,13 +161,13 @@ const ContactSection = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors text-sm sm:text-base"
                       placeholder="tu@email.com"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">
+                    <label htmlFor="phone" className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                       Teléfono (opcional)
                     </label>
                     <input
@@ -176,14 +176,14 @@ const ContactSection = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors text-sm sm:text-base"
                       placeholder="+123 456 7890"
                     />
                   </div>
                 </div>
                 
                 <div>
-                  <label htmlFor="subject" className="block text-gray-700 font-medium mb-2">
+                  <label htmlFor="subject" className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Asunto
                   </label>
                   <select
@@ -191,7 +191,7 @@ const ContactSection = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors text-sm sm:text-base"
                   >
                     <option value="Información general">Información general</option>
                     <option value="Compras">Compras</option>
@@ -202,7 +202,7 @@ const ContactSection = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
+                  <label htmlFor="message" className="block text-gray-700 font-medium mb-2 text-sm sm:text-base">
                     Mensaje
                   </label>
                   <textarea
@@ -212,7 +212,7 @@ const ContactSection = () => {
                     onChange={handleChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors text-sm sm:text-base resize-vertical"
                     placeholder="¿Cómo podemos ayudarte?"
                   ></textarea>
                 </div>
@@ -242,82 +242,82 @@ const ContactSection = () => {
           
           {/* Información de contacto */}
           <ScrollAnimation direction="right" className="flex flex-col justify-between">
-            <div className="bg-green-50 rounded-xl p-8 mb-8">
-              <h3 className="text-2xl font-bold mb-6 text-gray-800">Información de contacto</h3>
+            <div className="bg-green-50 rounded-xl p-6 sm:p-8 mb-6 sm:mb-8">
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Información de contacto</h3>
               
-              <div className="space-y-4">
+              <div className="space-y-4 sm:space-y-6">
                 <div className="flex items-start">
-                  <div className="bg-green-100 p-3 rounded-lg text-green-600 mr-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <div className="bg-green-100 p-2 sm:p-3 rounded-lg text-green-600 mr-3 sm:mr-4 flex-shrink-0">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-700">Dirección</h4>
-                    <p className="text-gray-600">Kl-7 Via Cabuyaro Barranca de Upía</p>
+                    <h4 className="font-bold text-gray-700 text-sm sm:text-base">Dirección</h4>
+                    <p className="text-gray-600 text-sm sm:text-base">Kl-7 Via Cabuyaro Barranca de Upía</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-green-100 p-3 rounded-lg text-green-600 mr-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <div className="bg-green-100 p-2 sm:p-3 rounded-lg text-green-600 mr-3 sm:mr-4 flex-shrink-0">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-700">Teléfono</h4>
-                    <p className="text-gray-600">+57 320 865 3324</p>
+                    <h4 className="font-bold text-gray-700 text-sm sm:text-base">Teléfono</h4>
+                    <p className="text-gray-600 text-sm sm:text-base">+57 320 865 3324</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-green-100 p-3 rounded-lg text-green-600 mr-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <div className="bg-green-100 p-2 sm:p-3 rounded-lg text-green-600 mr-3 sm:mr-4 flex-shrink-0">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-700">Correo</h4>
-                    <p className="text-gray-600">marketingsirius@siriusregenerative.com</p>
+                    <h4 className="font-bold text-gray-700 text-sm sm:text-base">Correo</h4>
+                    <p className="text-gray-600 text-sm sm:text-base break-all">marketingsirius@siriusregenerative.com</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-green-100 p-3 rounded-lg text-green-600 mr-4">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <div className="bg-green-100 p-2 sm:p-3 rounded-lg text-green-600 mr-3 sm:mr-4 flex-shrink-0">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-700">Horario</h4>
-                    <p className="text-gray-600">Lunes a Viernes: 9am - 6pm</p>
-                    <p className="text-gray-600">Sábados: 9am - 1pm</p>
+                    <h4 className="font-bold text-gray-700 text-sm sm:text-base">Horario</h4>
+                    <p className="text-gray-600 text-sm sm:text-base">Lunes a Viernes: 9am - 6pm</p>
+                    <p className="text-gray-600 text-sm sm:text-base">Sábados: 9am - 1pm</p>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-green-600 rounded-xl p-8 text-white">
-              <h3 className="text-xl font-bold mb-4">Síguenos en redes sociales</h3>
-              <div className="flex space-x-4">
+            <div className="bg-green-600 rounded-xl p-6 sm:p-8 text-white">
+              <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Síguenos en redes sociales</h3>
+              <div className="flex space-x-3 sm:space-x-4">
                 <a 
                   href="https://www.instagram.com/sirius.colombia" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="bg-white/20 hover:bg-white/30 p-3 rounded-full transition-colors"
+                  className="bg-white/20 hover:bg-white/30 p-2 sm:p-3 rounded-full transition-colors"
                   aria-label="Instagram"
                 >
-                  <FaInstagram className="w-6 h-6" />
+                  <FaInstagram className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 <a 
                   href="https://www.linkedin.com/company/sirius-regenerative" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="bg-white/20 hover:bg-white/30 p-3 rounded-full transition-colors"
+                  className="bg-white/20 hover:bg-white/30 p-2 sm:p-3 rounded-full transition-colors"
                   aria-label="LinkedIn"
                 >
-                  <FaLinkedin className="w-6 h-6" />
+                  <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 {/* <a 
                   href="https://wa.me/573132121019" 
@@ -330,7 +330,7 @@ const ContactSection = () => {
                 </a> */}
               </div>
               
-              <p className="mt-6 text-white/80">
+              <p className="mt-4 sm:mt-6 text-white/80 text-sm sm:text-base">
                 Únete a nuestra comunidad y mantente actualizado sobre nuestras últimas novedades, consejos 
                 de agricultura regenerativa y ofertas especiales.
               </p>

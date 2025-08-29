@@ -12,9 +12,9 @@ if (typeof window !== 'undefined') {
 }
 
 const HorizontalGallerySection = () => {
-  const sectionRef = useRef(null);
-  const containerRef = useRef(null);
-  const panelsRef = useRef([]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
   
   const galleryImages = [
     {
@@ -40,7 +40,12 @@ const HorizontalGallerySection = () => {
   ];
 
   useEffect(() => {
+    // Verificar que todos los elementos necesarios existen
     if (!sectionRef.current || !containerRef.current) return;
+    
+    // Verificar que todos los paneles tienen elementos válidos
+    const validPanels = panelsRef.current.filter(panel => panel && panel.parentNode);
+    if (validPanels.length === 0) return;
     
     const ctx = gsap.context(() => {
       // Configurar el desplazamiento horizontal con scroll vertical
@@ -52,69 +57,86 @@ const HorizontalGallerySection = () => {
           pin: true, // Fijar el contenedor durante el scroll
           scrub: 0.5, // Suavizar el movimiento
           start: "top top",
-          end: () => `+=${containerRef.current.offsetWidth * (galleryImages.length - 1)}`,
+          end: () => `+=${containerRef.current?.offsetWidth ? containerRef.current.offsetWidth * (galleryImages.length - 1) : 0}`,
           invalidateOnRefresh: true, // Recalcular en caso de cambio de tamaño
         }
       });
       
       // Animaciones para cada panel cuando está en el centro
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       panelsRef.current.forEach((panel, i) => {
+        if (!panel) return;
+
         ScrollTrigger.create({
           trigger: panel,
           containerAnimation: scrollTween,
           start: "center right",
           end: "center center",
           onEnter: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out"
-            });
+            const captionContainer = panel.querySelector('.caption-container');
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+            }
           },
           onLeave: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 0,
-              y: 50,
-              duration: 0.5,
-              ease: "power2.in"
-            });
+            const captionContainer = panel.querySelector('.caption-container');
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 0,
+                y: 50,
+                duration: 0.5,
+                ease: "power2.in"
+              });
+            }
           },
           onEnterBack: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              ease: "power2.out"
-            });
+            const captionContainer = panel.querySelector('.caption-container');
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: "power2.out"
+              });
+            }
           },
           onLeaveBack: () => {
-            gsap.to(panel.querySelector('.caption-container'), {
-              opacity: 0,
-              y: 50,
-              duration: 0.5,
-              ease: "power2.in"
-            });
+            const captionContainer = panel.querySelector('.caption-container');
+            if (captionContainer && captionContainer.parentNode) {
+              gsap.to(captionContainer, {
+                opacity: 0,
+                y: 50,
+                duration: 0.5,
+                ease: "power2.in"
+              });
+            }
           }
         });
       });
       
       // Indicadores en pantalla (puntos)
-      const indicators = document.querySelectorAll('.gallery-indicator');
+      const indicators = gsap.utils.toArray('.gallery-indicator');
       panelsRef.current.forEach((panel, i) => {
+        if (!panel) return;
+
         ScrollTrigger.create({
           trigger: panel,
           containerAnimation: scrollTween,
           start: "center 60%",
           end: "center 40%",
           onToggle: self => {
-            if (self.isActive) {
+            if (self.isActive && indicators[i]) {
               indicators.forEach((ind, idx) => {
-                if (idx === i) {
-                  ind.classList.add('active');
-                } else {
-                  ind.classList.remove('active');
+                if (ind && typeof ind === 'object' && 'classList' in ind && ind instanceof HTMLElement && ind.parentNode) {
+                  if (idx === i) {
+                    ind.classList.add('active');
+                  } else {
+                    ind.classList.remove('active');
+                  }
                 }
               });
             }
@@ -123,7 +145,11 @@ const HorizontalGallerySection = () => {
       });
     }, sectionRef);
     
-    return () => ctx.revert();
+    return () => {
+      // Limpiar todas las animaciones de ScrollTrigger antes de revertir el contexto
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ctx.revert();
+    };
   }, [galleryImages.length]);
 
   return (
@@ -151,7 +177,11 @@ const HorizontalGallerySection = () => {
         {galleryImages.map((image, index) => (
           <div
             key={index}
-            ref={el => { panelsRef.current[index] = el; }}
+            ref={(el) => {
+              if (panelsRef.current) {
+                panelsRef.current[index] = el;
+              }
+            }}
             className="gallery-panel relative flex-shrink-0 w-full h-full flex items-center justify-center"
           >
             {/* Contenido del panel */}
