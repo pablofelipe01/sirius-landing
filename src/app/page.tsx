@@ -1,11 +1,11 @@
 import HeroSection from '@/components/HeroSection';
 import HistorySection from '@/components/HistorySection';
 import ProductsSection from '@/components/ProductsSection';
-import SustainabilitySection from '@/components/SustainabilitySection';
-import GallerySection from '@/components/GallerySection';
 import ZoomBackgroundSection from '@/components/ZoomBackgroundSection';
-import TeamSection from '@/components/TeamSection';
-import ContactSection from '@/components/ContactSection';
+import BiofabricaSection from '@/components/BiofabricaNew';
+import ImpactoSection from '@/components/ImpactoNew';
+import InvolucrateSection from '@/components/InvolucrateNew';
+import ContactoFinalSection from '@/components/ContactoNew';
 
 export default function Home() {
   return (
@@ -14,10 +14,10 @@ export default function Home() {
       <HistorySection />
       <ZoomBackgroundSection /> 
       <ProductsSection />
-      <SustainabilitySection />
-      <GallerySection />
-      <TeamSection />
-      <ContactSection />
+      <BiofabricaSection />
+      <ImpactoSection />
+      <InvolucrateSection />
+      <ContactoFinalSection />
     </main>
   );
 }
