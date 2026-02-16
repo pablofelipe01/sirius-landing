@@ -1,113 +1,88 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ScrollAnimation from '@/components/ScrollAnimation';
 
+interface TeamMember {
+  id: string | number;
+  name: string;
+  role: string;
+  bio?: string;
+  imageSrc?: string;
+  status?: string;
+}
+
+interface ApiResponse {
+  success: boolean;
+  data?: Array<{
+    id: string;
+    name: string;
+    role: string;
+    status: string;
+  }>;
+  error?: string;
+}
+
 const TeamPage = () => {
-  // Datos ficticios del equipo - reemplazar con información real
-  const teamMembers = [
-    {
-      id: 1,
-      name: 'Martín',
-      role: 'Fundador y CEO',
-      bio: 'Sirius es un sueño hecho realidad. Surgió de un proceso profundo de sanación interior y me dio la oportunidad de alinear mi vida con un propósito verdadero. Hoy, Sirius es un vehículo de expansión para muchos: una puerta hacia el liderazgo auténtico que nace del corazón.',
-      imageSrc: '/martin.png',
-    },
-    {
-      id: 2,
-      name: 'Pablo',
-      role: 'CTO',
-      bio: 'Publicista y Matemático con experiencia desde 1984, cuando escribió su primera línea de código. Experto en IA y machine learning, combinando análisis de datos y creatividad para desarrollar soluciones innovadoras.',
-      imageSrc: '/pablo.png',
-    },
-    {
-      id: 3,
-      name: 'Alejo',
-      role: 'CFO',
-      bio: 'Guío la parte financiera con visión y claridad. Aquí integro estructura y alma, ayudando a que Sirius crezca con propósito, orden y sostenibilidad económica regenerativa.',
-      imageSrc: '/alejo.png',
-    },
-    {
-      id: 4,
-      name: 'Lina',
-      role: 'Innovación',
-      bio: 'En Sirius alineo visión y alma. Como asesora estratégica, estructuro ideas vivas que conectan lo espiritual con el mercado, honrando a GAIA y sanando desde el ser.',
-      imageSrc: '/lina.png',
-    },
-    {
-      id: 5,
-      name: 'Juan Ma',
-      role: 'Marketing',
-      bio: 'En Sirius, comunicamos con el alma. Desde el mercadeo, creo estrategias que inspiran, conecto con la naturaleza y hago visible lo invisible, alineando mi propósito con el todo.',
-      imageSrc: '/juan.png',
-    },
-     {
-      id: 8,
-      name: 'Lu',
-      role: 'Psicologa',
-      bio: 'En Sirius alineo visión y alma. Como asesora estratégica, estructuro ideas vivas que conectan lo espiritual con el mercado, honrando a GAIA y sanando desde el ser.',
-      imageSrc: '/ser3.png',
-    },
-     {
-      id: 11,
-      name: 'Fer',
-      role: 'Administración',
-      bio: 'Organizo y acompaño tareas administrativas con alegría. Mi rol es dar soporte, cuidar los detalles y sostener al equipo con responsabilidad, armonía y mucho corazón.',
-      imageSrc: '/ser6.png',
-    },
-    {
-      id: 6,
-      name: 'David',
-      role: 'Tech',
-      bio: 'Diseño herramientas digitales que ayudan al equipo. En Sirius aprendí a desarrollar tecnología con alma, conectando personas, procesos y naturaleza desde una mirada regenerativa.',
-      imageSrc: '/ser1.png',
-    },
-    {
-      id: 7,
-      name: 'Mario',
-      role: 'Pirólisis',
-      bio: 'Opero la planta con responsabilidad. El proceso de pirólisis me enseñó a ser constante, eficiente y consciente del poder regenerador de cada acción que realizamos.',
-      imageSrc: '/ser2.png',
-    },
-   
-    {
-      id: 9,
-      name: 'Pavy',
-      role: 'Pirólisis',
-      bio: 'Especialista en huella de carbono, Miguel asegura que todas nuestras operaciones contribuyan positivamente a la mitigación del cambio climático y a la regeneración de ecosistemas.',
-      imageSrc: '/ser4.png',
-    },
-    {
-      id: 10,
-      name: 'Alexa',
-      role: 'Lab',
-      bio: 'Produzco hongos con amor y precisión. Este trabajo me ha permitido descubrir talentos, crecer interiormente y contribuir a la regeneración desde lo invisible y esencial.',
-      imageSrc: '/ser5.png',
-    },
-   
-    {
-      id: 12,
-      name: 'Angie Yo',
-      role: 'Administración',
-      bio: 'En Sirius, cada rol me transformó: limpiando, honré el espacio; en el laboratorio, cuidé la vida; y en lo administrativo, florecí en equipo y propósito.',
-      imageSrc: '/ser7.png',
-    },
-    {
-      id: 13,
-      name: 'Yeison',
-      role: 'Pirólisis',
-      bio: 'Asisto en la pirólisis con energía y atención. Aquí he crecido como persona, aprendiendo a transformar residuos en vida y a confiar en mi proceso.',
-      imageSrc: '/ser8.png',
-    },
-    {
-      id: 13,
-      name: 'Santi',
-      role: 'Pirólisis',
-      bio: 'Lidero la planta desde lo humano y técnico. Mi rol es guiar, escuchar y sostener procesos que producen biochar y transforman vidas con propósito regenerativo.',
-      imageSrc: '/santi.png',
-    },
-  ];
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const response = await fetch('/api/team-members', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          cache: 'no-store',
+        });
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`);
+        }
+
+        const result: ApiResponse = await response.json();
+
+        if (!result.success || !result.data) {
+          setError('No pudimos cargar los miembros del equipo.');
+          setTeamMembers([]);
+          return;
+        }
+
+        const activeMembers = result.data;
+        
+        if (activeMembers && activeMembers.length > 0) {
+          // Mapear la estructura de API a la estructura del componente
+          const mappedMembers: TeamMember[] = activeMembers.map(member => ({
+            id: member.id,
+            name: member.name,
+            role: member.role,
+            status: member.status,
+            // Usar un placeholder de imagen por defecto
+            imageSrc: `/avatar-placeholder.png`,
+          }));
+          
+          setTeamMembers(mappedMembers);
+        } else {
+          // No hay miembros activos - dejar vacío
+          setTeamMembers([]);
+        }
+      } catch (err) {
+        console.error('Error fetching team members:', err);
+        setError('No pudimos cargar los miembros del equipo de la base de datos.');
+        // No usar fallback - dejar vacío
+        setTeamMembers([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTeamMembers();
+  }, []);
 
   return (
     <main>
@@ -132,33 +107,68 @@ const TeamPage = () => {
                 En Sirius Regenerative creemos que el trabajo en equipo, la pasión y el compromiso 
                 son la base para crear soluciones que respeten y fortalezcan los ecosistemas.
               </p>
+              {error && (
+                <div className="mt-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-800 rounded-lg">
+                  <p className="text-sm">{error}</p>
+                </div>
+              )}
+              <p className="text-sm text-gray-500 mt-4">
+                {teamMembers.length > 0 && `Mostrando ${teamMembers.length} miembros activos del equipo`}
+              </p>
             </div>
           </ScrollAnimation>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <ScrollAnimation 
-                key={member.id} 
-                direction="up" 
-                delay={0.1 * index}
-                className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2"
-              >
-                <div className="relative h-80">
-                  <Image 
-                    src={member.imageSrc} 
-                    alt={member.name} 
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-1 text-gray-800">{member.name}</h3>
-                  <p className="text-green-600 font-medium mb-4">{member.role}</p>
-                  <p className="text-gray-600">{member.bio}</p>
-                </div>
-              </ScrollAnimation>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+              <p className="ml-4 text-gray-600">Cargando miembros del equipo...</p>
+            </div>
+          ) : teamMembers.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600 text-lg">No hay miembros del equipo disponibles en este momento.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {teamMembers.map((member, index) => (
+                <ScrollAnimation 
+                  key={member.id} 
+                  direction="up" 
+                  delay={0.1 * index}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2"
+                >
+                  <div className="relative h-80 bg-gray-200">
+                    {member.imageSrc && member.imageSrc !== '/avatar-placeholder.png' ? (
+                      <Image 
+                        src={member.imageSrc} 
+                        alt={member.name} 
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          // Manejo de error en la carga de imagen
+                          const img = e.currentTarget as HTMLImageElement;
+                          img.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-100 to-green-200">
+                        <div className="text-center">
+                          <div className="text-5xl mb-2">👤</div>
+                          <p className="text-green-700 font-medium">{member.name.charAt(0)}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-1 text-gray-800">{member.name}</h3>
+                    <p className="text-green-600 font-medium mb-4">{member.role}</p>
+                    <p className="text-gray-600 text-sm">
+                      {member.bio || 'Miembro activo del equipo Sirius Regenerative'}
+                    </p>
+                  </div>
+                </ScrollAnimation>
+              ))}
+            </div>
+          )}
         </div>
       </section>
       
@@ -168,7 +178,7 @@ const TeamPage = () => {
             <ScrollAnimation direction="left">
               <div className="relative rounded-xl overflow-hidden shadow-xl h-96">
                 <Image 
-                  src="/foto7.png" 
+                  src="/foto10.png" 
                   alt="Equipo trabajando juntos" 
                   fill
                   className="object-cover"
