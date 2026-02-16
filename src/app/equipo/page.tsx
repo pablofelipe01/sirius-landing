@@ -20,6 +20,7 @@ interface ApiResponse {
     name: string;
     role: string;
     status: string;
+    photoUrl?: string;
   }>;
   error?: string;
 }
@@ -62,8 +63,7 @@ const TeamPage = () => {
             name: member.name,
             role: member.role,
             status: member.status,
-            // Usar un placeholder de imagen por defecto
-            imageSrc: `/avatar-placeholder.png`,
+            imageSrc: member.photoUrl || undefined,
           }));
           
           setTeamMembers(mappedMembers);
@@ -89,6 +89,7 @@ const TeamPage = () => {
       <div className="bg-[#0154AC] text-white py-20 px-4">
         <div className="container mx-auto text-center">
           <ScrollAnimation direction="up">
+            <br /><br />
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Nuestro Equipo</h1>
             <p className="text-xl max-w-3xl mx-auto">
               Conoce a las personas detrás de Sirius Regenerative, unidas por la pasión
@@ -112,9 +113,6 @@ const TeamPage = () => {
                   <p className="text-sm">{error}</p>
                 </div>
               )}
-              <p className="text-sm text-gray-500 mt-4">
-                {teamMembers.length > 0 && `Mostrando ${teamMembers.length} miembros activos del equipo`}
-              </p>
             </div>
           </ScrollAnimation>
           
@@ -137,23 +135,20 @@ const TeamPage = () => {
                   className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:-translate-y-2"
                 >
                   <div className="relative h-80 bg-gray-200">
-                    {member.imageSrc && member.imageSrc !== '/avatar-placeholder.png' ? (
+                    {member.imageSrc ? (
                       <Image 
                         src={member.imageSrc} 
                         alt={member.name} 
                         fill
                         className="object-cover"
-                        onError={(e) => {
-                          // Manejo de error en la carga de imagen
-                          const img = e.currentTarget as HTMLImageElement;
-                          img.style.display = 'none';
-                        }}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        unoptimized
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#BCD7EA] to-[#ECF1F4]">
                         <div className="text-center">
-                          <div className="text-5xl mb-2">👤</div>
-                          <p className="text-[#0154AC] font-medium">{member.name.charAt(0)}</p>
+                          <div className="text-6xl mb-2 text-[#0154AC]/40">👤</div>
+                          <p className="text-[#0154AC] text-2xl font-bold">{member.name.charAt(0)}</p>
                         </div>
                       </div>
                     )}

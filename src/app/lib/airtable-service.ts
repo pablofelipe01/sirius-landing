@@ -3,6 +3,21 @@
  * Base: Sirius Nomina Core
  */
 
+interface AirtableAttachment {
+  id: string;
+  url: string;
+  filename: string;
+  size: number;
+  type: string;
+  width?: number;
+  height?: number;
+  thumbnails?: {
+    small?: { url: string; width: number; height: number };
+    large?: { url: string; width: number; height: number };
+    full?: { url: string; width: number; height: number };
+  };
+}
+
 interface TeamMember {
   id: string;
   fields: {
@@ -15,7 +30,7 @@ interface TeamMember {
     'Numero Documento'?: string;
     'Fecha de nacimiento'?: string;
     'Dirección'?: string;
-    'Foto URL'?: string;
+    'Foto Perfil'?: AirtableAttachment[];
     'Areas'?: string[];
   };
   createdTime: string;
@@ -80,7 +95,7 @@ export const getActiveTeamMembers = async (): Promise<ProcessedTeamMember[]> => 
         'Authorization': `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 3600 }, // Cache for 1 hour
+      cache: 'no-store', // Don't cache - Airtable attachment URLs expire in ~2 hours
     });
 
     if (!response.ok) {
@@ -103,6 +118,17 @@ export const getActiveTeamMembers = async (): Promise<ProcessedTeamMember[]> => 
           roleName = rolesData.length > 0 ? rolesData[0] : 'Sin rol asignado';
         }
 
+        // Extract photo URL from attachment field
+        let photoUrl: string | undefined;
+        const attachments = fields['Foto Perfil'];
+        if (attachments && attachments.length > 0) {
+          const attachment = attachments[0];
+          // Prefer large thumbnail (512px), fall back to full URL
+          photoUrl = attachment.thumbnails?.large?.url
+            || attachment.thumbnails?.full?.url
+            || attachment.url;
+        }
+
         return {
           id: record.id,
           name: fields['Nombre completo'] || 'Sin nombre',
@@ -112,7 +138,7 @@ export const getActiveTeamMembers = async (): Promise<ProcessedTeamMember[]> => 
           documentNumber: fields['Numero Documento'],
           birthDate: fields['Fecha de nacimiento'],
           address: fields['Dirección'],
-          photoUrl: fields['Foto URL'],
+          photoUrl,
           status: fields['Estado de actividad'],
         };
       })
