@@ -86,7 +86,7 @@ const TeamPage = () => {
 
   return (
     <main>
-      <div className="bg-green-700 text-white py-20 px-4">
+      <div className="bg-[#0154AC] text-white py-20 px-4">
         <div className="container mx-auto text-center">
           <ScrollAnimation direction="up">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">Nuestro Equipo</h1>
@@ -120,7 +120,7 @@ const TeamPage = () => {
           
           {isLoading ? (
             <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0154AC]"></div>
               <p className="ml-4 text-gray-600">Cargando miembros del equipo...</p>
             </div>
           ) : teamMembers.length === 0 ? (
@@ -150,17 +150,17 @@ const TeamPage = () => {
                         }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-100 to-green-200">
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#BCD7EA] to-[#ECF1F4]">
                         <div className="text-center">
                           <div className="text-5xl mb-2">👤</div>
-                          <p className="text-green-700 font-medium">{member.name.charAt(0)}</p>
+                          <p className="text-[#0154AC] font-medium">{member.name.charAt(0)}</p>
                         </div>
                       </div>
                     )}
                   </div>
                   <div className="p-6">
                     <h3 className="text-2xl font-bold mb-1 text-gray-800">{member.name}</h3>
-                    <p className="text-green-600 font-medium mb-4">{member.role}</p>
+                    <p className="text-[#0154AC] font-medium mb-4">{member.role}</p>
                     <p className="text-gray-600 text-sm">
                       {member.bio || 'Miembro activo del equipo Sirius Regenerative'}
                     </p>
@@ -204,7 +204,7 @@ const TeamPage = () => {
                 <p className="text-gray-600 mb-4">
                   Estamos siempre en búsqueda de talento apasionado por la regeneración y la sostenibilidad.
                 </p>
-                <a href="/contacto" className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors">
+                <a href="/contacto" className="inline-block bg-[#0154AC] hover:bg-[#00A3FF] text-white px-6 py-3 rounded-lg transition-colors">
                   Contacta con nosotros
                 </a>
               </div>
@@ -213,12 +213,12 @@ const TeamPage = () => {
         </div>
       </section>
       
-      <section className="py-16 bg-green-800 text-white">
+      <section className="py-16 bg-[#1A1A33] text-white">
         <div className="container mx-auto px-4 text-center">
           <ScrollAnimation direction="up">
             <h2 className="text-3xl font-bold mb-6">Nuestros valores</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-green-700/50 p-6 rounded-xl">
+              <div className="bg-[#0154AC]/20 border border-[#0154AC]/30 p-6 rounded-xl">
                 <div className="text-4xl mb-4">🌱</div>
                 <h3 className="text-xl font-bold mb-2">Regeneración</h3>
                 <p className="text-white/80">
@@ -226,7 +226,7 @@ const TeamPage = () => {
                 </p>
               </div>
               
-              <div className="bg-green-700/50 p-6 rounded-xl">
+              <div className="bg-[#0154AC]/20 border border-[#0154AC]/30 p-6 rounded-xl">
                 <div className="text-4xl mb-4">🔬</div>
                 <h3 className="text-xl font-bold mb-2">Innovación</h3>
                 <p className="text-white/80">
@@ -234,7 +234,7 @@ const TeamPage = () => {
                 </p>
               </div>
               
-              <div className="bg-green-700/50 p-6 rounded-xl">
+              <div className="bg-[#0154AC]/20 border border-[#0154AC]/30 p-6 rounded-xl">
                 <div className="text-4xl mb-4">💚</div>
                 <h3 className="text-xl font-bold mb-2">Colaboración</h3>
                 <p className="text-white/80">
