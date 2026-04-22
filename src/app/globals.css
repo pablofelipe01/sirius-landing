@@ -1,94 +1,164 @@
 /* Importación para Tailwind CSS v4 */
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────
+   TIPOGRAFÍA SIRIUS — Manual de Marca 2023
+   · Tipografía Primaria : Utile → sustituto: DM Sans
+     (sans-serif orgánica, alegre, amigable — mismas proporciones)
+   · Tipografía Secundaria: IvyPresto Italic → sustituto: Cormorant Garamond Italic
+     (usada SÓLO para frases canalizadas / brand phrases)
+   · Fallback oficial     : Arial (Google Docs / Outlook / Word)
+───────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,300;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+
+/* ─── Variables de marca — Sirius Brand Colors 2023 ─── */
 :root {
   --foreground-rgb: 26, 26, 51;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 243, 249, 240;
-  /* Sirius Brand Colors */
-  --sirius-green: #00B602;
-  --sirius-blue: #0154AC;
-  --sirius-sky: #00A3FF;
-  --sirius-dark: #1A1A33;
-  --sirius-subtle: #BCD7EA;
-  --sirius-subtle-light: #ECF1F4;
-  --sirius-cotiledon: #BCD983;
-  --sirius-cotiledon-light: #F2FFDD;
-  --sirius-sprout: #CFE4BF;
-  --sirius-sprout-light: #F3F9F0;
+
+  /* Paleta primaria */
+  --sirius-green:          #00B602;   /* Verde Alegría       */
+  --sirius-blue:           #0154AC;   /* Azul Barranca — DOMINANTE */
+  --sirius-sky:            #00A3FF;   /* Azul Cielo          */
+  --sirius-dark:           #1A1A33;   /* Imperial            */
+
+  /* Sutileza / Gradiente */
+  --sirius-subtle:         #BCD7EA;
+  --sirius-subtle-light:   #ECF1F4;
+
+  /* Cotiledon / Gradiente */
+  --sirius-cotiledon:      #BCD983;
+  --sirius-cotiledon-light:#F2FFDD;
+
+  /* Primera Retoño / Gradiente */
+  --sirius-sprout:         #CFE4BF;
+  --sirius-sprout-light:   #F3F9F0;
 }
 
+/* ─── Tipografía base ─── */
 body {
   color: rgb(var(--foreground-rgb));
   background: #FFFFFF;
-  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: 'DM Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: 'DM Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-/* Estilos para animaciones de scroll */
+/* ─── Clase tipografía secundaria (IvyPresto → Cormorant Garamond) ─── */
+/* Usar SÓLO para frases canalizadas / brand phrases / citas */
+.font-brand-accent {
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+}
+
+/* ─── Etiquetas técnicas / tracking labels ─── */
+.font-label {
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BOTONES — Manual de Marca 2023 (Techstack p.45)
+   · Opción 01: Con drop shadow 40% opacity / 1mm — Mixed case
+   · Opción 02: Simple, sin shadow — Primera mayúscula
+───────────────────────────────────────────────────────────── */
+.btn-sirius-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  background-color: var(--sirius-blue);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(1, 84, 172, 0.40);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-sirius-primary:hover {
+  background-color: var(--sirius-sky);
+  box-shadow: 0 6px 20px rgba(0, 163, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-sirius-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: 'DM Sans', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-sirius-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Scroll suave ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Estilos para animaciones de scroll ─── */
 .scroll-animated {
   transition: all 0.8s ease-out;
 }
-
 .scroll-animated.hidden {
   opacity: 0;
   transform: translateY(50px);
 }
-
 .scroll-animated.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Personalización de scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
+/* ─── Scrollbar Sirius ─── */
+::-webkit-scrollbar        { width: 8px; }
+::-webkit-scrollbar-track  { background: var(--sirius-sprout-light); }
+::-webkit-scrollbar-thumb  { background: var(--sirius-blue); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sirius-sky); }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--sirius-blue);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--sirius-sky);
-}
-
-/* Animaciones personalizadas */
+/* ─── Animaciones personalizadas ─── */
 @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
 }
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
+.animate-float { animation: float 6s ease-in-out infinite; }
 
 @keyframes pulse-slow {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.65; }
 }
+.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
 
-.animate-pulse-slow {
-  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* ─── Prefers reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
