@@ -55,8 +55,13 @@ export default function NavBar() {
     setMobileOpen(false);
   };
 
-  const navBg = scrolled ? 'rgba(251,247,241,0.93)' : 'transparent';
-  const borderBottom = scrolled ? '1px solid rgba(14,24,20,0.10)' : '1px solid transparent';
+  const topMode = !scrolled;
+  const navBg = scrolled ? 'rgba(251,247,241,0.93)' : 'rgba(5,5,16,0.28)';
+  const borderBottom = scrolled ? '1px solid rgba(14,24,20,0.10)' : '1px solid rgba(241,233,218,0.06)';
+  const ink = topMode ? '#F1E9DA' : '#0E1814';
+  const mutedInk = topMode ? 'rgba(241,233,218,0.78)' : '#3A4540';
+  const activeInk = topMode ? '#58d9d4' : '#1F5538';
+  const accentDot = topMode ? '#58d9d4' : '#1F5538';
 
   return (
     <nav style={{
@@ -71,10 +76,10 @@ export default function NavBar() {
       <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24 }}>
 
         {/* Wordmark */}
-        <a href="#top" onClick={e => scrollTo(e, '#top')} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: '#0E1814' }}>
-          <SiriusMark color="#0E1814" size={22} />
-          <span style={{ fontFamily: '"Museo Slab", Georgia, serif', fontSize: 20, fontWeight: 500, letterSpacing: '-0.01em', color: '#0E1814' }}>
-            sirius<span style={{ color: '#1F5538' }}>.</span>
+        <a href="#top" onClick={e => scrollTo(e, '#top')} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', color: ink }}>
+          <SiriusMark color={ink} size={22} />
+          <span style={{ fontFamily: '"Museo Slab", Georgia, serif', fontSize: 20, fontWeight: 500, letterSpacing: '-0.01em', color: ink }}>
+            sirius<span style={{ color: accentDot }}>.</span>
           </span>
         </a>
 
@@ -84,8 +89,8 @@ export default function NavBar() {
             <a key={l.href} href={l.href} onClick={e => scrollTo(e, l.href)} style={{
               padding: '8px 14px', fontSize: 13, fontWeight: 500,
               letterSpacing: '0.04em', textDecoration: 'none',
-              color: activeSection === l.href.slice(1) ? '#1F5538' : '#3A4540',
-              borderBottom: activeSection === l.href.slice(1) ? '1px solid #1F5538' : '1px solid transparent',
+              color: activeSection === l.href.slice(1) ? activeInk : mutedInk,
+              borderBottom: activeSection === l.href.slice(1) ? `1px solid ${activeInk}` : '1px solid transparent',
               transition: 'color .2s, border-color .2s',
               fontFamily: '"Museo Slab", Georgia, serif',
             }}>
@@ -98,22 +103,22 @@ export default function NavBar() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <a href="#contacto" onClick={e => scrollTo(e, '#contacto')} className="sirius-nav-cta" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
-            background: '#1F5538', color: '#FFFFFF',
+            background: topMode ? '#58d9d4' : '#1F5538', color: topMode ? '#061011' : '#FFFFFF',
             padding: '11px 22px', borderRadius: 999,
             fontSize: 12, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
             textDecoration: 'none', fontFamily: '"Museo Slab", Georgia, serif',
-            boxShadow: '0 6px 22px rgba(31,85,56,0.28)',
+            boxShadow: topMode ? '0 6px 22px rgba(88,217,212,0.26)' : '0 6px 22px rgba(31,85,56,0.28)',
             transition: 'transform .2s, box-shadow .2s',
           }}
-            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-1px)'; el.style.boxShadow = '0 10px 28px rgba(31,85,56,0.42)'; }}
-            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = ''; el.style.boxShadow = '0 6px 22px rgba(31,85,56,0.28)'; }}
+            onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-1px)'; el.style.boxShadow = topMode ? '0 10px 28px rgba(88,217,212,0.38)' : '0 10px 28px rgba(31,85,56,0.42)'; }}
+            onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = ''; el.style.boxShadow = topMode ? '0 6px 22px rgba(88,217,212,0.26)' : '0 6px 22px rgba(31,85,56,0.28)'; }}
           >
             Hablar con inversiones <span style={{ fontSize: 14 }}>→</span>
           </a>
 
           <button className="sirius-hamburger" onClick={() => setMobileOpen(v => !v)} aria-label="Menú" style={{
             display: 'none', appearance: 'none', background: 'transparent', border: 0,
-            cursor: 'pointer', padding: 8, color: '#0E1814',
+            cursor: 'pointer', padding: 8, color: ink,
           }}>
             <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
               {mobileOpen
@@ -125,20 +130,20 @@ export default function NavBar() {
       </div>
 
       {mobileOpen && (
-        <div style={{ background: 'rgba(251,247,241,0.98)', backdropFilter: 'blur(14px)', borderTop: '1px solid rgba(14,24,20,0.10)', padding: '16px 32px 24px' }}>
+        <div style={{ background: topMode ? 'rgba(5,5,16,0.96)' : 'rgba(251,247,241,0.98)', backdropFilter: 'blur(14px)', borderTop: topMode ? '1px solid rgba(241,233,218,0.08)' : '1px solid rgba(14,24,20,0.10)', padding: '16px 32px 24px' }}>
           {NAV_LINKS.map(l => (
             <a key={l.href} href={l.href} onClick={e => scrollTo(e, l.href)} style={{
               display: 'block', padding: '12px 0',
-              fontSize: 16, fontWeight: 500, color: '#0E1814',
+              fontSize: 16, fontWeight: 500, color: ink,
               textDecoration: 'none', fontFamily: '"Museo Slab", Georgia, serif',
-              borderBottom: '1px solid rgba(14,24,20,0.08)',
+              borderBottom: topMode ? '1px solid rgba(241,233,218,0.08)' : '1px solid rgba(14,24,20,0.08)',
             }}>
               {l.label}
             </a>
           ))}
           <a href="#contacto" onClick={e => scrollTo(e, '#contacto')} style={{
             display: 'inline-flex', marginTop: 20,
-            background: '#1F5538', color: '#fff',
+            background: topMode ? '#58d9d4' : '#1F5538', color: topMode ? '#061011' : '#fff',
             padding: '13px 28px', borderRadius: 999,
             fontSize: 13, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase',
             textDecoration: 'none', fontFamily: '"Museo Slab", Georgia, serif',

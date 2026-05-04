@@ -1,162 +1,439 @@
 'use client';
 
-import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
-const TICKERS = [
-  'Puro.earth · validado',
-  'SBTi · alineado',
-  'ZOMAC · Colombia',
-  'Barranca de Upía · Meta',
+// ─── PALETA COSMIC ──────────────────────────────────────────
+const C = {
+  bg:         '#050510',
+  ink:        '#e8d5b7',
+  inkSoft:    'rgba(232,213,183,0.72)',
+  inkDim:     'rgba(232,213,183,0.42)',
+  accent:     '#4ecdc4',
+  rule:       'rgba(232,213,183,0.12)',
+  ruleStrong: 'rgba(232,213,183,0.28)',
+};
+
+const METRICS = [
+  { n: '10',    u: 'kg/ha',  l: 'DOSIS SIRIUS' },
+  { n: '300',   u: '+',      l: 'AGRICULTORES ACTIVOS' },
+  { n: '1 200', u: 'tCO₂e', l: 'SECUESTRADO · PIPELINE' },
+  { n: '1 000', u: 'años',   l: 'PERMANENCIA CARBONO' },
 ];
 
-function scrollTo(href: string) {
-  const id = href.slice(1);
-  const el = document.getElementById(id);
-  if (!el) return;
-  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+// ─── STARFIELD ──────────────────────────────────────────────
+function Starfield({ count = 220 }: { count?: number }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let raf = 0;
+    let w = 0, h = 0;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const stars = Array.from({ length: count }, () => ({
+      x:     Math.random(),
+      y:     Math.random(),
+      r:     0.2 + Math.random() * 1.3,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.4 + Math.random() * 0.6,
+    }));
+
+    const resize = () => {
+      w = canvas.offsetWidth;
+      h = canvas.offsetHeight;
+      canvas.width  = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const t0 = performance.now();
+    const tick = (t: number) => {
+      const elapsed = (t - t0) / 1000;
+      ctx.clearRect(0, 0, w, h);
+      for (const s of stars) {
+        const a = (Math.sin(elapsed * s.speed + s.phase) * 0.35 + 0.65) * 0.8;
+        ctx.globalAlpha = a;
+        ctx.fillStyle = '#e8d5b7';
+        ctx.beginPath();
+        ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    resize();
+    raf = requestAnimationFrame(tick);
+    window.addEventListener('resize', resize);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+    };
+  }, [count]);
+
+  return (
+    <canvas ref={ref} aria-hidden style={{
+      position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none',
+    }} />
+  );
 }
 
-export default function HeroSection() {
+// ─── WATER-RIPPLE CURSOR ─────────────────────────────────────
+// Ported from Animations.jsx del reference pack — teal (#4ecdc4)
+function WaterCursor() {
+  const ref = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    const canvas = ref.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
+
+    const SCALE = 4;
+    let raf = 0, W = 0, H = 0, gw = 0, gh = 0;
+    let prev: Float32Array = new Float32Array(0);
+    let curr: Float32Array = new Float32Array(0);
+
+    const resize = () => {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      const d = Math.min(window.devicePixelRatio || 1, 1.25);
+      canvas.width  = Math.floor(W * d);
+      canvas.height = Math.floor(H * d);
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+      gw = Math.ceil(W / SCALE);
+      gh = Math.ceil(H / SCALE);
+      prev = new Float32Array(gw * gh);
+      curr = new Float32Array(gw * gh);
+    };
+    resize();
+
+    let lastX = -1, lastY = -1, lastDrop = 0;
+
+    const onMove = (e: MouseEvent) => {
+      const x = Math.floor(e.clientX / SCALE);
+      const y = Math.floor(e.clientY / SCALE);
+      if (x < 1 || y < 1 || x >= gw - 1 || y >= gh - 1) return;
+      const now = performance.now();
+      if (now - lastDrop < 14) return;
+      lastDrop = now;
+      const dx  = lastX < 0 ? 0 : x - lastX;
+      const dy  = lastY < 0 ? 0 : y - lastY;
+      const v   = Math.min(28, Math.sqrt(dx * dx + dy * dy));
+      const amp = 180 + v * 22;
+      for (let oy = -1; oy <= 1; oy++)
+        for (let ox = -1; ox <= 1; ox++)
+          curr[(y + oy) * gw + (x + ox)] -= amp * ((ox === 0 && oy === 0) ? 1 : 0.55);
+      lastX = x; lastY = y;
+    };
+
+    const onClick = (e: MouseEvent) => {
+      const x = Math.floor(e.clientX / SCALE);
+      const y = Math.floor(e.clientY / SCALE);
+      if (x < 2 || y < 2 || x >= gw - 2 || y >= gh - 2) return;
+      for (let oy = -2; oy <= 2; oy++)
+        for (let ox = -2; ox <= 2; ox++) {
+          const d = Math.sqrt(ox * ox + oy * oy);
+          if (d > 2.2) continue;
+          curr[(y + oy) * gw + (x + ox)] -= 600 * (1 - d / 2.4);
+        }
+    };
+
+    // teal: r=78 g=205 b=196
+    const [aR, aG, aB] = [78, 205, 196];
+
+    const tick = () => {
+      const next = prev;
+      for (let y = 1; y < gh - 1; y++) {
+        let i = y * gw + 1;
+        for (let x = 1; x < gw - 1; x++, i++) {
+          const v = (curr[i-1] + curr[i+1] + curr[i-gw] + curr[i+gw]) * 0.5 - prev[i];
+          next[i] = v * 0.972;
+        }
+      }
+      prev = curr; curr = next;
+
+      const fullImg = ctx.createImageData(gw, gh);
+      const data = fullImg.data;
+      for (let i = 0, p = 0; i < curr.length; i++, p += 4) {
+        const hv = curr[i];
+        const a  = Math.min(255, Math.abs(hv) * 0.9);
+        if (a < 3) { data[p + 3] = 0; continue; }
+        const t2 = Math.max(-1, Math.min(1, hv / 200));
+        data[p]     = Math.min(255, aR +  60 * t2);
+        data[p + 1] = Math.min(255, aG + 110 * (0.4 + 0.6 * Math.abs(t2)));
+        data[p + 2] = Math.min(255, aB + 140 * (0.6 + 0.4 * Math.abs(t2)));
+        data[p + 3] = a;
+      }
+
+      ctx.clearRect(0, 0, W, H);
+      const tmp = document.createElement('canvas');
+      tmp.width = gw; tmp.height = gh;
+      tmp.getContext('2d')!.putImageData(fullImg, 0, 0);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(tmp, 0, 0, gw, gh, 0, 0, W, H);
+      ctx.globalCompositeOperation = 'source-over';
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener('resize',    resize);
+    window.addEventListener('mousemove', onMove,  { passive: true });
+    window.addEventListener('click',     onClick);
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize',    resize);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('click',     onClick);
+    };
+  }, []);
+
   return (
-    <section id="top" style={{
-      position: 'relative', minHeight: '100vh',
-      background: '#FBF7F1',
-      paddingTop: 110, paddingBottom: 80,
-      overflow: 'hidden',
-    }}>
-      {/* Subtle grain overlay */}
-      <div aria-hidden style={{
-        position: 'absolute', inset: 0, opacity: 0.03, pointerEvents: 'none',
-        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
-      }} />
+    <canvas ref={ref} aria-hidden style={{
+      position: 'fixed', inset: 0, pointerEvents: 'none',
+      zIndex: 9998, mixBlendMode: 'screen', opacity: 0.85,
+    }} />
+  );
+}
 
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 1fr)', gap: 56, alignItems: 'center' }} className="hero-grid">
+// ─── HERO ────────────────────────────────────────────────────
+export default function HeroSection() {
+  const [loaded, setLoaded] = useState(false);
 
-        {/* LEFT — type */}
-        <div style={{ position: 'relative', zIndex: 2 }}>
+  useEffect(() => {
+    const id = setTimeout(() => setLoaded(true), 60);
+    return () => clearTimeout(id);
+  }, []);
+
+  return (
+    <>
+      <WaterCursor />
+
+      <section id="top" style={{
+        position: 'relative',
+        minHeight: '100vh',
+        background: C.bg,
+        color: C.ink,
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}>
+        <Starfield count={280} />
+
+        {/* Anillos decorativos */}
+        <div aria-hidden style={{
+          position: 'absolute', right: '-6vw', top: '50%',
+          transform: 'translateY(-50%)',
+          width: '56vw', maxWidth: 820, aspectRatio: '1/1',
+          borderRadius: '50%',
+          border: `1px solid ${C.accent}1a`,
+          pointerEvents: 'none', zIndex: 1,
+        }} />
+        <div aria-hidden style={{
+          position: 'absolute', right: '2vw', top: '50%',
+          transform: 'translateY(-50%)',
+          width: '40vw', maxWidth: 580, aspectRatio: '1/1',
+          borderRadius: '50%',
+          border: `1px solid ${C.accent}12`,
+          pointerEvents: 'none', zIndex: 1,
+        }} />
+        <div aria-hidden style={{
+          position: 'absolute', right: '10vw', top: '50%',
+          transform: 'translateY(-50%)',
+          width: '36vw', maxWidth: 500, aspectRatio: '1/1',
+          borderRadius: '50%',
+          background: `radial-gradient(closest-side, ${C.accent}10, transparent)`,
+          pointerEvents: 'none', zIndex: 1,
+        }} />
+
+        {/* Contenido */}
+        <div style={{
+          position: 'relative', zIndex: 2,
+          maxWidth: 1320, margin: '0 auto',
+          padding: '130px 48px 60px',
+          width: '100%',
+          opacity:   loaded ? 1 : 0,
+          transform: loaded ? 'none' : 'translateY(20px)',
+          transition: 'opacity 0.9s ease, transform 0.9s ease',
+        }}>
+
           {/* Eyebrow */}
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 10,
             fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase',
-            color: '#7A857F', marginBottom: 24,
+            color: C.inkDim, fontFamily: '"Museo Slab", Georgia, serif',
+            marginBottom: 28,
           }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#1F5538', animation: 'sirius-pulse 2.5s ease-in-out infinite' }} />
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%',
+              background: C.accent,
+              boxShadow: `0 0 8px ${C.accent}`,
+              display: 'inline-block',
+              animation: 'siriusPulse 2.4s ease-in-out infinite',
+            }} />
             Regeneración como Servicio · Colombia
           </div>
 
           {/* H1 */}
           <h1 style={{
             fontFamily: '"Museo Slab", Georgia, serif',
-            fontSize: 'clamp(44px, 6.4vw, 92px)',
-            fontWeight: 300, lineHeight: 0.98,
+            fontSize: 'clamp(52px, 7.8vw, 112px)',
+            fontWeight: 300,
+            lineHeight: 1.0,
             letterSpacing: '-0.02em',
-            color: '#0E1814',
+            color: C.ink,
             margin: '0 0 28px',
+            maxWidth: 860,
           }}>
             Biochar es la{' '}
-            <em style={{ fontStyle: 'italic', fontWeight: 300, color: '#1F5538', fontFamily: 'Georgia, "Museo Slab", serif' }}>
+            <em style={{
+              fontStyle: 'italic', fontWeight: 300,
+              color: C.accent,
+              fontFamily: 'Georgia, serif',
+            }}>
               infraestructura
             </em>
-            <br />donde vive la vida.
+            <br />
+            donde vive la vida.
           </h1>
 
-          <p style={{ fontSize: 19, lineHeight: 1.55, color: '#3A4540', maxWidth: 560, margin: '0 0 36px' }}>
-            Producimos biochar inoculado con bacterias nativas y lo entregamos a agricultores como un servicio.
-            Donde la academia recomienda 5 a 20 toneladas por hectárea, Sirius logra el mismo efecto con{' '}
-            <strong style={{ fontWeight: 600, color: '#0E1814' }}>10 kilogramos</strong>.
+          {/* Lede */}
+          <p style={{
+            fontSize: 19, lineHeight: 1.6,
+            color: C.inkSoft,
+            maxWidth: 620, margin: '0 0 44px',
+            fontFamily: '"Museo Slab", Georgia, serif',
+            fontWeight: 300,
+          }}>
+            Producimos biochar inoculado con bacterias nativas y lo entregamos a
+            agricultores como un servicio. Donde la academia recomienda 5 a 20
+            toneladas por hectárea, Sirius logra el mismo efecto con 10 kilogramos.
           </p>
 
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="#contacto" onClick={e => { e.preventDefault(); scrollTo('#contacto'); }} className="btn-primary">
-              Solicitar pitch deck
+          {/* CTAs */}
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginBottom: 72 }}>
+            <a href="#contacto" onClick={e => {
+              e.preventDefault();
+              const el = document.getElementById('contacto');
+              if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+            }} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              background: C.accent, color: '#050510',
+              padding: '14px 28px', borderRadius: 999,
+              fontSize: 12, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
+              textDecoration: 'none', fontFamily: '"Museo Slab", Georgia, serif',
+              boxShadow: `0 8px 28px ${C.accent}44`,
+              transition: 'transform .2s, box-shadow .2s',
+            }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-2px)'; el.style.boxShadow = `0 14px 36px ${C.accent}66`; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = ''; el.style.boxShadow = `0 8px 28px ${C.accent}44`; }}
+            >
+              Solicitar pitch deck <span style={{ fontSize: 14 }}>→</span>
             </a>
-            <a href="#tesis" onClick={e => { e.preventDefault(); scrollTo('#tesis'); }} className="btn-ghost">
+
+            <a href="#tesis" onClick={e => {
+              e.preventDefault();
+              const el = document.getElementById('tesis');
+              if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+            }} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              background: 'transparent',
+              border: `1px solid ${C.ruleStrong}`,
+              color: C.ink,
+              padding: '13px 26px', borderRadius: 999,
+              fontSize: 12, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
+              textDecoration: 'none', fontFamily: '"Museo Slab", Georgia, serif',
+              transition: 'border-color .2s, color .2s',
+            }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = C.accent; el.style.color = C.accent; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.borderColor = C.ruleStrong; el.style.color = C.ink; }}
+            >
               Ver tesis completa
             </a>
           </div>
 
-          {/* Tickers */}
+          {/* Tira de métricas */}
           <div style={{
-            marginTop: 56, paddingTop: 24,
-            borderTop: '1px solid rgba(14,24,20,0.10)',
-            display: 'flex', flexWrap: 'wrap', gap: '12px 28px',
-          }}>
-            {TICKERS.map(x => (
-              <span key={x} style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#7A857F' }}>
-                {x}
-              </span>
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            borderTop: `1px solid ${C.rule}`,
+          }} className="hero-metrics">
+            {METRICS.map((m, i) => (
+              <div key={m.l} style={{
+                padding: '28px 0 8px',
+                borderRight: i < METRICS.length - 1 ? `1px solid ${C.rule}` : 'none',
+                paddingRight: i < METRICS.length - 1 ? 24 : 0,
+                paddingLeft:  i > 0 ? 24 : 0,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 10 }}>
+                  <span style={{
+                    fontFamily: 'Georgia, serif',
+                    fontSize: 'clamp(36px, 4.5vw, 60px)',
+                    fontWeight: 300, color: C.ink,
+                    letterSpacing: '-0.03em', lineHeight: 1,
+                  }}>
+                    {m.n}
+                  </span>
+                  <span style={{ fontSize: 16, color: C.inkSoft, fontWeight: 500 }}>{m.u}</span>
+                </div>
+                <div style={{
+                  fontSize: 10, fontWeight: 600,
+                  letterSpacing: '0.16em', textTransform: 'uppercase',
+                  color: C.inkDim, fontFamily: '"Museo Slab", Georgia, serif',
+                }}>
+                  {m.l}
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* RIGHT — hero image */}
-        <div style={{ position: 'relative', minHeight: 580 }}>
-          <div style={{ position: 'absolute', inset: 0, borderRadius: 4, overflow: 'hidden', boxShadow: '0 30px 80px rgba(14,24,20,0.18)' }}>
-            <Image
-              src="/images/sunrise-aerial.jpg"
-              alt="Vista aérea Barranca de Upía"
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, transparent 50%, rgba(14,24,20,0.35))' }} />
-          </div>
-
-          {/* Floating metric card */}
-          <div style={{
-            position: 'absolute', left: -32, bottom: -32,
-            background: '#FFFFFF',
-            border: '1px solid rgba(14,24,20,0.10)',
-            padding: '20px 22px', borderRadius: 6,
-            boxShadow: '0 18px 48px rgba(14,24,20,0.14)',
-            maxWidth: 280, zIndex: 2,
-          }}>
-            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1F5538', marginBottom: 10 }}>
-              Métrica clave
-            </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-              <span style={{ fontFamily: 'Georgia, serif', fontSize: 56, fontWeight: 300, color: '#0E1814', letterSpacing: '-0.03em', lineHeight: 1 }}>10</span>
-              <span style={{ fontSize: 18, color: '#3A4540', fontWeight: 500 }}>kg/ha</span>
-            </div>
-            <div style={{ fontSize: 13, color: '#7A857F', marginTop: 6 }}>vs 5–20 t/ha académico</div>
-          </div>
-
-          {/* Place tag */}
-          <div style={{
-            position: 'absolute', right: 18, top: 18,
-            background: 'rgba(14,24,20,0.62)',
-            backdropFilter: 'blur(8px)',
-            color: '#F1E9DA',
-            padding: '8px 14px', borderRadius: 999,
-            fontSize: 11, fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase',
-            display: 'inline-flex', alignItems: 'center', gap: 8, zIndex: 2,
-          }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#C77A2C' }} />
-            Barranca de Upía · 04:42
-          </div>
+        {/* Scroll hint */}
+        <div style={{
+          position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+          bottom: 28, display: 'flex', alignItems: 'center', gap: 10,
+          color: C.inkDim, fontSize: 9, fontWeight: 600,
+          letterSpacing: '0.32em', textTransform: 'uppercase',
+          fontFamily: '"Museo Slab", Georgia, serif', zIndex: 2,
+        }}>
+          Continúa
+          <span style={{
+            display: 'inline-block', width: 1, height: 26,
+            background: C.inkDim,
+            animation: 'scrollHint 2.4s ease-in-out infinite',
+          }} />
         </div>
-      </div>
 
-      {/* Scroll hint */}
-      <div style={{
-        position: 'absolute', left: '50%', transform: 'translateX(-50%)',
-        bottom: 32, color: '#7A857F',
-        fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', textTransform: 'uppercase',
-        display: 'flex', alignItems: 'center', gap: 10,
-      }}>
-        Continúa
-        <span style={{ display: 'inline-block', width: 1, height: 28, background: 'rgba(14,24,20,0.22)', animation: 'scrollHint 2.4s ease-in-out infinite' }} />
-      </div>
-
-      <style>{`
-        @media (max-width: 980px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-grid > div:last-child { min-height: 360px !important; }
-        }
-        @media (max-width: 980px) {
-          .hero-grid > div:last-child { position: relative !important; }
-        }
-      `}</style>
-    </section>
+        <style>{`
+          @keyframes siriusPulse {
+            0%,100% { opacity:0.55; transform:scale(1);    }
+            50%     { opacity:1;    transform:scale(1.2);  }
+          }
+          @keyframes scrollHint {
+            0%,100% { opacity:0.3; transform:scaleY(0.6); }
+            50%     { opacity:1;   transform:scaleY(1);   }
+          }
+          @media (max-width:880px) {
+            .hero-metrics { grid-template-columns: repeat(2,1fr) !important; }
+          }
+        `}</style>
+      </section>
+    </>
   );
 }
+
+
