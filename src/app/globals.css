@@ -1,161 +1,308 @@
 /* Importación para Tailwind CSS v4 */
 @import "tailwindcss";
 
-/* ─────────────────────────────────────────────────────────────
-   TIPOGRAFÍA SIRIUS — Manual de Marca 2023
-   · Tipografía Primaria : Utile → sustituto: DM Sans
-     (sans-serif orgánica, alegre, amigable — mismas proporciones)
-   · Tipografía Secundaria: IvyPresto Italic → sustituto: Cormorant Garamond Italic
-     (usada SÓLO para frases canalizadas / brand phrases)
-   · Fallback oficial     : Arial (Google Docs / Outlook / Word)
-───────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,900;1,9..40,300;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+/* ============================================================
+   SIRIUS REGENERATIVE — Design System 2026
+   Museo Slab display font · Daylight editorial theme
+   ============================================================ */
 
-/* ─── Variables de marca — Sirius Brand Colors 2023 ─── */
-:root {
-  --foreground-rgb: 26, 26, 51;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 243, 249, 240;
-
-  /* Paleta primaria */
-  --sirius-green:          #00B602;   /* Verde Alegría       */
-  --sirius-blue:           #0154AC;   /* Azul Barranca — DOMINANTE */
-  --sirius-sky:            #00A3FF;   /* Azul Cielo          */
-  --sirius-dark:           #1A1A33;   /* Imperial            */
-
-  /* Sutileza / Gradiente */
-  --sirius-subtle:         #BCD7EA;
-  --sirius-subtle-light:   #ECF1F4;
-
-  /* Cotiledon / Gradiente */
-  --sirius-cotiledon:      #BCD983;
-  --sirius-cotiledon-light:#F2FFDD;
-
-  /* Primera Retoño / Gradiente */
-  --sirius-sprout:         #CFE4BF;
-  --sirius-sprout-light:   #F3F9F0;
+/* ---------- Museo Slab font faces ---------- */
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 100;
+  font-style: normal;
+  src: url("/fonts/MuseoSlab-100.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 300;
+  font-style: normal;
+  src: url("/fonts/MuseoSlab-300.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 300;
+  font-style: italic;
+  src: url("/fonts/MuseoSlab-300Italic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 500;
+  font-style: normal;
+  src: url("/fonts/MUSEOSLAB-500.OTF") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 500;
+  font-style: italic;
+  src: url("/fonts/MuseoSlab-500Italic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 700;
+  font-style: normal;
+  src: url("/fonts/MuseoSlab-700.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 700;
+  font-style: italic;
+  src: url("/fonts/MuseoSlab-700Italic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 900;
+  font-style: normal;
+  src: url("/fonts/MuseoSlab-900.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Museo Slab";
+  font-weight: 1000;
+  font-style: normal;
+  src: url("/fonts/MuseoSlab-1000.otf") format("opentype");
+  font-display: swap;
 }
 
-/* ─── Tipografía base ─── */
+/* ---------- Design Tokens — Daylight Editorial Theme ---------- */
+:root {
+  /* Background */
+  --s-bg:           #FBF7F1;   /* editorial cream */
+  --s-bg-alt:       #F3EEE4;
+  --s-bg-panel:     #FFFFFF;
+  --s-bg-inverse:   #0E1814;   /* deep forest-black */
+
+  /* Ink */
+  --s-ink:          #0E1814;
+  --s-ink-soft:     #3A4540;
+  --s-ink-dim:      #7A857F;
+
+  /* Rules */
+  --s-rule:         rgba(14,24,20,0.10);
+  --s-rule-strong:  rgba(14,24,20,0.22);
+
+  /* Accent — deep regenerative green */
+  --s-accent:       #1F5538;
+  --s-accent-soft:  #3D8F5F;
+  --s-accent-ink:   #FFFFFF;
+
+  /* Warm — earthy ochre */
+  --s-warm:         #C77A2C;
+
+  /* Sky — brand azul barranca */
+  --s-sky:          #0154AC;
+
+  /* Inverse text (on dark backgrounds) */
+  --s-inv-ink:      #F1E9DA;
+  --s-inv-ink-soft: rgba(241,233,218,0.72);
+  --s-inv-ink-dim:  rgba(241,233,218,0.48);
+
+  /* Legacy brand palette */
+  --sirius-green:          #00B602;
+  --sirius-blue:           #0154AC;
+  --sirius-sky:            #00A3FF;
+  --sirius-dark:           #1A1A33;
+  --sirius-subtle:         #BCD7EA;
+  --sirius-subtle-light:   #ECF1F4;
+  --sirius-cotiledon:      #BCD983;
+  --sirius-cotiledon-light:#F2FFDD;
+  --sirius-sprout:         #CFE4BF;
+  --sirius-sprout-light:   #F3F9F0;
+
+  /* Typography */
+  --font-display: "Museo Slab", Georgia, serif;
+  --font-body:    "Museo Slab", Georgia, serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, monospace;
+  --font-metric:  Georgia, "Museo Slab", serif;
+
+  /* Type scale */
+  --fs-display: clamp(36px, 6vw, 72px);
+  --fs-chapter: clamp(28px, 4vw, 52px);
+  --fs-section: clamp(24px, 4vw, 48px);
+  --fs-metric:  clamp(48px, 8vw, 80px);
+  --fs-body:    clamp(16px, 2vw, 20px);
+  --fs-label:   13px;
+  --fs-caption: 12px;
+
+  /* Spacing */
+  --sp-xs:   4px;
+  --sp-sm:   8px;
+  --sp-md:   16px;
+  --sp-lg:   24px;
+  --sp-xl:   32px;
+  --sp-2xl:  48px;
+  --sp-3xl:  60px;
+
+  /* Radii */
+  --r-card: 12px;
+  --r-pill: 30px;
+
+  /* Shadows */
+  --shadow-elevated: 0 4px 20px rgba(0,0,0,0.12);
+  --shadow-modal:    0 8px 40px rgba(0,0,0,0.20);
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  background: var(--s-bg);
+}
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: #FFFFFF;
-  font-family: 'DM Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  background: var(--s-bg);
+  color: var(--s-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.7;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'DM Sans', Arial, 'Helvetica Neue', Helvetica, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+::selection {
+  background: var(--s-accent);
+  color: var(--s-accent-ink);
 }
 
-/* ─── Clase tipografía secundaria (IvyPresto → Cormorant Garamond) ─── */
-/* Usar SÓLO para frases canalizadas / brand phrases / citas */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--s-ink);
+}
+
+a {
+  color: var(--s-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar        { width: 10px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: rgba(14,24,20,0.18); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(14,24,20,0.32); }
+
+/* ---------- Utility classes ---------- */
+.font-display { font-family: var(--font-display); }
+.font-metric  { font-family: var(--font-metric); }
+
+.font-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: var(--fs-label);
+}
+
 .font-brand-accent {
-  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Museo Slab", serif;
   font-style: italic;
 }
 
-/* ─── Etiquetas técnicas / tracking labels ─── */
-.font-label {
-  font-family: 'DM Sans', Arial, sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+/* ---------- Buttons ---------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--s-accent);
+  color: var(--s-accent-ink);
+  border: 0;
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  padding: 14px 32px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-size: 0.7rem;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   BOTONES — Manual de Marca 2023 (Techstack p.45)
-   · Opción 01: Con drop shadow 40% opacity / 1mm — Mixed case
-   · Opción 02: Simple, sin shadow — Primera mayúscula
-───────────────────────────────────────────────────────────── */
-.btn-sirius-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-family: 'DM Sans', Arial, sans-serif;
-  font-weight: 900;
-  font-size: 1rem;
-  padding: 1rem 2rem;
-  border-radius: 9999px;
-  background-color: var(--sirius-blue);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(1, 84, 172, 0.40);
-  transition: all 0.25s ease;
-  cursor: pointer;
   text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 22px rgba(31,85,56,0.28);
 }
-.btn-sirius-primary:hover {
-  background-color: var(--sirius-sky);
-  box-shadow: 0 6px 20px rgba(0, 163, 255, 0.45);
-  transform: translateY(-1px);
+.btn-primary:hover {
+  background: var(--s-accent-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(31,85,56,0.38);
+  color: var(--s-accent-ink);
 }
 
-.btn-sirius-secondary {
+.btn-ghost {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-family: 'DM Sans', Arial, sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  padding: 1rem 2rem;
-  border-radius: 9999px;
+  gap: 8px;
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  color: #ffffff;
-  transition: all 0.25s ease;
+  color: var(--s-ink);
+  border: 1.5px solid var(--s-rule-strong);
   cursor: pointer;
+  border-radius: var(--r-pill);
+  padding: 13px 28px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.btn-sirius-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.6);
-}
-
-/* ─── Scroll suave ─── */
-html {
-  scroll-behavior: smooth;
+.btn-ghost:hover {
+  border-color: var(--s-accent);
+  color: var(--s-accent);
 }
 
-/* ─── Estilos para animaciones de scroll ─── */
-.scroll-animated {
-  transition: all 0.8s ease-out;
-}
-.scroll-animated.hidden {
-  opacity: 0;
-  transform: translateY(50px);
-}
-.scroll-animated.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* Legacy button aliases */
+.btn-sirius-primary  { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-weight: 600; font-size: 13px; padding: 14px 32px; border-radius: var(--r-pill); background: var(--s-accent); color: #fff; box-shadow: 0 6px 22px rgba(31,85,56,0.28); transition: all 0.25s ease; cursor: pointer; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; border: 0; }
+.btn-sirius-primary:hover { background: var(--s-accent-soft); transform: translateY(-1px); }
+.btn-sirius-secondary { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-weight: 500; font-size: 13px; padding: 13px 28px; border-radius: var(--r-pill); background: transparent; border: 1.5px solid var(--s-rule-strong); color: var(--s-ink); transition: all 0.25s ease; cursor: pointer; text-decoration: none; }
+.btn-sirius-secondary:hover { border-color: var(--s-accent); color: var(--s-accent); }
 
-/* ─── Scrollbar Sirius ─── */
-::-webkit-scrollbar        { width: 8px; }
-::-webkit-scrollbar-track  { background: var(--sirius-sprout-light); }
-::-webkit-scrollbar-thumb  { background: var(--sirius-blue); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--sirius-sky); }
-
-/* ─── Animaciones personalizadas ─── */
+/* ---------- Animations ---------- */
+@keyframes sirius-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.15); }
+}
+@keyframes sirius-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-16px); }
+  50%       { transform: translateY(-10px); }
 }
-.animate-float { animation: float 6s ease-in-out infinite; }
-
-@keyframes pulse-slow {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.65; }
+@keyframes scrollHint {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50%       { opacity: 1;   transform: scaleY(1); }
 }
-.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
 
-/* ─── Prefers reduced motion ─── */
+.animate-float      { animation: float 6s ease-in-out infinite; }
+.animate-fade-up    { animation: sirius-fade-up 0.8s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-pulse-slow { animation: sirius-pulse 3s ease-in-out infinite; }
+
+/* ---------- Scroll animations ---------- */
+.scroll-animated {
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.scroll-animated.hidden  { opacity: 0; transform: translateY(32px); }
+.scroll-animated.visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- Section dividers ---------- */
+.section-rule {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--s-rule-strong), transparent);
+  margin: 0;
+}
+
+/* ---------- Prefers reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

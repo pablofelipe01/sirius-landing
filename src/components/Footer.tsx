@@ -1,153 +1,28 @@
-'use client';
-
-import Link from 'next/link';
-import Image from 'next/image';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
-
-const Footer = () => {
+﻿export default function Footer() {
   return (
-    <footer className="bg-[#1A1A33] text-white pt-12 pb-6">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {/* Logo y descripción */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <Link href="/">
-              <Image 
-                src="/logo.png" 
-                alt="Sirius Regenerative" 
-                width={120} 
-                height={40} 
-                className="h-auto mb-4 w-auto max-w-[120px] sm:max-w-[150px]" 
-              />
-            </Link>
-            <p className="text-white/60 mt-4 text-sm sm:text-base">
-              Transformamos la agricultura convencional con soluciones regenerativas 
-              que nutren el suelo y potencian tus cultivos.
-            </p>
-            <div className="flex space-x-3 sm:space-x-4 mt-6">
-              <a 
-                href="https://www.instagram.com/sirius.colombia" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white/50 hover:text-pink-400 transition-colors"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={20} className="sm:w-6 sm:h-6" />
-              </a>
-              <a 
-                href="https://www.linkedin.com/company/sirius-regenerative" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white/50 hover:text-[#00A3FF] transition-colors"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
-              </a>
-            </div>
-          </div>
-
-          {/* Enlaces rápidos */}
-          <div className="col-span-1">
-            <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-[#00A3FF]">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link href="/productos" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Productos
-                </Link>
-              </li>
-              <li>
-                <Link href="/calculadora" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Calculadora de Carbono
-                </Link>
-              </li>
-              <li>
-                <Link href="/equipo" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Nuestro Equipo
-                </Link>
-              </li>
-              <li>
-                <Link href="/contacto" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Contacto
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Productos */}
-          <div className="col-span-1">
-            <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-[#00A3FF]">Nuestros Productos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/productos#biochar-blend" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Biochar Blend
-                </Link>
-              </li>
-              <li>
-                <Link href="/productos#star-dust" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Star Dust
-                </Link>
-              </li>
-              <li>
-                <Link href="/ventas" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base">
-                  Ofertas Especiales
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contacto */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-[#00A3FF]">Información de contacto</h4>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <span className="text-white/50 mr-2 text-sm">📍</span>
-                <span className="text-white/60 text-sm sm:text-base">Kl-7 Via Cabuyaro Barranca de Upía</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-white/50 mr-2 text-sm">📞</span>
-                <span className="text-white/60 text-sm sm:text-base">+57 320 865 3324</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-white/50 mr-2 text-sm">✉️</span>
-                <a href="mailto:marketingsirius@siriusregenerative.com" className="text-white/60 hover:text-white transition-colors text-sm sm:text-base break-all">
-                  marketingsirius@siriusregenerative.com
-                </a>
-              </li>
-              <li className="flex items-start mt-3 sm:mt-4">
-                <span className="text-white/50 mr-2 text-sm">🕒</span>
-                <div className="text-white/60 text-sm sm:text-base">
-                  <p>Lunes a Viernes: 9am - 6pm</p>
-                  <p>Sábados: 9am - 1pm</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+    <footer style={{ background: '#0E1814', padding: '64px 32px', borderTop: '1px solid rgba(241,233,218,0.08)' }}>
+      <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+        <div style={{
+          fontFamily: '"Museo Slab", Georgia, serif',
+          fontSize: 'clamp(15px, 1.6vw, 18px)',
+          fontWeight: 300, lineHeight: 1.7,
+          color: 'rgba(241,233,218,0.72)',
+          maxWidth: 680, marginBottom: 56,
+          fontStyle: 'italic',
+        }}>
+          &ldquo;Ser una guía que brinda las herramientas para llevar el campo hacia
+          la regeneración del suelo, de la biodiversidad y de los seres.&rdquo;
         </div>
 
-        <div className="border-t border-white/10 mt-6 sm:mt-8 pt-4 sm:pt-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-white/40 text-xs sm:text-sm mb-3 sm:mb-0">
-              &copy; {new Date().getFullYear()} Sirius Regenerative. Todos los derechos reservados.
-            </p>
-            <div className="flex space-x-4 sm:space-x-6">
-              <Link href="/privacypolicy" className="text-white/40 hover:text-white text-xs sm:text-sm transition-colors">
-                Política de Privacidad
-              </Link>
-              <Link href="/terminos" className="text-white/40 hover:text-white text-xs sm:text-sm transition-colors">
-                Términos y Condiciones
-              </Link>
-            </div>
+        <div style={{ borderTop: '1px solid rgba(241,233,218,0.10)', paddingTop: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ fontSize: 12, color: 'rgba(241,233,218,0.40)', letterSpacing: '0.04em' }}>
+            © Sirius Regenerative Solutions S.A.S ZOMAC · Barranca de Upía, Meta, Colombia
+          </div>
+          <div style={{ fontSize: 12, color: 'rgba(241,233,218,0.30)', letterSpacing: '0.04em' }}>
+            Hecho con alegría en Colombia.
           </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

@@ -1,155 +1,162 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import Link from 'next/link';
+import Image from 'next/image';
 
-const HeroSection = () => {
-  const { scrollY } = useScroll();
-  const videoRef = useRef<HTMLVideoElement>(null);
+const TICKERS = [
+  'Puro.earth · validado',
+  'SBTi · alineado',
+  'ZOMAC · Colombia',
+  'Barranca de Upía · Meta',
+];
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
+function scrollTo(href: string) {
+  const id = href.slice(1);
+  const el = document.getElementById(id);
+  if (!el) return;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+}
 
-  /* Parallax suave */
-  const overlayOpacity = useTransform(scrollY, [0, 600], [0.50, 0.80]);
-  const textY          = useTransform(scrollY, [0, 400], [0, 70]);
-  const textOpacity    = useTransform(scrollY, [0, 320], [1, 0]);
-
+export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="top" style={{
+      position: 'relative', minHeight: '100vh',
+      background: '#FBF7F1',
+      paddingTop: 110, paddingBottom: 80,
+      overflow: 'hidden',
+    }}>
+      {/* Subtle grain overlay */}
+      <div aria-hidden style={{
+        position: 'absolute', inset: 0, opacity: 0.03, pointerEvents: 'none',
+        backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
+      }} />
 
-      {/* ── Video de fondo ── */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          className="absolute w-full h-full object-cover"
-          autoPlay loop muted playsInline
-        >
-          <source
-            src="/video/copy_483F5DC8-DAFB-4DC4-A15F-6769312F16C7_lineav.mov"
-            type="video/mp4"
-          />
-        </video>
+      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px', display: 'grid', gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 1fr)', gap: 56, alignItems: 'center' }} className="hero-grid">
 
-        {/* Overlay Imperial (#1A1A33) — color de marca */}
-        <motion.div
-          className="absolute inset-0"
-          style={{ backgroundColor: '#1A1A33', opacity: overlayOpacity }}
-        />
+        {/* LEFT — type */}
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          {/* Eyebrow */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase',
+            color: '#7A857F', marginBottom: 24,
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#1F5538', animation: 'sirius-pulse 2.5s ease-in-out infinite' }} />
+            Regeneración como Servicio · Colombia
+          </div>
 
-        {/* Fade inferior hacia blanco */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-white to-transparent z-10" />
+          {/* H1 */}
+          <h1 style={{
+            fontFamily: '"Museo Slab", Georgia, serif',
+            fontSize: 'clamp(44px, 6.4vw, 92px)',
+            fontWeight: 300, lineHeight: 0.98,
+            letterSpacing: '-0.02em',
+            color: '#0E1814',
+            margin: '0 0 28px',
+          }}>
+            Biochar es la{' '}
+            <em style={{ fontStyle: 'italic', fontWeight: 300, color: '#1F5538', fontFamily: 'Georgia, "Museo Slab", serif' }}>
+              infraestructura
+            </em>
+            <br />donde vive la vida.
+          </h1>
+
+          <p style={{ fontSize: 19, lineHeight: 1.55, color: '#3A4540', maxWidth: 560, margin: '0 0 36px' }}>
+            Producimos biochar inoculado con bacterias nativas y lo entregamos a agricultores como un servicio.
+            Donde la academia recomienda 5 a 20 toneladas por hectárea, Sirius logra el mismo efecto con{' '}
+            <strong style={{ fontWeight: 600, color: '#0E1814' }}>10 kilogramos</strong>.
+          </p>
+
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <a href="#contacto" onClick={e => { e.preventDefault(); scrollTo('#contacto'); }} className="btn-primary">
+              Solicitar pitch deck
+            </a>
+            <a href="#tesis" onClick={e => { e.preventDefault(); scrollTo('#tesis'); }} className="btn-ghost">
+              Ver tesis completa
+            </a>
+          </div>
+
+          {/* Tickers */}
+          <div style={{
+            marginTop: 56, paddingTop: 24,
+            borderTop: '1px solid rgba(14,24,20,0.10)',
+            display: 'flex', flexWrap: 'wrap', gap: '12px 28px',
+          }}>
+            {TICKERS.map(x => (
+              <span key={x} style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#7A857F' }}>
+                {x}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT — hero image */}
+        <div style={{ position: 'relative', minHeight: 580 }}>
+          <div style={{ position: 'absolute', inset: 0, borderRadius: 4, overflow: 'hidden', boxShadow: '0 30px 80px rgba(14,24,20,0.18)' }}>
+            <Image
+              src="/images/sunrise-aerial.jpg"
+              alt="Vista aérea Barranca de Upía"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, transparent 50%, rgba(14,24,20,0.35))' }} />
+          </div>
+
+          {/* Floating metric card */}
+          <div style={{
+            position: 'absolute', left: -32, bottom: -32,
+            background: '#FFFFFF',
+            border: '1px solid rgba(14,24,20,0.10)',
+            padding: '20px 22px', borderRadius: 6,
+            boxShadow: '0 18px 48px rgba(14,24,20,0.14)',
+            maxWidth: 280, zIndex: 2,
+          }}>
+            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#1F5538', marginBottom: 10 }}>
+              Métrica clave
+            </div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+              <span style={{ fontFamily: 'Georgia, serif', fontSize: 56, fontWeight: 300, color: '#0E1814', letterSpacing: '-0.03em', lineHeight: 1 }}>10</span>
+              <span style={{ fontSize: 18, color: '#3A4540', fontWeight: 500 }}>kg/ha</span>
+            </div>
+            <div style={{ fontSize: 13, color: '#7A857F', marginTop: 6 }}>vs 5–20 t/ha académico</div>
+          </div>
+
+          {/* Place tag */}
+          <div style={{
+            position: 'absolute', right: 18, top: 18,
+            background: 'rgba(14,24,20,0.62)',
+            backdropFilter: 'blur(8px)',
+            color: '#F1E9DA',
+            padding: '8px 14px', borderRadius: 999,
+            fontSize: 11, fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase',
+            display: 'inline-flex', alignItems: 'center', gap: 8, zIndex: 2,
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#C77A2C' }} />
+            Barranca de Upía · 04:42
+          </div>
+        </div>
       </div>
 
-      {/* ── Contenido principal ── */}
-      <motion.div
-        className="relative z-20 container mx-auto px-6 text-center max-w-5xl"
-        style={{ y: textY, opacity: textOpacity }}
-      >
+      {/* Scroll hint */}
+      <div style={{
+        position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+        bottom: 32, color: '#7A857F',
+        fontSize: 10, fontWeight: 600, letterSpacing: '0.3em', textTransform: 'uppercase',
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
+        Continúa
+        <span style={{ display: 'inline-block', width: 1, height: 28, background: 'rgba(14,24,20,0.22)', animation: 'scrollHint 2.4s ease-in-out infinite' }} />
+      </div>
 
-        {/* Tag — Utile Black / DM Sans Black */}
-        <motion.span
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md
-                     border border-white/20 text-white/90 px-5 py-2 rounded-full
-                     font-label text-[11px] mb-10"
-        >
-          <span className="w-2 h-2 rounded-full bg-[#00B602] animate-pulse" />
-          Agricultura Regenerativa
-        </motion.span>
-
-        {/* H1 — Utile Bold / DM Sans Bold — letra spacing -0.02em del manual */}
-        <motion.h1
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-5xl sm:text-6xl md:text-7xl font-black text-white
-                     leading-[1.05] tracking-tight mb-6"
-        >
-          Regeneramos suelos.{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00A3FF] to-[#00B602]">
-            Transformamos
-          </span>{' '}
-          la agricultura.
-        </motion.h1>
-
-        {/* Frase secundaria — IvyPresto Italic (Cormorant Garamond) */}
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="font-brand-accent text-2xl sm:text-3xl text-white/70 mb-4 leading-relaxed"
-        >
-          "Let's get Sirius!"
-        </motion.p>
-
-        {/* Subtítulo — Utile Regular / DM Sans Regular */}
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-lg sm:text-xl text-white/65 mb-12 max-w-2xl mx-auto leading-relaxed font-light"
-        >
-          Bioinsumos de alto impacto creados con pirólisis y biotecnología
-          para nutrir el suelo y potenciar tus cultivos.
-        </motion.p>
-
-        {/* CTAs — Botones Sirius (Manual p.45) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.75 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          {/* Botón Opción 01 — con drop shadow 40% / Azul Barranca */}
-          <Link href="/contacto" className="btn-sirius-primary">
-            Solicitar asesoría
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-
-          {/* Botón Opción 02 — simple, sin shadow */}
-          <Link href="https://pedidos-sirius.vercel.app/" className="btn-sirius-secondary">
-            Ver productos
-          </Link>
-        </motion.div>
-
-      </motion.div>
-
-      {/* ── Indicador de scroll ── */}
-      <motion.div
-        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-white/25 flex justify-center pt-2">
-          <div className="w-1.5 h-2.5 rounded-full bg-white/50" />
-        </div>
-        <span className="font-label text-[9px] text-white/35 tracking-widest">scroll</span>
-      </motion.div>
-
-      {/* ── Estrella Sirius — detalle decorativo ── */}
-      <motion.div
-        className="absolute top-8 right-8 z-20 hidden lg:block"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-      >
-        <div className="flex items-center gap-2 bg-white/8 backdrop-blur-sm border border-white/12 rounded-full px-4 py-2">
-          <div className="w-2 h-2 rounded-full bg-[#00A3FF] animate-pulse-slow" />
-          <span className="font-label text-[9px] text-white/50">Sirius — La Estrella más Brillante</span>
-        </div>
-      </motion.div>
-
+      <style>{`
+        @media (max-width: 980px) {
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-grid > div:last-child { min-height: 360px !important; }
+        }
+        @media (max-width: 980px) {
+          .hero-grid > div:last-child { position: relative !important; }
+        }
+      `}</style>
     </section>
   );
-};
-
-export default HeroSection;
+}
