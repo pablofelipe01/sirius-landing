@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Globe from '@/components/ui/globe';
 
 // ─── PALETA COSMIC ──────────────────────────────────────────
 const C = {
@@ -89,7 +90,6 @@ function WaterCursor() {
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.matchMedia('(hover: none)').matches) return;
 
     const canvas = ref.current;
     if (!canvas) return;
@@ -119,9 +119,9 @@ function WaterCursor() {
 
     let lastX = -1, lastY = -1, lastDrop = 0;
 
-    const onMove = (e: MouseEvent) => {
-      const x = Math.floor(e.clientX / SCALE);
-      const y = Math.floor(e.clientY / SCALE);
+    const dropAt = (clientX: number, clientY: number) => {
+      const x = Math.floor(clientX / SCALE);
+      const y = Math.floor(clientY / SCALE);
       if (x < 1 || y < 1 || x >= gw - 1 || y >= gh - 1) return;
       const now = performance.now();
       if (now - lastDrop < 14) return;
@@ -136,9 +136,18 @@ function WaterCursor() {
       lastX = x; lastY = y;
     };
 
-    const onClick = (e: MouseEvent) => {
-      const x = Math.floor(e.clientX / SCALE);
-      const y = Math.floor(e.clientY / SCALE);
+    const onMove = (e: MouseEvent) => dropAt(e.clientX, e.clientY);
+
+    const onTouch = (e: TouchEvent) => {
+      for (let i = 0; i < e.touches.length; i++) {
+        const t = e.touches[i];
+        dropAt(t.clientX, t.clientY);
+      }
+    };
+
+    const burstAt = (clientX: number, clientY: number) => {
+      const x = Math.floor(clientX / SCALE);
+      const y = Math.floor(clientY / SCALE);
       if (x < 2 || y < 2 || x >= gw - 2 || y >= gh - 2) return;
       for (let oy = -2; oy <= 2; oy++)
         for (let ox = -2; ox <= 2; ox++) {
@@ -147,6 +156,9 @@ function WaterCursor() {
           curr[(y + oy) * gw + (x + ox)] -= 600 * (1 - d / 2.4);
         }
     };
+
+    const onClick  = (e: MouseEvent)  => burstAt(e.clientX, e.clientY);
+    const onTap    = (e: TouchEvent)  => { if (e.touches.length === 1) burstAt(e.touches[0].clientX, e.touches[0].clientY); };
 
     // teal: r=78 g=205 b=196
     const [aR, aG, aB] = [78, 205, 196];
@@ -188,16 +200,20 @@ function WaterCursor() {
       raf = requestAnimationFrame(tick);
     };
 
-    window.addEventListener('resize',    resize);
-    window.addEventListener('mousemove', onMove,  { passive: true });
-    window.addEventListener('click',     onClick);
+    window.addEventListener('resize',     resize);
+    window.addEventListener('mousemove',  onMove,  { passive: true });
+    window.addEventListener('touchmove',  onTouch, { passive: true });
+    window.addEventListener('touchstart', onTap,   { passive: true });
+    window.addEventListener('click',      onClick);
     raf = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener('resize',    resize);
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('click',     onClick);
+      window.removeEventListener('resize',     resize);
+      window.removeEventListener('mousemove',  onMove);
+      window.removeEventListener('touchmove',  onTouch);
+      window.removeEventListener('touchstart', onTap);
+      window.removeEventListener('click',      onClick);
     };
   }, []);
 
@@ -235,7 +251,7 @@ export default function HeroSection() {
         <Starfield count={280} />
 
         {/* Anillos decorativos */}
-        <div aria-hidden style={{
+        <div aria-hidden className="hero-rings" style={{
           position: 'absolute', right: '-6vw', top: '50%',
           transform: 'translateY(-50%)',
           width: '56vw', maxWidth: 820, aspectRatio: '1/1',
@@ -243,7 +259,7 @@ export default function HeroSection() {
           border: `1px solid ${C.accent}1a`,
           pointerEvents: 'none', zIndex: 1,
         }} />
-        <div aria-hidden style={{
+        <div aria-hidden className="hero-rings" style={{
           position: 'absolute', right: '2vw', top: '50%',
           transform: 'translateY(-50%)',
           width: '40vw', maxWidth: 580, aspectRatio: '1/1',
@@ -251,7 +267,7 @@ export default function HeroSection() {
           border: `1px solid ${C.accent}12`,
           pointerEvents: 'none', zIndex: 1,
         }} />
-        <div aria-hidden style={{
+        <div aria-hidden className="hero-rings" style={{
           position: 'absolute', right: '10vw', top: '50%',
           transform: 'translateY(-50%)',
           width: '36vw', maxWidth: 500, aspectRatio: '1/1',
@@ -260,62 +276,57 @@ export default function HeroSection() {
           pointerEvents: 'none', zIndex: 1,
         }} />
 
+        {/* Globe centrado en los anillos decorativos */}
+        <div className="hero-globe" style={{
+          position: 'absolute', right: 'calc(22vw - 170px)', top: '50%',
+          transform: 'translateY(-50%)',
+          zIndex: 2, pointerEvents: 'none',
+        }}>
+          <Globe size={320} />
+        </div>
+
         {/* Contenido */}
-        <div style={{
+        <div className="hero-content sirius-container" style={{
           position: 'relative', zIndex: 2,
           maxWidth: 1320, margin: '0 auto',
           padding: '130px 48px 60px',
           width: '100%',
+          boxSizing: 'border-box',
           opacity:   loaded ? 1 : 0,
           transform: loaded ? 'none' : 'translateY(20px)',
           transition: 'opacity 0.9s ease, transform 0.9s ease',
         }}>
 
-          {/* Eyebrow */}
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: 10,
-            fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase',
-            color: C.inkDim, fontFamily: '"Museo Slab", Georgia, serif',
-            marginBottom: 28,
-          }}>
-            <span style={{
-              width: 7, height: 7, borderRadius: '50%',
-              background: C.accent,
-              boxShadow: `0 0 8px ${C.accent}`,
-              display: 'inline-block',
-              animation: 'siriusPulse 2.4s ease-in-out infinite',
-            }} />
-            Regeneración como Servicio · Colombia
-          </div>
+
 
           {/* H1 */}
-          <h1 style={{
+          <h1 className="hero-h1" style={{
             fontFamily: '"Museo Slab", Georgia, serif',
-            fontSize: 'clamp(52px, 7.8vw, 112px)',
+            fontSize: 'clamp(36px, 6.8vw, 102px)',
             fontWeight: 300,
-            lineHeight: 1.0,
+            lineHeight: 1.05,
             letterSpacing: '-0.02em',
             color: C.ink,
             margin: '0 0 28px',
             maxWidth: 860,
           }}>
-            Biochar es la{' '}
+            Devolverle vida a la tierra es{' '}
             <em style={{
               fontStyle: 'italic', fontWeight: 300,
               color: C.accent,
               fontFamily: 'Georgia, serif',
             }}>
-              infraestructura
+              devolverle futuro
             </em>
             <br />
-            donde vive la vida.
+            al planeta.
           </h1>
 
           {/* Lede */}
-          <p style={{
-            fontSize: 19, lineHeight: 1.6,
+          <p className="hero-lede" style={{
+            fontSize: 'clamp(15px, 2vw, 19px)', lineHeight: 1.65,
             color: C.inkSoft,
-            maxWidth: 620, margin: '0 0 44px',
+            maxWidth: 560, margin: '0 0 44px',
             fontFamily: '"Museo Slab", Georgia, serif',
             fontWeight: 300,
           }}>
@@ -325,7 +336,7 @@ export default function HeroSection() {
           </p>
 
           {/* CTAs */}
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginBottom: 72 }}>
+          <div className="hero-ctas" style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginBottom: 72 }}>
             <a href="#contacto" onClick={e => {
               e.preventDefault();
               const el = document.getElementById('contacto');
@@ -373,7 +384,7 @@ export default function HeroSection() {
             borderTop: `1px solid ${C.rule}`,
           }} className="hero-metrics">
             {METRICS.map((m, i) => (
-              <div key={m.l} style={{
+              <div key={m.l} className="hero-metric-cell" style={{
                 padding: '28px 0 8px',
                 borderRight: i < METRICS.length - 1 ? `1px solid ${C.rule}` : 'none',
                 paddingRight: i < METRICS.length - 1 ? 24 : 0,
@@ -400,6 +411,16 @@ export default function HeroSection() {
               </div>
             ))}
           </div>
+
+          {/* Globe mobile — solo visible en ≤768px */}
+          <div className="hero-globe-mobile" style={{
+            display: 'none',
+            justifyContent: 'center',
+            marginTop: 40,
+            paddingBottom: 16,
+          }}>
+            <Globe size={220} />
+          </div>
         </div>
 
         {/* Scroll hint */}
@@ -423,12 +444,45 @@ export default function HeroSection() {
             0%,100% { opacity:0.55; transform:scale(1);    }
             50%     { opacity:1;    transform:scale(1.2);  }
           }
+          @keyframes heroFadeUp {
+            from { opacity:0; transform:translateY(24px); }
+            to   { opacity:1; transform:translateY(0);    }
+          }
           @keyframes scrollHint {
             0%,100% { opacity:0.3; transform:scaleY(0.6); }
             50%     { opacity:1;   transform:scaleY(1);   }
           }
-          @media (max-width:880px) {
+
+          /* ── Tablet (≤880px) ── */
+          @media (max-width: 880px) {
             .hero-metrics { grid-template-columns: repeat(2,1fr) !important; }
+            .hero-metric-cell { padding-left: 16px !important; padding-right: 16px !important; }
+            .hero-metric-cell:nth-child(2n) { border-right: none !important; }
+            .hero-metric-cell:nth-child(odd) { padding-left: 0 !important; }
+          }
+
+          /* ── Mobile (≤768px) ── */
+          @media (max-width: 768px) {
+            .hero-content  { padding: 96px 28px 48px !important; }
+            .hero-rings    { display: none !important; }
+            .hero-globe    { display: none !important; }
+            .hero-globe-mobile { display: flex !important; }
+            .hero-h1       { max-width: 100% !important; }
+            .hero-lede     { max-width: 100% !important; }
+            .hero-ctas     { margin-bottom: 48px !important; }
+          }
+
+          /* ── Small mobile (≤480px) ── */
+          @media (max-width: 480px) {
+            .hero-content  { padding: 88px 20px 40px !important; }
+            .hero-h1       { font-size: clamp(30px, 9vw, 52px) !important; margin-bottom: 18px !important; }
+            .hero-lede     { margin-bottom: 28px !important; }
+            .hero-ctas     { flex-direction: column; align-items: stretch; margin-bottom: 36px !important; }
+            .hero-ctas a   { text-align: center; justify-content: center; }
+            .hero-metrics  { grid-template-columns: repeat(2,1fr) !important; }
+            .hero-metric-cell { padding: 20px 8px 6px !important; }
+            .hero-metric-cell:nth-child(odd)  { padding-left: 0 !important; border-right: 1px solid rgba(232,213,183,0.12) !important; }
+            .hero-metric-cell:nth-child(even) { border-right: none !important; }
           }
         `}</style>
       </section>

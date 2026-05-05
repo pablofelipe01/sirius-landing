@@ -12,7 +12,7 @@ const TEAM = [
 export default function TeamSection() {
   return (
     <section id="equipo" style={{ background: '#FBF7F1', padding: '120px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         <div style={{ marginBottom: 56 }}>
           <div style={{
             fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase',
@@ -57,7 +57,10 @@ export default function TeamSection() {
           ))}
         </div>
       </div>
-      <style>{`@media (max-width: 960px) { .team-grid { grid-template-columns: repeat(2, 1fr) !important; } }`}</style>
+      <style>{`
+        @media (max-width: 960px) { .team-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 400px) { .team-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }

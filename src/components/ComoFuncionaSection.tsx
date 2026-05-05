@@ -11,7 +11,7 @@ const STEPS = [
 export default function ComoFuncionaSection() {
   return (
     <section id="como-funciona" style={{ background: '#FBF7F1', padding: '80px 0 120px' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         {/* Header */}
         <div style={{ marginBottom: 64 }}>
           <div style={{
@@ -69,6 +69,9 @@ export default function ComoFuncionaSection() {
         @media (max-width: 880px) {
           .cf-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 32px 16px !important; }
           .cf-line { display: none !important; }
+        }
+        @media (max-width: 480px) {
+          .cf-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
         }
       `}</style>
     </section>

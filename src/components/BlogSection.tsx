@@ -29,7 +29,7 @@ const RESOURCES = [
 export default function BlogSection() {
   return (
     <section id="blog" style={{ background: '#FBF7F1', padding: '96px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48, flexWrap: 'wrap', gap: 20 }}>
           <div>
             <div style={{

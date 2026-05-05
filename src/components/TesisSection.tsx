@@ -26,7 +26,7 @@ const POINTS = [
 export default function TesisSection() {
   return (
     <section id="tesis" style={{ background: '#FBF7F1', padding: '120px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         {/* Header */}
         <div style={{ marginBottom: 64 }}>
           <div style={{

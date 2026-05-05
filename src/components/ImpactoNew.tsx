@@ -32,7 +32,7 @@ export default function ImpactoSection() {
         background: 'radial-gradient(closest-side, rgba(31,85,56,0.22), transparent)', pointerEvents: 'none',
       }} />
 
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px', position: 'relative' }} ref={ref}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px', position: 'relative' }} ref={ref}>
         {/* Eyebrow */}
         <div style={{
           fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase',
@@ -87,7 +87,8 @@ export default function ImpactoSection() {
         </div>
       </div>
 
-      <style>{`@media (max-width: 880px) { .imp-grid { grid-template-columns: repeat(2, 1fr) !important; } }`}</style>
+      <style>{`@media (max-width: 880px) { .imp-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+      @media (max-width: 480px) { .imp-grid { grid-template-columns: 1fr !important; } }`}</style>
     </section>
   );
 }

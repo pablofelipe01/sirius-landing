@@ -30,7 +30,7 @@ const CERTS = [
 export default function CertificacionesSection() {
   return (
     <section id="certificaciones" style={{ background: '#F3EEE4', padding: '96px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         <div style={{ marginBottom: 52 }}>
           <div style={{
             fontSize: 11, fontWeight: 600, letterSpacing: '0.24em', textTransform: 'uppercase',
@@ -85,7 +85,10 @@ export default function CertificacionesSection() {
           ))}
         </div>
       </div>
-      <style>{`@media (max-width: 960px) { .cert-grid { grid-template-columns: repeat(2, 1fr) !important; } }`}</style>
+      <style>{`
+        @media (max-width: 960px) { .cert-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 480px)  { .cert-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }

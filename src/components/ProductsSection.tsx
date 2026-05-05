@@ -84,7 +84,7 @@ function ProductCard({ p }: { p: typeof PRODUCTS[0] }) {
 export default function ProductsSection() {
   return (
     <section id="productos" style={{ background: '#FBF7F1', padding: '120px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         {/* Header */}
         <div style={{ marginBottom: 56 }}>
           <div style={{
@@ -114,7 +114,10 @@ export default function ProductsSection() {
         </div>
       </div>
 
-      <style>{`@media (max-width: 880px) { .prod-grid { grid-template-columns: 1fr !important; } }`}</style>
+      <style>{`
+        @media (max-width: 880px) { .prod-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        @media (max-width: 580px) { .prod-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   );
 }

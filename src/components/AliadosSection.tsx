@@ -26,7 +26,7 @@ const QUOTES = [
 export default function AliadosSection() {
   return (
     <section id="aliados" style={{ background: '#FBF7F1', padding: '96px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         {/* Section header */}
         <div style={{ marginBottom: 56 }}>
           <div style={{

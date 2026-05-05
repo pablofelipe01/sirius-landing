@@ -74,7 +74,7 @@ export default function CalculadoraSection() {
 
   return (
     <section id="calculadora" style={{ background: '#FBF7F1', padding: '120px 0' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         {/* Header */}
         <div style={{ marginBottom: 56 }}>
           <div style={{
@@ -103,7 +103,7 @@ export default function CalculadoraSection() {
           background: '#FFFFFF', border: '1px solid rgba(14,24,20,0.10)', borderRadius: 6, overflow: 'hidden',
         }} className="calc-grid">
           {/* Inputs */}
-          <div style={{ padding: 40, borderRight: '1px solid rgba(14,24,20,0.10)' }} className="calc-inputs">
+          <div className="calc-inputs calc-panel" style={{ padding: 40, borderRight: '1px solid rgba(14,24,20,0.10)' }}>
             <Slider label="Hectáreas a regenerar" value={hectares} setValue={setHectares} min={10} max={5000} step={10} unit="ha" />
             <Slider label="Precio crédito carbono" value={price} setValue={setPrice} min={50} max={400} step={5} unit="USD/t" />
             <Slider label="Horizonte (años)" value={years} setValue={setYears} min={1} max={20} step={1} unit="años" />
@@ -113,7 +113,7 @@ export default function CalculadoraSection() {
           </div>
 
           {/* Outputs */}
-          <div style={{ padding: 40, background: '#F3EEE4' }}>
+          <div className="calc-panel" style={{ padding: 40, background: '#F3EEE4' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 32, marginBottom: 32 }}>
               <Output label="CO₂ secuestrado"          value={fmt(co2e, 1)}      unit="tCO₂e"   accent />
               <Output label="Ingresos carbono est."    value={'$' + fmt(revenue, 0)}  unit="USD" />

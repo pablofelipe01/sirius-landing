@@ -309,3 +309,66 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================================
+   SIRIUS — Global Responsive Styles
+   Breakpoints: xs=480  sm=640  md=768  lg=1024
+   ============================================================ */
+
+/* Prevent horizontal overflow */
+html, body { overflow-x: hidden; }
+
+/* ── Inner containers: tighter horizontal padding on small screens ── */
+@media (max-width: 480px) {
+  .sirius-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* ── Section vertical padding reduction ── */
+@media (max-width: 768px) {
+  #tesis, #como-funciona, #productos, #impacto,
+  #calculadora, #proceso, #certificaciones,
+  #equipo, #aliados, #blog, #contacto {
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+}
+@media (max-width: 480px) {
+  #tesis, #como-funciona, #productos, #impacto,
+  #calculadora, #proceso, #certificaciones,
+  #equipo, #aliados, #blog, #contacto {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+}
+
+/* ── Hero: hide decorative rings & globe on mobile ── */
+@media (max-width: 768px) {
+  .hero-rings, .hero-globe { display: none !important; }
+}
+
+/* ── All grids → 1 column on very small screens ── */
+@media (max-width: 480px) {
+  .cf-grid     { grid-template-columns: 1fr !important; gap: 24px !important; }
+  .imp-grid    { grid-template-columns: 1fr !important; gap: 0  !important; }
+  .cert-grid   { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .team-grid   { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+  .hero-metrics{ grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* ── Biofabrica badge: prevent right overflow when stacked ── */
+@media (max-width: 960px) {
+  .bfab-badge { right: 0 !important; }
+}
+
+/* ── Calculadora panels: reduce inner padding on mobile ── */
+@media (max-width: 640px) {
+  .calc-panel { padding: 24px !important; }
+}
+
+/* ── NavBar logo sizing on mobile ── */
+@media (max-width: 480px) {
+  .sirius-logo { width: 120px !important; height: auto !important; }
+}

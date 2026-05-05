@@ -46,7 +46,7 @@ export default function ContactoSection() {
       background: 'radial-gradient(ellipse 120% 80% at 60% 40%, #143329 0%, #0B1F17 60%, #061410 100%)',
       padding: '120px 0',
     }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }} className="ct-grid">
 
           {/* Left: copy */}

@@ -12,7 +12,7 @@ const STATS = [
 export default function BiofabricaSection() {
   return (
     <section id="proceso" style={{ background: '#FBF7F1', padding: '120px 0', overflow: 'hidden' }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
+      <div className="sirius-container" style={{ maxWidth: 1320, margin: '0 auto', padding: '0 32px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }} className="bfab-grid">
           {/* Left: image */}
           <div style={{ position: 'relative' }}>
@@ -25,7 +25,7 @@ export default function BiofabricaSection() {
               />
             </div>
             {/* Badge */}
-            <div style={{
+            <div className="bfab-badge" style={{
               position: 'absolute', bottom: 24, right: -16,
               background: '#FBF7F1', border: '1px solid rgba(14,24,20,0.10)',
               borderRadius: 4, padding: '14px 20px', boxShadow: '0 4px 24px rgba(14,24,20,0.12)',
@@ -83,6 +83,7 @@ export default function BiofabricaSection() {
       <style>{`
         @media (max-width: 960px) {
           .bfab-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .bfab-badge { right: 0 !important; }
         }
       `}</style>
     </section>
