@@ -77,7 +77,7 @@ export default function ContactoSection() {
             {/* Info cards */}
             {[
               { lbl: 'Ubicación',       val: 'Barranca de Upía, Meta · Colombia' },
-              { lbl: 'Correo',          val: 'hola@siriusregeneration.com' },
+              { lbl: 'Correo',          val: 'adm@siriusregenerative.com' },
               { lbl: 'Tiempo respuesta',val: '< 48 horas hábiles' },
             ].map(c => (
               <div key={c.lbl} style={{
