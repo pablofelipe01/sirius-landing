@@ -76,13 +76,13 @@ export default function NavBar() {
       </div>
 
       {mobileOpen && (
-        <div style={{ background: topMode ? 'rgba(5,5,16,0.97)' : 'rgba(255,255,255,0.98)', backdropFilter: 'blur(16px)', borderTop: topMode ? '1px solid rgba(241,233,218,0.08)' : '1px solid rgba(14,24,20,0.08)', padding: '16px 32px 28px' }}>
+        <div style={{ background: 'rgba(5,5,16,0.97)', backdropFilter: 'blur(16px)', borderTop: '1px solid rgba(241,233,218,0.08)', padding: '16px 32px 28px' }}>
           {NAV_LINKS.map(l => (
             <a key={l.href} href={l.href} onClick={e => { e.preventDefault(); scrollTo(l.href); }} style={{
               display: 'block', padding: '13px 0',
               fontSize: 16, fontWeight: 600, color: ink,
               textDecoration: 'none', fontFamily: '"Museo Slab", Georgia, serif',
-              borderBottom: topMode ? '1px solid rgba(241,233,218,0.08)' : '1px solid rgba(14,24,20,0.07)',
+              borderBottom: '1px solid rgba(241,233,218,0.08)',
             }}>
               {l.label}
             </a>
