@@ -423,22 +423,6 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div style={{
-          position: 'absolute', left: '50%', transform: 'translateX(-50%)',
-          bottom: 28, display: 'flex', alignItems: 'center', gap: 10,
-          color: C.inkDim, fontSize: 9, fontWeight: 600,
-          letterSpacing: '0.32em', textTransform: 'uppercase',
-          fontFamily: '"Museo Slab", Georgia, serif', zIndex: 2,
-        }}>
-          Continúa
-          <span style={{
-            display: 'inline-block', width: 1, height: 26,
-            background: C.inkDim,
-            animation: 'scrollHint 2.4s ease-in-out infinite',
-          }} />
-        </div>
-
         <style>{`
           @keyframes siriusPulse {
             0%,100% { opacity:0.55; transform:scale(1);    }

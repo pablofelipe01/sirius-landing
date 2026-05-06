@@ -18,9 +18,6 @@
           <div style={{ fontSize: 12, color: 'rgba(241,233,218,0.40)', letterSpacing: '0.04em' }}>
             © Sirius Regenerative Solutions S.A.S ZOMAC · Barranca de Upía, Meta, Colombia
           </div>
-          <div style={{ fontSize: 12, color: 'rgba(241,233,218,0.30)', letterSpacing: '0.04em' }}>
-            Hecho con alegría en Colombia.
-          </div>
         </div>
       </div>
     </footer>
