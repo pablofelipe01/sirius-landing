@@ -330,9 +330,7 @@ export default function HeroSection() {
             fontFamily: '"Museo Slab", Georgia, serif',
             fontWeight: 300,
           }}>
-            Producimos biochar inoculado con bacterias nativas y lo entregamos a
-            agricultores como un servicio. Donde la academia recomienda 5 a 20
-            toneladas por hectárea, Sirius logra el mismo efecto con 10 kilogramos.
+            No vendemos un producto. Devolvemos la capacidad productiva del suelo de forma medible, trazable y permanente.
           </p>
 
           {/* CTAs */}
@@ -353,7 +351,7 @@ export default function HeroSection() {
               onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.transform = 'translateY(-2px)'; el.style.boxShadow = `0 14px 36px ${C.accent}66`; }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.transform = ''; el.style.boxShadow = `0 8px 28px ${C.accent}44`; }}
             >
-              Solicitar pitch deck <span style={{ fontSize: 14 }}>→</span>
+              Contáctenos <span style={{ fontSize: 14 }}>→</span>
             </a>
 
             <a href="#tesis" onClick={e => {

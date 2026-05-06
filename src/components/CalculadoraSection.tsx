@@ -121,7 +121,7 @@ export default function CalculadoraSection() {
               <Output label="Biochar requerido"        value={fmt(biocharKg, 0)}       unit="kg" />
             </div>
             <div style={{ paddingTop: 24, borderTop: '1px solid rgba(14,24,20,0.10)' }}>
-              <a href="#contacto" className="btn-primary">Solicitar pitch deck</a>
+              <a href="#contacto" className="btn-primary">Contáctenos</a>
             </div>
           </div>
         </div>

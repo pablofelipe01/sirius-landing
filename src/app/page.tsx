@@ -7,6 +7,7 @@ import CalculadoraSection from '@/components/CalculadoraSection';
 import BiofabricaSection from '@/components/BiofabricaNew';
 import CertificacionesSection from '@/components/CertificacionesSection';
 import TeamSection from '@/components/TeamSection';
+import PilaresSection from '@/components/PilaresSection';
 import AliadosSection from '@/components/AliadosSection';
 import BlogSection from '@/components/BlogSection';
 import ContactoSection from '@/components/ContactoNew';
@@ -23,6 +24,7 @@ export default function Home() {
       <BiofabricaSection />
       <CertificacionesSection />
       <TeamSection />
+      <PilaresSection />
       <AliadosSection />
       <BlogSection />
       <ContactoSection />
