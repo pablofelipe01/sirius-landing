@@ -92,14 +92,7 @@ const NavBar = () => {
                   className="absolute top-full right-0 mt-2 w-48 bg-black/80 backdrop-blur-sm rounded-lg shadow-lg border border-white/10"
                 >
                   <div className="py-2">
-                    <Link 
-                      href="/equipo" 
-                      className="block px-4 py-2 text-white hover:bg-[#5A7836]/30 transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Equipo
-                    </Link>
-                    <Link 
+                    <Link
                       href="/inovacion" 
                       className="block px-4 py-2 text-white hover:bg-[#5A7836]/30 transition-colors"
                       onClick={() => setIsMenuOpen(false)}
@@ -170,14 +163,7 @@ const NavBar = () => {
             >
               Contáctenos
             </Link>
-            <Link 
-              href="/equipo" 
-              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-[#5A7836]/30 transition-all"
-              onClick={() => setIsOpen(false)}
-            >
-              Equipo
-            </Link>
-            <Link 
+            <Link
               href="/inovacion" 
               className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-[#5A7836]/30 transition-all"
               onClick={() => setIsOpen(false)}
