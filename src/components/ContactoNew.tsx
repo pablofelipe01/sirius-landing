@@ -52,7 +52,7 @@ const ContactoFinalSection = () => {
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">✉️</span>
-                  <span>marketingsirius@siriusregenerative.com</span>
+                  <span>marketing@siriusregenerative.com</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">🕒</span>

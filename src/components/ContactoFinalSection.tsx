@@ -75,7 +75,7 @@ const ContactoFinalSection = () => {
     {
       icon: '✉️',
       title: 'Correo',
-      info: 'marketingsirius@siriusregenerative.com',
+      info: 'marketing@siriusregenerative.com',
       color: 'bg-purple-100 text-purple-600'
     },
     {

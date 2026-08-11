@@ -115,12 +115,12 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">📞</span>
-                <span className="text-gray-400 text-sm sm:text-base">+57 320 865 3324</span>
+                <span className="text-gray-400 text-sm sm:text-base">+57 320 956 8566</span>
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">✉️</span>
-                <a href="mailto:marketingsirius@siriusregenerative.com" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base break-all">
-                  marketingsirius@siriusregenerative.com
+                <a href="mailto:marketing@siriusregenerative.com" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base break-all">
+                  marketing@siriusregenerative.com
                 </a>
               </li>
               <li className="flex items-start mt-3 sm:mt-4">
