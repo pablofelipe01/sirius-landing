@@ -45,7 +45,7 @@ const Footer = () => {
                 <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
               </a>
               {/* <a 
-                href="https://wa.me/573208653324" 
+                href="https://wa.me/573209568566"
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-green-400 transition-colors"
@@ -115,7 +115,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">📞</span>
-                <span className="text-gray-400 text-sm sm:text-base">+57 320 956 8566</span>
+                <span className="text-gray-400 text-sm sm:text-base">+57 320 9568566</span>
               </li>
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">✉️</span>

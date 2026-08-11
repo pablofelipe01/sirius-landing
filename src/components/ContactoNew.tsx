@@ -48,7 +48,7 @@ const ContactoFinalSection = () => {
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">📞</span>
-                  <span>+57 320 956 8566</span>
+                  <span>+57 320 9568566</span>
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">✉️</span>

@@ -69,7 +69,7 @@ const ContactoFinalSection = () => {
     {
       icon: '📞',
       title: 'Teléfono',
-      info: '+57 320 956 8566',
+      info: '+57 320 9568566',
       color: 'bg-green-100 text-green-600'
     },
     {

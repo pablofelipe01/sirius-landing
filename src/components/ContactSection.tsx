@@ -267,7 +267,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700 text-sm sm:text-base">Teléfono</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">+57 320 865 3324</p>
+                    <p className="text-gray-600 text-sm sm:text-base">+57 320 9568566</p>
                   </div>
                 </div>
                 
@@ -279,7 +279,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700 text-sm sm:text-base">Correo</h4>
-                    <p className="text-gray-600 text-sm sm:text-base break-all">marketingsirius@siriusregenerative.com</p>
+                    <p className="text-gray-600 text-sm sm:text-base break-all">marketing@siriusregenerative.com</p>
                   </div>
                 </div>
                 
@@ -320,7 +320,7 @@ const ContactSection = () => {
                   <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 {/* <a 
-                  href="https://wa.me/573132121019" 
+                  href="https://wa.me/573209568566"
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="bg-white/20 hover:bg-white/30 p-3 rounded-full transition-colors"
