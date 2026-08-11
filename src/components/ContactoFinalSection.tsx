@@ -59,7 +59,13 @@ const ContactoFinalSection = () => {
     }
   ];
 
-  const contactInfo = [
+  const contactInfo: {
+    icon: string;
+    title: string;
+    info: string;
+    info2?: string;
+    color: string;
+  }[] = [
     {
       icon: '📍',
       title: 'Dirección',
@@ -70,6 +76,7 @@ const ContactoFinalSection = () => {
       icon: '📞',
       title: 'Teléfono',
       info: '+57 320 9568566',
+      info2: '+57 321 2206923',
       color: 'bg-green-100 text-green-600'
     },
     {
@@ -217,6 +224,9 @@ const ContactoFinalSection = () => {
                       <div>
                         <h4 className="font-semibold text-white">{item.title}</h4>
                         <p className="text-white/80 text-sm">{item.info}</p>
+                        {item.info2 && (
+                          <p className="text-white/80 text-sm">{item.info2}</p>
+                        )}
                       </div>
                     </div>
                   ))}

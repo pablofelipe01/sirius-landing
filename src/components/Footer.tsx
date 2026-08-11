@@ -118,6 +118,10 @@ const Footer = () => {
                 <span className="text-gray-400 text-sm sm:text-base">+57 320 9568566</span>
               </li>
               <li className="flex items-start">
+                <span className="text-gray-400 mr-2 text-sm">📞</span>
+                <span className="text-gray-400 text-sm sm:text-base">+57 321 2206923</span>
+              </li>
+              <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">✉️</span>
                 <a href="mailto:marketing@siriusregenerative.com" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base break-all">
                   marketing@siriusregenerative.com

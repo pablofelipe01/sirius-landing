@@ -51,6 +51,10 @@ const ContactoFinalSection = () => {
                   <span>+57 320 9568566</span>
                 </div>
                 <div className="flex items-center">
+                  <span className="text-2xl mr-3">📞</span>
+                  <span>+57 321 2206923</span>
+                </div>
+                <div className="flex items-center">
                   <span className="text-2xl mr-3">✉️</span>
                   <span>marketing@siriusregenerative.com</span>
                 </div>
