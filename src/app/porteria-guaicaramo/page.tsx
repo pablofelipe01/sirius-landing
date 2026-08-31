@@ -13,13 +13,13 @@ import type { Metadata } from 'next';
  *   04  Guaicaramo Portería — consulta ............. /Guaicaramo Porteria.jpeg
  *   05  Guaicaramo Portería — autorizado ........... /Consulta Autorizado.jpeg
  *   06  Guaicaramo Portería — sin autorización . /Consulta No autorizado.jpeg
- *   07  Registros de visitas / histórico ......................... pendiente
+ *   07  Guaicaramo Visitas — registros de visitas . /registro de salidas.jpeg
  */
 
 export const metadata: Metadata = {
-  title: 'Registro y Control de Visitantes — Guaicaramo',
+  title: 'Red mesh y control de acceso — Guaicaramo',
   description:
-    'Cómo se registra, se autoriza y se controla el ingreso de visitantes a la plantación de Guaicaramo.',
+    'Cómo una red mesh con gateway inteligente extiende la operación a los puntos sin cobertura, con el control de visitantes como primer caso.',
   robots: {
     index: false,
     follow: false,
@@ -325,6 +325,60 @@ body:has(.doc-porteria) { background: #F9F7EB; }
   .doc-porteria .contraste{grid-template-columns:1fr}
 }
 
+/* ---------- Resumen problema / solucion ---------- */
+.doc-porteria .resumen{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 32px;margin:0 0 40px;max-width:920px}
+.doc-porteria .resumen > div{padding-left:18px;border-left:3px solid var(--arena)}
+.doc-porteria .resumen > div + div{border-left-color:var(--oliva-fuerte)}
+.doc-porteria .resumen b{
+  display:block;font-size:.66rem;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--oliva);margin-bottom:6px;
+}
+.doc-porteria .resumen p{margin:0;font-size:.98rem;line-height:1.6;color:var(--verde)}
+
+@media (max-width:860px){
+  .doc-porteria .resumen{grid-template-columns:1fr;gap:18px}
+}
+
+/* ---------- Diagrama de la arquitectura ---------- */
+.doc-porteria .flujo{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;margin:36px 0 0}
+.doc-porteria .nodo{
+  position:relative;padding:24px 22px 26px;background:var(--crema-2);
+  border:1px solid var(--hair-suave);border-radius:18px;
+}
+.doc-porteria .nodo::before{
+  content:"";position:absolute;left:-26px;top:50%;width:18px;height:2px;
+  background:var(--oliva-fuerte);border-radius:2px;
+}
+.doc-porteria .nodo::after{
+  content:"";position:absolute;left:-13px;top:50%;
+  width:7px;height:7px;margin-top:-3px;border-radius:50%;background:var(--oliva-fuerte);
+}
+.doc-porteria .nodo:first-child::before,
+.doc-porteria .nodo:first-child::after{display:none}
+.doc-porteria .nodo b{
+  display:block;font-size:.68rem;font-weight:700;letter-spacing:.1em;
+  color:var(--oliva);margin-bottom:12px;
+}
+.doc-porteria .nodo h3{margin-bottom:8px;font-size:1.05rem;font-weight:700}
+.doc-porteria .nodo p{margin:0;font-size:.88rem;line-height:1.6}
+.doc-porteria .nodo--cerebro{background:var(--verde);border-color:var(--verde)}
+.doc-porteria .nodo--cerebro h3{color:#fff}
+.doc-porteria .nodo--cerebro b{color:var(--verde-claro)}
+.doc-porteria .nodo--cerebro p{color:rgba(255,255,255,.80)}
+
+@media (max-width:1024px){
+  .doc-porteria .flujo{grid-template-columns:repeat(2,1fr);gap:34px 34px}
+  .doc-porteria .nodo:nth-child(3)::before,
+  .doc-porteria .nodo:nth-child(3)::after{display:none}
+}
+@media (max-width:720px){
+  .doc-porteria .flujo{grid-template-columns:1fr;gap:30px}
+  .doc-porteria .nodo::before{left:50%;top:-24px;width:2px;height:16px;margin-left:-1px}
+  .doc-porteria .nodo::after{left:50%;top:-8px;margin-left:-3px}
+  .doc-porteria .nodo:nth-child(3)::before,
+  .doc-porteria .nodo:nth-child(3)::after{display:block}
+}
+
 `;
 
 function Marco({
@@ -369,20 +423,38 @@ export default function PorteriaGuaicaramoPage() {
         <header className="portada">
           <p className="marca">
             <i />
-            Guaicaramo <span>· Control de Visitantes</span>
+            Guaicaramo <span>· Red mesh y control de acceso</span>
           </p>
-          <h1>Registro y Control de Visitantes</h1>
+          <h1>Operación en línea donde no hay cobertura</h1>
           <p className="bajada">
-            Quién entra a la plantación, quién lo autorizó y a qué hora entró y salió.
+            Una red mesh con un gateway inteligente lleva los sistemas hasta los puntos ciegos de la plantación. El
+            control de visitantes fue la primera prueba, y ya está en operación.
           </p>
+          <div className="resumen">
+            <div>
+              <b>El problema</b>
+              <p>
+                En los accesos, los lotes y los frentes de trabajo no hay cobertura. Sin red no hay sistema, y sin
+                sistema el control se hacía en papel y por radio.
+              </p>
+            </div>
+            <div>
+              <b>La solución</b>
+              <p>
+                Una malla propia que llega hasta esos puntos y un gateway que la enlaza con el sistema. Hoy la
+                portería consulta, autoriza y registra sin depender de la señal.
+              </p>
+            </div>
+          </div>
+
           <ul className="dato">
             <li>
               <b>En operación desde</b>
               <span>26 de mayo de 2026</span>
             </li>
             <li>
-              <b>Alcance</b>
-              <span>Visitantes de la plantación</span>
+              <b>Primer caso</b>
+              <span>Control de visitantes</span>
             </li>
             <li>
               <b>Punto de control</b>
@@ -404,8 +476,8 @@ export default function PorteriaGuaicaramoPage() {
               </a>
             </li>
             <li>
-              <a href="#mesh">
-                Por qué una red mesh <em>La restricción y la respuesta</em>
+              <a href="#arquitectura">
+                La arquitectura <em>Malla, gateway y sistema</em>
               </a>
             </li>
             <li>
@@ -438,16 +510,22 @@ export default function PorteriaGuaicaramoPage() {
                 Lo que cambió <em>Cifras en operación</em>
               </a>
             </li>
+            <li>
+              <a href="#extension">
+                Hasta dónde llega <em>Lo que sigue</em>
+              </a>
+            </li>
           </ul>
         </nav>
 
         <section id="problema">
           <span className="fase">El punto de partida</span>
-          <h2>Nadie sabía con certeza quién estaba adentro</h2>
+          <h2>El problema no era el software: era la cobertura</h2>
           <p className="prosa">
-            Antes de este sistema no existía un control formal de visitantes. Lo que había era una mezcla: la minuta
-            en papel de la portería, llamadas por radio al área para confirmar a quien llegaba, y listas sueltas en
-            Excel y WhatsApp. Cada ingreso dependía de que alguien contestara.
+            La plantación opera en zonas donde no llega la señal celular ni la red de la empresa. Los accesos, los
+            lotes y los frentes de trabajo quedan por fuera, y ahí ningún sistema en línea alcanza a funcionar. El
+            control de acceso fue donde más se sintió: sin red, lo que quedaba era la minuta en papel, la llamada por
+            radio y listas sueltas en Excel y WhatsApp. Cada ingreso dependía de que alguien contestara.
           </p>
           <div className="casos">
             <div className="caso">
@@ -472,23 +550,46 @@ export default function PorteriaGuaicaramoPage() {
               </p>
             </div>
             <div className="caso">
-              <h3>Sin exigencia externa</h3>
+              <h3>Y no es un solo punto</h3>
               <p>
-                Ninguna auditoría ni certificación lo pidió: el sistema nació por iniciativa del área, al ver el
-                hueco de control.
+                Lo mismo pasa en los demás accesos y en los frentes de trabajo: la falta de cobertura deja a toda esa
+                operación fuera de cualquier sistema.
               </p>
             </div>
           </div>
         </section>
 
-        <section id="mesh">
-          <span className="fase">Por qué una red mesh</span>
-          <h2>El control se decide donde no hay señal</h2>
+        <section id="arquitectura">
+          <span className="fase">La arquitectura</span>
+          <h2>Malla para transportar, gateway para pensar</h2>
           <p className="prosa">
-            La decisión de dejar entrar o no se toma en la barrera, y la barrera es el punto con peor conectividad de
-            la operación. Un sistema que dependiera de internet habría dejado sin control el único lugar donde el
-            control importa.
+            La idea es sencilla: si la señal no llega hasta donde se trabaja, se construye el camino. Nodos enlazados
+            entre sí llevan la información desde los puntos ciegos hasta un gateway ubicado donde sí hay internet.
+            Ese gateway hace de cerebro: conecta la malla con el sistema central y responde consultas sobre los datos
+            del sistema, sin que quien pregunta tenga que estar en línea.
           </p>
+          <div className="flujo">
+            <div className="nodo">
+              <b>01</b>
+              <h3>Punto sin cobertura</h3>
+              <p>Accesos, lotes y frentes de trabajo donde no llega señal celular, wifi ni fibra.</p>
+            </div>
+            <div className="nodo">
+              <b>02</b>
+              <h3>Red mesh</h3>
+              <p>Nodos enlazados entre sí que transportan la información de un punto al siguiente.</p>
+            </div>
+            <div className="nodo nodo--cerebro">
+              <b>03</b>
+              <h3>Gateway con IA</h3>
+              <p>Ubicado donde hay internet. Enlaza la malla con el sistema y responde consultas sobre sus datos.</p>
+            </div>
+            <div className="nodo">
+              <b>04</b>
+              <h3>Sistema en línea</h3>
+              <p>Las aplicaciones y el histórico funcionan como si el campo estuviera conectado.</p>
+            </div>
+          </div>
           <div className="contraste">
             <div className="bloque bloque--limite">
               <b>La restricción</b>
@@ -516,8 +617,8 @@ export default function PorteriaGuaicaramoPage() {
             </div>
           </div>
           <p className="pie">
-            La malla la montó en campo el mismo equipo que desarrolló las aplicaciones, y queda como infraestructura
-            para otros sistemas: está proyectada para rastreo de rutas y para consultas que funcionen sin internet.
+            La malla la montó en campo el mismo equipo que desarrolló las aplicaciones. Hoy recepción ya consulta al
+            gateway sobre los datos del sistema de visitantes.
           </p>
         </section>
 
@@ -698,12 +799,15 @@ export default function PorteriaGuaicaramoPage() {
                 <p className="quien">Portería</p>
                 <h3>Registro de salida</h3>
                 <p>
-                  Al salir, el portero marca la salida. Con eso se sabe en cualquier momento del día quiénes siguen
-                  dentro de la plantación.
+                  Al salir, el portero marca la salida. En el registro, las visitas sin hora de salida son las que
+                  siguen dentro de la plantación en ese momento.
                 </p>
                 <div className="capturas">
-                  {/* Captura 06 — histórico de ingresos y salidas */}
-                  <Marco alto />
+                  {/* Captura 07 — Guaicaramo Visitas, registros de visitas */}
+                  <Marco
+                    src="/registro%20de%20salidas.jpeg"
+                    alt="Registros de visitas con hora de entrada y de salida en Guaicaramo Visitas"
+                  />
                 </div>
               </div>
             </article>
@@ -789,6 +893,33 @@ export default function PorteriaGuaicaramoPage() {
             </div>
           </div>
           <p className="pie">Acumulado desde el 26 de mayo de 2026.</p>
+        </section>
+
+        <section id="extension">
+          <span className="fase">Hasta dónde llega</span>
+          <h2>La misma malla sirve para lo que siga</h2>
+          <p className="prosa">
+            El control de visitantes demostró que el camino funciona: la infraestructura ya está puesta y lo que
+            venga encima no vuelve a pelear con la cobertura.
+          </p>
+          <div className="casos">
+            <div className="caso">
+              <h3>Los demás accesos</h3>
+              <p>Extender el mismo control a las otras porterías y puntos de entrada de la operación.</p>
+            </div>
+            <div className="caso">
+              <h3>Lotes y frentes de trabajo</h3>
+              <p>Llevar los sistemas hasta donde efectivamente se trabaja, hoy sin ninguna conexión.</p>
+            </div>
+            <div className="caso">
+              <h3>Rastreo de rutas</h3>
+              <p>Seguimiento de vehículos y recorridos dentro y entre predios sobre la misma malla.</p>
+            </div>
+            <div className="caso">
+              <h3>Consultas sin internet</h3>
+              <p>Ampliar lo que el gateway responde, para que cualquiera pregunte desde campo y reciba respuesta.</p>
+            </div>
+          </div>
         </section>
 
         <section className="cierre">
