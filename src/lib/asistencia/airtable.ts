@@ -231,6 +231,6 @@ export async function registrarAsistencia(payload: AttendancePayload, ip?: strin
   };
 }
 
-export function isAirtableConfigError(error: unknown) {
+export function isAirtableConfigError(error: unknown): error is AirtableConfigError {
   return error instanceof AirtableConfigError;
 }

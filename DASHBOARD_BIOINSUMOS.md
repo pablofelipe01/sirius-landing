@@ -19,15 +19,20 @@ src/
 
 ### 1. Variables de Entorno
 
-Agrega tu API key de Airtable en el archivo `.env.local`:
+Copia `.env.example` a `.env.local` y llena estos valores (ningún identificador
+vive en el código fuente):
 
 ```env
-AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE=tu_api_key_real_aqui
+AIRTABLE_BASE_ID_SIRIUS_REMISIONES_CORE=
+AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE=
+AIRTABLE_TABLE_REMISIONES=
+AIRTABLE_TABLE_PRODUCTOS_REMITIDOS=
+DASHBOARD_BIOINSUMOS_CLIENTE_ID=
 ```
 
-**⚠️ IMPORTANTE:** 
-- Reemplaza `TU_API_KEY_AQUI` con tu API key real de Airtable
-- Nunca subas este archivo a Git (ya está en `.gitignore`)
+**⚠️ IMPORTANTE:**
+- Los IDs de base, tablas y cliente son configuración: van en el entorno, no en el repo
+- Nunca subas `.env.local` a Git (ya está en `.gitignore`)
 - Para obtener tu API key, ve a: https://airtable.com/create/tokens
 
 ### 2. Instalación
@@ -51,15 +56,15 @@ http://localhost:3000/bioinsumos
 ## 📊 Fuente de Datos
 
 ### Base de Airtable
-- **Base:** Sirius Remisiones Core (`appkw74J0rSYx6Xlh`)
+- **Base:** Sirius Remisiones Core (ID en `AIRTABLE_BASE_ID_SIRIUS_REMISIONES_CORE`)
 - **Tablas:**
-  - `Remisiones` (`tblVqQjwTXyl4sp9V`) - Encabezado de remisiones
-  - `Productos Remitidos` (`tbl98nZkdtoqCT47u`) - Detalle línea por línea
+  - `Remisiones` (ID en `AIRTABLE_TABLE_REMISIONES`) - Encabezado de remisiones
+  - `Productos Remitidos` (ID en `AIRTABLE_TABLE_PRODUCTOS_REMITIDOS`) - Detalle línea por línea
 
 ### Lógica de Filtrado
 
 El endpoint filtra:
-1. **Cliente:** `CL-0001`
+1. **Cliente:** el configurado en `DASHBOARD_BIOINSUMOS_CLIENTE_ID`
 2. **Estado:** `Entregada`
 3. **Año:** `2026`
 
@@ -155,7 +160,7 @@ const COLORS = {
   "metadata": {
     "generadoEl": "2026-07-08T14:23:45.123Z",
     "numeroRemisiones": 36,
-    "cliente": "CL-0001",
+    "cliente": "<cliente configurado>",
     "periodo": "2026"
   },
   "microorganismos": [
@@ -203,7 +208,10 @@ const COLORS = {
 1. **Variables de Entorno:**
    - Ve a tu proyecto en Vercel
    - Settings → Environment Variables
-   - Agrega: `AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE` con tu API key
+   - Agrega todas las variables de `.env.example` de la sección Remisiones Core:
+     `AIRTABLE_BASE_ID_SIRIUS_REMISIONES_CORE`, `AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE`,
+     `AIRTABLE_TABLE_REMISIONES`, `AIRTABLE_TABLE_PRODUCTOS_REMITIDOS`,
+     `DASHBOARD_BIOINSUMOS_CLIENTE_ID`
 
 2. **Deploy:**
    ```bash
