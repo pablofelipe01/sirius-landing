@@ -99,6 +99,13 @@ const NavBar = () => {
                     >
                       Innovación
                     </Link>
+                    <Link
+                      href="/asistencia"
+                      className="block px-4 py-2 text-white hover:bg-[#5A7836]/30 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Asistencia eventos
+                    </Link>
                     <Link 
                       href="https://pedidos-sirius.vercel.app/" 
                       className="block px-4 py-2 text-[#5A7836] hover:bg-[#5A7836]/30 transition-colors font-medium"
@@ -169,6 +176,13 @@ const NavBar = () => {
               onClick={() => setIsOpen(false)}
             >
               Innovación
+            </Link>
+            <Link
+              href="/asistencia"
+              className="text-white bg-black/40 backdrop-blur-sm px-3 py-2 rounded-lg hover:bg-[#5A7836]/30 transition-all"
+              onClick={() => setIsOpen(false)}
+            >
+              Asistencia eventos
             </Link>
             <Link 
               href="https://pedidos-sirius.vercel.app/" 

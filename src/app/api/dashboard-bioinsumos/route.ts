@@ -1,14 +1,28 @@
 import { NextResponse } from 'next/server';
+import { isMissingEnvError, requireEnvVars } from '@/lib/env';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONFIGURACIÓN DE AIRTABLE
+// Todo (base, tablas, cliente) se lee del entorno: nada queda en el código.
 // ═══════════════════════════════════════════════════════════════════════════════
-const AIRTABLE_BASE_ID = 'appkw74J0rSYx6Xlh'; // Sirius Remisiones Core
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE;
+const ENV_VARS = [
+  'AIRTABLE_BASE_ID_SIRIUS_REMISIONES_CORE',
+  'AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE',
+  'AIRTABLE_TABLE_REMISIONES',
+  'AIRTABLE_TABLE_PRODUCTOS_REMITIDOS',
+  'DASHBOARD_BIOINSUMOS_CLIENTE_ID',
+] as const;
 
-// IDs de tablas
-const TABLE_REMISIONES = 'tblVqQjwTXyl4sp9V';
-const TABLE_PRODUCTOS_REMITIDOS = 'tbl98nZkdtoqCT47u';
+function getConfig() {
+  const env = requireEnvVars(ENV_VARS);
+  return {
+    baseId: env.AIRTABLE_BASE_ID_SIRIUS_REMISIONES_CORE,
+    apiKey: env.AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE,
+    tableRemisiones: env.AIRTABLE_TABLE_REMISIONES,
+    tableProductosRemitidos: env.AIRTABLE_TABLE_PRODUCTOS_REMITIDOS,
+    clienteId: env.DASHBOARD_BIOINSUMOS_CLIENTE_ID,
+  };
+}
 
 // Nombres de campos - Tabla Remisiones
 // Nota: Airtable devuelve nombres de campos, no field IDs en la respuesta
@@ -20,9 +34,6 @@ const FIELD_FECHA_REMISION = 'Fecha de Remisión';
 const FIELD_REMISION_VINCULADA = 'Remisión vinculada';
 const FIELD_ID_PRODUCTO = 'ID Producto';
 const FIELD_CANTIDAD = 'Cantidad';
-
-// Valor de filtro
-const CLIENTE_TARGET = 'CL-0001';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PRESUPUESTO ANUAL 2026 (Litros)
@@ -90,7 +101,10 @@ interface ProductoNoPresupuestado {
 /**
  * Consulta Airtable con paginación automática
  */
+type AirtableConfig = ReturnType<typeof getConfig>;
+
 async function fetchAirtableRecords(
+  config: AirtableConfig,
   tableId: string,
   filterFormula?: string
 ): Promise<AirtableRecord[]> {
@@ -106,11 +120,11 @@ async function fetchAirtableRecords(
       params.append('offset', offset);
     }
 
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${tableId}?${params.toString()}`;
+    const url = `https://api.airtable.com/v0/${config.baseId}/${tableId}?${params.toString()}`;
 
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        Authorization: `Bearer ${config.apiKey}`,
       },
     });
 
@@ -127,15 +141,16 @@ async function fetchAirtableRecords(
 }
 
 /**
- * Obtiene remisiones entregadas del cliente CL-0001 en 2026
+ * Obtiene las remisiones entregadas en 2026 del cliente configurado
  */
-async function fetchRemisionesEntregadas(): Promise<Set<string>> {
-  console.log('🔍 Buscando remisiones del cliente', CLIENTE_TARGET);
+async function fetchRemisionesEntregadas(config: AirtableConfig): Promise<Set<string>> {
+  console.log('🔍 Buscando remisiones del cliente configurado');
 
   // Filtro por cliente usando nombre de campo
-  const filterFormula = `{${FIELD_ID_CLIENTE}} = '${CLIENTE_TARGET}'`;
+  const clienteEscapado = config.clienteId.replace(/'/g, "\\'");
+  const filterFormula = `{${FIELD_ID_CLIENTE}} = '${clienteEscapado}'`;
 
-  const records = await fetchAirtableRecords(TABLE_REMISIONES, filterFormula);
+  const records = await fetchAirtableRecords(config, config.tableRemisiones, filterFormula);
 
   console.log('📊 Remisiones encontradas del cliente:', records.length);
 
@@ -180,10 +195,11 @@ async function fetchRemisionesEntregadas(): Promise<Set<string>> {
  * Obtiene todos los productos remitidos y filtra por remisiones entregadas
  */
 async function fetchProductosRemitidos(
+  config: AirtableConfig,
   remisionesEntregadasIds: Set<string>
 ): Promise<{ porMicroorganismo: Record<string, number>; noPresupuestados: Record<string, number> }> {
   console.log('📦 Obteniendo productos remitidos...');
-  const records = await fetchAirtableRecords(TABLE_PRODUCTOS_REMITIDOS);
+  const records = await fetchAirtableRecords(config, config.tableProductosRemitidos);
   console.log(`📦 Total de productos remitidos en la tabla: ${records.length}`);
 
   const porMicroorganismo: Record<string, number> = {};
@@ -244,24 +260,31 @@ export async function GET() {
   try {
     console.log('🚀 Iniciando consulta del dashboard de bioinsumos...');
 
-    // Validar que existe el API key
-    if (!AIRTABLE_API_KEY) {
-      console.error('❌ ERROR: Falta API key');
-      return NextResponse.json(
-        { error: 'Configuración incompleta: falta AIRTABLE_API_KEY_SIRIUS_REMISIONES_CORE' },
-        { status: 500 }
-      );
+    // Validar la configuración (base, tablas, credenciales, cliente)
+    let config: AirtableConfig;
+    try {
+      config = getConfig();
+    } catch (error) {
+      if (isMissingEnvError(error)) {
+        console.error('❌ ERROR de configuración:', error.message);
+        return NextResponse.json(
+          { error: 'Configuración incompleta del servidor' },
+          { status: 500 }
+        );
+      }
+      throw error;
     }
 
-    console.log('✅ API key configurada');
+    console.log('✅ Configuración cargada');
 
     // 1. Obtener remisiones entregadas
     console.log('📦 Paso 1: Obteniendo remisiones entregadas...');
-    const remisionesEntregadasIds = await fetchRemisionesEntregadas();
+    const remisionesEntregadasIds = await fetchRemisionesEntregadas(config);
     console.log(`✅ Paso 1 completo: ${remisionesEntregadasIds.size} remisiones encontradas`);
 
     // 2. Obtener productos remitidos y agrupar
     const { porMicroorganismo, noPresupuestados } = await fetchProductosRemitidos(
+      config,
       remisionesEntregadasIds
     );
 
@@ -325,7 +348,7 @@ export async function GET() {
       metadata: {
         generadoEl: new Date().toISOString(),
         numeroRemisiones: remisionesEntregadasIds.size,
-        cliente: CLIENTE_TARGET,
+        cliente: config.clienteId,
         periodo: '2026',
       },
       microorganismos,
