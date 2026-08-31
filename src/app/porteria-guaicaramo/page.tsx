@@ -1,5 +1,24 @@
 import type { Metadata } from 'next';
 
+/**
+ * Ruta privada: no se enlaza desde el navbar, el footer ni el landing.
+ *
+ * Marcos de captura pendientes (todos son pantallas de la app, sin personas).
+ * Para llenar uno, reemplazar `<div className="marco__lienzo" />` por
+ * `<Image src="/porteria/NN-nombre.png" alt="" fill sizes="..." />` o un
+ * `<img>` simple; el recorte ya está resuelto por CSS.
+ *
+ *   01  Consulta de documento — resultado autorizado (apertura)
+ *   02  Formulario de programación semanal (líder de área)
+ *   03  Consolidado por área (recepción)
+ *   04  Pantalla de validación (Control 1)
+ *   05  Consulta de documento — resultado autorizado
+ *   06  Consulta de documento — resultado no autorizado
+ *   07  Confirmación de ingreso con hora
+ *   08  Listado de personas dentro de la planta
+ *   09  Histórico de ingresos / reporte
+ */
+
 export const metadata: Metadata = {
   title: 'App de Portería — Guaicaramo',
   description:
@@ -15,170 +34,250 @@ export const metadata: Metadata = {
 const css = `
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap');
 
-/* La página es autónoma: se ocultan el navbar y el footer del sitio */
 body:has(.doc-porteria) > nav,
 body:has(.doc-porteria) > footer { display: none !important; }
-body:has(.doc-porteria) { background: #F1F5F8; }
+body:has(.doc-porteria) { background: #F4F6F9; }
 
 .doc-porteria{
-  --tinta:#1A1A33;
-  --tinta-70:rgba(26,26,51,.70);
-  --tinta-45:rgba(26,26,51,.45);
+  --tinta:#141428;
+  --tinta-72:rgba(20,20,40,.72);
+  --tinta-52:rgba(20,20,40,.52);
+  --tinta-38:rgba(20,20,40,.38);
   --barranca:#0154AC;
-  --alegria:#00B602;
   --cielo:#00A3FF;
-  --papel:#F1F5F8;
+  --alegria:#00B602;
+  --papel:#F4F6F9;
   --blanco:#fff;
-  --hair:rgba(26,26,51,.14);
+  --hair:rgba(20,20,40,.10);
+  --hair-fuerte:rgba(20,20,40,.16);
+  --sombra:0 1px 2px rgba(20,20,40,.04), 0 8px 24px -12px rgba(20,20,40,.18);
   background:var(--papel);
   color:var(--tinta);
   font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
-  font-size:17px;
-  line-height:1.6;
+  font-size:16.5px;
+  line-height:1.62;
+  letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;
   -webkit-text-size-adjust:100%;
 }
 .doc-porteria *{box-sizing:border-box}
-.doc-porteria .pagina{max-width:1000px;margin:0 auto;padding:0 24px 96px}
-.doc-porteria .prosa{max-width:62ch}
-.doc-porteria a{color:var(--barranca);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
-.doc-porteria a:focus-visible,.doc-porteria button:focus-visible{outline:3px solid var(--cielo);outline-offset:3px}
+.doc-porteria .pagina{max-width:1080px;margin:0 auto;padding:0 32px 120px}
+.doc-porteria .prosa{max-width:60ch;color:var(--tinta-72)}
+.doc-porteria a{color:var(--barranca);text-decoration:none}
+.doc-porteria a:focus-visible{outline:2px solid var(--cielo);outline-offset:4px;border-radius:2px}
+.doc-porteria h1,.doc-porteria h2,.doc-porteria h3{text-wrap:balance}
 
 /* ---------- Portada ---------- */
-.doc-porteria .portada{padding:72px 0 0}
-.doc-porteria .marca{font-size:.92rem;color:var(--barranca);font-weight:600;letter-spacing:.01em;margin:0 0 20px}
-.doc-porteria .marca span{color:var(--tinta-45);font-weight:400}
+.doc-porteria .portada{padding:80px 0 0}
+.doc-porteria .marca{
+  display:flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--barranca);margin:0 0 28px;
+}
+.doc-porteria .marca span{color:var(--tinta-38);font-weight:500}
+.doc-porteria .marca i{display:block;width:22px;height:2px;background:var(--barranca);border-radius:2px;font-style:normal}
 .doc-porteria h1{
-  font-size:clamp(2.6rem,7vw,4.6rem);
-  line-height:.98;
+  font-size:clamp(2.7rem,6.4vw,4.4rem);
+  line-height:1.0;
   font-weight:700;
-  letter-spacing:-.025em;
-  margin:0 0 18px;
+  letter-spacing:-.035em;
+  margin:0 0 20px;
+  max-width:16ch;
 }
 .doc-porteria .bajada{
   font-family:"Cormorant Garamond",Georgia,serif;
   font-style:italic;
-  font-size:clamp(1.35rem,3vw,1.8rem);
-  line-height:1.35;
-  color:var(--tinta-70);
-  max-width:34ch;
-  margin:0 0 28px;
+  font-size:clamp(1.3rem,2.6vw,1.7rem);
+  line-height:1.4;
+  color:var(--tinta-72);
+  max-width:38ch;
+  margin:0 0 40px;
 }
-.doc-porteria .dato{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.95rem;color:var(--tinta-70);margin:0 0 36px;padding:0;list-style:none}
-.doc-porteria .dato b{color:var(--tinta);font-weight:600}
+.doc-porteria .dato{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
+  margin:0 0 48px;padding:0;list-style:none;
+  border-top:1px solid var(--hair-fuerte);border-bottom:1px solid var(--hair);
+}
+.doc-porteria .dato li{padding:16px 24px 16px 0;border-right:1px solid var(--hair)}
+.doc-porteria .dato li:last-child{border-right:0}
+.doc-porteria .dato b{
+  display:block;font-size:.72rem;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--tinta-38);margin-bottom:4px;
+}
+.doc-porteria .dato span{font-size:.98rem;font-weight:500}
 
-/* ---------- Barra de barrera ---------- */
+/* ---------- Regla de barrera ---------- */
 .doc-porteria .barrera{
-  height:15px;border-radius:2px;margin:44px 0;
-  background:repeating-linear-gradient(115deg,var(--barranca) 0 15px,#fff 15px 30px);
-  box-shadow:inset 0 0 0 1px rgba(1,84,172,.35);
+  height:8px;border-radius:1px;margin:0;
+  background:repeating-linear-gradient(115deg,var(--barranca) 0 12px,rgba(1,84,172,.14) 12px 24px);
 }
+.doc-porteria .separador{margin:88px 0 0;height:1px;background:var(--hair-fuerte)}
 
 /* ---------- Índice ---------- */
-.doc-porteria .indice{margin:0 0 8px;padding:0;list-style:none;border-top:1px solid var(--hair)}
+.doc-porteria .indice{margin:56px 0 0;padding:0;list-style:none;counter-reset:idx}
 .doc-porteria .indice li{border-bottom:1px solid var(--hair)}
+.doc-porteria .indice li:first-child{border-top:1px solid var(--hair)}
 .doc-porteria .indice a{
-  display:flex;justify-content:space-between;gap:16px;align-items:baseline;
-  padding:14px 2px;text-decoration:none;font-weight:500;
+  display:grid;grid-template-columns:40px 1fr auto;align-items:baseline;gap:0 8px;
+  padding:15px 4px;font-weight:500;color:var(--tinta);
+  transition:color .15s ease,padding-left .15s ease;
 }
-.doc-porteria .indice a:hover{color:var(--cielo)}
-.doc-porteria .indice em{font-style:normal;color:var(--tinta-45);font-size:.9rem;text-align:right}
+.doc-porteria .indice a::before{
+  counter-increment:idx;content:counter(idx,decimal-leading-zero);
+  font-size:.78rem;font-weight:600;color:var(--tinta-38);letter-spacing:.04em;
+}
+.doc-porteria .indice a:hover{color:var(--barranca);padding-left:8px}
+.doc-porteria .indice em{font-style:normal;color:var(--tinta-38);font-size:.86rem}
 
 /* ---------- Secciones ---------- */
-.doc-porteria section{padding-top:64px}
-.doc-porteria h2{
-  font-size:clamp(1.6rem,3.6vw,2.3rem);line-height:1.1;letter-spacing:-.02em;
-  font-weight:700;margin:0 0 10px;
+.doc-porteria section{padding-top:88px}
+.doc-porteria .fase{
+  display:block;font-size:.72rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--barranca);margin-bottom:12px;
 }
-.doc-porteria h2 .fase{display:block;font-size:.95rem;font-weight:600;color:var(--barranca);letter-spacing:.01em;margin-bottom:8px}
-.doc-porteria h3{font-size:1.15rem;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
-.doc-porteria p{margin:0 0 14px}
+.doc-porteria h2{
+  font-size:clamp(1.65rem,3.2vw,2.15rem);line-height:1.12;letter-spacing:-.028em;
+  font-weight:700;margin:0 0 14px;max-width:20ch;
+}
+.doc-porteria h3{font-size:1.05rem;font-weight:600;margin:0 0 8px;letter-spacing:-.015em}
+.doc-porteria p{margin:0 0 16px}
 
 /* ---------- Roles ---------- */
-.doc-porteria .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;margin:28px 0 0;border-top:2px solid var(--tinta)}
-.doc-porteria .rol{padding:18px 0;border-bottom:1px solid var(--hair)}
-.doc-porteria .rol h3{margin-bottom:4px}
-.doc-porteria .rol p{margin:0;color:var(--tinta-70);font-size:.96rem}
+.doc-porteria .roles{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  margin:36px 0 0;background:var(--hair-fuerte);
+  border:1px solid var(--hair-fuerte);border-radius:6px;overflow:hidden;
+}
+.doc-porteria .rol{padding:22px 20px 24px;background:var(--blanco)}
+.doc-porteria .rol b{
+  display:block;font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  color:var(--tinta-38);margin-bottom:14px;
+}
+.doc-porteria .rol h3{margin-bottom:6px}
+.doc-porteria .rol p{margin:0;color:var(--tinta-72);font-size:.92rem;line-height:1.55}
 
 /* ---------- Pasos ---------- */
-.doc-porteria .pasos{margin:36px 0 0}
-.doc-porteria .paso{position:relative;display:grid;grid-template-columns:52px 1fr;gap:0 26px;padding-bottom:44px}
+.doc-porteria .pasos{margin:44px 0 0}
+.doc-porteria .paso{position:relative;display:grid;grid-template-columns:44px 1fr;gap:0 28px;padding-bottom:56px}
 .doc-porteria .paso::before{
-  content:"";position:absolute;left:25px;top:56px;bottom:0;width:2px;
-  background:repeating-linear-gradient(to bottom,var(--barranca) 0 9px,transparent 9px 18px);
-  opacity:.5;
+  content:"";position:absolute;left:21px;top:46px;bottom:8px;width:1px;background:var(--hair-fuerte);
 }
+.doc-porteria .paso:last-child{padding-bottom:0}
 .doc-porteria .paso:last-child::before{display:none}
 .doc-porteria .paso__num{
-  width:52px;height:52px;border-radius:50%;background:var(--blanco);
-  border:2px solid var(--barranca);color:var(--barranca);
-  display:grid;place-items:center;font-weight:700;font-size:1.15rem;
+  width:44px;height:44px;border-radius:50%;background:var(--blanco);
+  border:1px solid var(--hair-fuerte);color:var(--tinta);
+  display:grid;place-items:center;font-weight:600;font-size:.95rem;
+  box-shadow:var(--sombra);
 }
-.doc-porteria .paso__cuerpo{padding-top:10px}
+.doc-porteria .paso__cuerpo{padding-top:8px;min-width:0}
 .doc-porteria .quien{
-  display:inline-block;font-size:.82rem;font-weight:600;color:var(--barranca);
-  background:rgba(1,163,255,.12);border-radius:999px;padding:3px 11px;margin:0 0 10px;
+  display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--barranca);
+  border:1px solid rgba(1,84,172,.24);border-radius:3px;
+  padding:3px 9px;margin:0 0 14px;
 }
-.doc-porteria .paso p{color:var(--tinta-70);max-width:60ch}
-.doc-porteria .paso p strong{color:var(--tinta)}
+.doc-porteria .paso p{color:var(--tinta-72);max-width:58ch;margin-bottom:0}
 
 /* ---------- Estados ---------- */
-.doc-porteria .estado{display:inline-block;font-size:.85rem;font-weight:600;padding:2px 10px;border-radius:4px;white-space:nowrap}
-.doc-porteria .estado--ok{background:rgba(0,182,2,.13);color:#046b02}
-.doc-porteria .estado--no{background:rgba(200,30,30,.11);color:#a81f1f}
-
-/* ---------- Espacios de foto ---------- */
-.doc-porteria .fotos{display:grid;gap:16px;margin:18px 0 0}
-.doc-porteria .fotos--par{grid-template-columns:repeat(2,1fr)}
-.doc-porteria figure{margin:0}
-.doc-porteria .foto{
-  aspect-ratio:16/9;background:var(--blanco);
-  border:1.5px dashed rgba(1,84,172,.5);border-radius:3px;
-  display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:16px;
+.doc-porteria .estado{
+  display:inline-block;font-size:.8rem;font-weight:600;padding:1px 8px;
+  border-radius:3px;white-space:nowrap;
 }
-.doc-porteria .foto--v{aspect-ratio:3/4}
-.doc-porteria .foto--pantalla{aspect-ratio:16/10;border-color:rgba(0,182,2,.55);background:#fbfffb}
-.doc-porteria .foto__id{font-weight:700;font-size:.85rem;color:var(--barranca)}
-.doc-porteria .foto--pantalla .foto__id{color:#046b02}
-.doc-porteria .foto__spec{font-size:.86rem;line-height:1.45;color:var(--tinta-70)}
-.doc-porteria .foto img{width:100%;height:100%;object-fit:cover;display:block;border-radius:3px}
-.doc-porteria figcaption{font-size:.86rem;color:var(--tinta-45);margin-top:7px;max-width:52ch}
+.doc-porteria .estado--ok{background:rgba(0,182,2,.10);color:#04760a;box-shadow:inset 0 0 0 1px rgba(0,182,2,.22)}
+.doc-porteria .estado--no{background:rgba(178,32,32,.08);color:#a81f1f;box-shadow:inset 0 0 0 1px rgba(178,32,32,.20)}
 
-/* ---------- Excepciones ---------- */
-.doc-porteria .casos{margin:28px 0 0;border-top:2px solid var(--tinta)}
-.doc-porteria .caso{padding:16px 0;border-bottom:1px solid var(--hair);display:grid;grid-template-columns:minmax(180px,1fr) 2fr;gap:6px 32px}
-.doc-porteria .caso h3{margin:0;font-size:1rem}
-.doc-porteria .caso p{margin:0;color:var(--tinta-70);font-size:.96rem}
+/* ---------- Marcos de captura ---------- */
+.doc-porteria .capturas{display:grid;gap:20px;margin:24px 0 0}
+.doc-porteria .capturas--par{grid-template-columns:repeat(2,minmax(0,1fr))}
+.doc-porteria figure{margin:0;min-width:0}
+.doc-porteria .marco{
+  background:var(--blanco);border:1px solid var(--hair-fuerte);
+  border-radius:8px;overflow:hidden;box-shadow:var(--sombra);
+}
+.doc-porteria .marco__barra{
+  display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;
+  border-bottom:1px solid var(--hair);background:rgba(20,20,40,.02);
+}
+.doc-porteria .marco__barra i{width:8px;height:8px;border-radius:50%;background:var(--hair-fuerte)}
+.doc-porteria .marco__lienzo{
+  aspect-ratio:16/10;
+  background:
+    linear-gradient(rgba(20,20,40,.02),rgba(20,20,40,.02)),
+    repeating-linear-gradient(135deg,transparent 0 11px,rgba(20,20,40,.035) 11px 12px);
+}
+.doc-porteria .marco--alto .marco__lienzo{aspect-ratio:16/7}
+.doc-porteria .marco img{display:block;width:100%;height:auto}
+
+/* ---------- Casos ---------- */
+.doc-porteria .casos{margin:36px 0 0;border-top:1px solid var(--hair-fuerte)}
+.doc-porteria .caso{
+  padding:20px 0;border-bottom:1px solid var(--hair);
+  display:grid;grid-template-columns:minmax(200px,1fr) 1.6fr;gap:6px 40px;
+}
+.doc-porteria .caso h3{margin:0;font-size:.98rem}
+.doc-porteria .caso p{margin:0;color:var(--tinta-72);font-size:.94rem}
+
+/* ---------- Registro ---------- */
+.doc-porteria .preguntas{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:32px 0 0;
+  background:var(--hair-fuerte);border:1px solid var(--hair-fuerte);border-radius:6px;overflow:hidden;
+}
+.doc-porteria .pregunta{padding:20px;background:var(--blanco);font-size:.94rem;color:var(--tinta-72)}
+.doc-porteria .pregunta b{display:block;color:var(--tinta);font-weight:600;margin-bottom:4px;font-size:.98rem}
 
 /* ---------- Cierre ---------- */
-.doc-porteria .cierre{margin-top:64px;padding:32px;background:var(--tinta);color:#fff;border-radius:4px}
-.doc-porteria .cierre h2{color:#fff;margin-bottom:12px}
-.doc-porteria .cierre p{color:rgba(255,255,255,.78);max-width:58ch}
-.doc-porteria .cierre a{color:var(--cielo)}
+.doc-porteria .cierre{
+  margin-top:96px;padding:44px 40px;background:var(--tinta);color:#fff;border-radius:8px;
+}
+.doc-porteria .cierre h2{color:#fff;margin-bottom:14px;font-size:1.5rem}
+.doc-porteria .cierre p{color:rgba(255,255,255,.74);max-width:56ch;margin:0}
 
-/* ---------- Notas de producción ---------- */
-.doc-porteria .notas{margin-top:56px;padding:24px;border:1.5px dashed var(--tinta-45);border-radius:4px;background:#fff}
-.doc-porteria .notas h2{font-size:1.2rem}
-.doc-porteria .notas ul{margin:0;padding-left:20px;color:var(--tinta-70);font-size:.95rem}
-.doc-porteria .notas li{margin-bottom:8px}
-
+@media (max-width:860px){
+  .doc-porteria .roles{grid-template-columns:repeat(2,1fr)}
+  .doc-porteria .preguntas{grid-template-columns:1fr}
+}
 @media (max-width:720px){
   .doc-porteria{font-size:16px}
-  .doc-porteria .roles,.doc-porteria .fotos--par{grid-template-columns:1fr}
-  .doc-porteria .roles{gap:0}
-  .doc-porteria .caso{grid-template-columns:1fr}
-  .doc-porteria .paso{grid-template-columns:40px 1fr;gap:0 18px}
-  .doc-porteria .paso__num{width:40px;height:40px;font-size:1rem}
-  .doc-porteria .paso::before{left:19px;top:44px}
-  .doc-porteria .paso__cuerpo{padding-top:6px}
+  .doc-porteria .pagina{padding:0 20px 88px}
+  .doc-porteria .portada{padding-top:56px}
+  .doc-porteria .roles,.doc-porteria .capturas--par{grid-template-columns:1fr}
+  .doc-porteria .dato{grid-template-columns:1fr}
+  .doc-porteria .dato li{border-right:0;border-bottom:1px solid var(--hair);padding-right:0}
+  .doc-porteria .dato li:last-child{border-bottom:0}
+  .doc-porteria .caso{grid-template-columns:1fr;gap:4px}
+  .doc-porteria .paso{grid-template-columns:34px 1fr;gap:0 18px;padding-bottom:44px}
+  .doc-porteria .paso__num{width:34px;height:34px;font-size:.85rem}
+  .doc-porteria .paso::before{left:16px;top:38px}
+  .doc-porteria .paso__cuerpo{padding-top:4px}
+  .doc-porteria section{padding-top:64px}
+  .doc-porteria .cierre{padding:32px 24px}
 }
 @media print{
-  .doc-porteria{background:#fff}
-  .doc-porteria .indice,.doc-porteria .notas{display:none}
-  .doc-porteria .paso,.doc-porteria figure,.doc-porteria .caso{break-inside:avoid}
-  .doc-porteria .cierre{background:#fff;color:var(--tinta);border:1px solid var(--tinta)}
-  .doc-porteria .cierre h2,.doc-porteria .cierre p{color:var(--tinta)}
+  .doc-porteria{background:#fff;font-size:11pt}
+  .doc-porteria .indice{display:none}
+  .doc-porteria .paso,.doc-porteria figure,.doc-porteria .caso,.doc-porteria .rol{break-inside:avoid}
+  .doc-porteria .marco{box-shadow:none}
+  .doc-porteria .cierre{background:#fff;color:var(--tinta);border:1px solid var(--hair-fuerte)}
+  .doc-porteria .cierre h2{color:var(--tinta)}
+  .doc-porteria .cierre p{color:var(--tinta-72)}
 }
 `;
+
+function Marco({ alto = false }: { alto?: boolean }) {
+  return (
+    <figure>
+      <div className={alto ? 'marco marco--alto' : 'marco'}>
+        <div className="marco__barra" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </div>
+        <div className="marco__lienzo" />
+      </div>
+    </figure>
+  );
+}
 
 export default function PorteriaGuaicaramoPage() {
   return (
@@ -187,63 +286,89 @@ export default function PorteriaGuaicaramoPage() {
       <main className="pagina">
         <header className="portada">
           <p className="marca">
-            Guaicaramo <span>/ Control de Visitas</span>
+            <i />
+            Guaicaramo <span>· Control de Visitas</span>
           </p>
           <h1>App de Portería</h1>
           <p className="bajada">
             Así se programa, se autoriza y se registra el ingreso de personas y vehículos a la planta.
           </p>
           <ul className="dato">
-            <li><b>En operación desde</b> 26 de mayo de 2026</li>
-            <li><b>Tiempo de lectura</b> 5 minutos</li>
+            <li>
+              <b>En operación desde</b>
+              <span>26 de mayo de 2026</span>
+            </li>
+            <li>
+              <b>Usan la app</b>
+                <span>Personal autorizado de Guaicaramo</span>
+            </li>
+            <li>
+              <b>Tiempo de lectura</b>
+              <span>5 minutos</span>
+            </li>
           </ul>
 
-          {/* FOTO 01 · imagen de apertura */}
-          <figure>
-            <div className="foto">
-              <span className="foto__id">Foto 01 — Portería principal</span>
-              <span className="foto__spec">
-                Plano amplio horizontal (16:9, mínimo 1600&nbsp;px de ancho) de la portería con la barrera cerrada y el
-                vigilante en su puesto. Luz de día, sin flash. Es la foto que abre la página, que se vea limpia y
-                reconocible.
-              </span>
-            </div>
-            <figcaption>Punto de control de ingreso a Guaicaramo.</figcaption>
-          </figure>
+          {/* Captura 01 — consulta de documento, resultado autorizado */}
+          <Marco alto />
         </header>
 
-        <div className="barrera" role="presentation" />
+        <div className="separador" role="presentation" />
 
         <nav aria-label="Contenido de la página">
           <ul className="indice">
-            <li><a href="#roles">Quién participa <em>4 roles</em></a></li>
-            <li><a href="#programacion">Antes de la visita: la programación semanal <em>pasos 1 a 3</em></a></li>
-            <li><a href="#porteria">El día del ingreso: en la portería <em>pasos 4 a 7</em></a></li>
-            <li><a href="#casos">Casos que se salen del flujo <em>4 situaciones</em></a></li>
-            <li><a href="#registro">Qué queda registrado <em>trazabilidad</em></a></li>
+            <li>
+              <a href="#roles">
+                Quién participa <em>4 roles</em>
+              </a>
+            </li>
+            <li>
+              <a href="#programacion">
+                La programación semanal <em>Pasos 1 a 3</em>
+              </a>
+            </li>
+            <li>
+              <a href="#porteria">
+                En la portería <em>Pasos 4 a 7</em>
+              </a>
+            </li>
+            <li>
+              <a href="#casos">
+                Casos que se salen del flujo <em>4 situaciones</em>
+              </a>
+            </li>
+            <li>
+              <a href="#registro">
+                Qué queda registrado <em>Trazabilidad</em>
+              </a>
+            </li>
           </ul>
         </nav>
 
         <section id="roles">
-          <h2>Quién participa</h2>
+          <span className="fase">Quién participa</span>
+          <h2>Cuatro roles, una sola información</h2>
           <p className="prosa">
-            Cuatro roles usan la misma información en momentos distintos. Nadie repite el trabajo del otro: cada uno
-            agrega una capa y la pasa al siguiente.
+            Cada rol usa los mismos datos en un momento distinto. Nadie repite el trabajo del otro: cada uno agrega una
+            capa y la pasa al siguiente.
           </p>
           <div className="roles">
             <div className="rol">
+              <b>01</b>
               <h3>Líderes de área</h3>
               <p>Reportan el personal y los visitantes que van a ingresar durante la semana.</p>
             </div>
             <div className="rol">
+              <b>02</b>
               <h3>Recepción</h3>
               <p>Consolida lo que envían todas las áreas en una sola programación.</p>
             </div>
             <div className="rol">
+              <b>03</b>
               <h3>Control 1</h3>
               <p>Revisa la programación consolidada y la autoriza.</p>
             </div>
             <div className="rol">
+              <b>04</b>
               <h3>Portería</h3>
               <p>Verifica a cada persona al llegar y registra la entrada y la salida.</p>
             </div>
@@ -251,9 +376,8 @@ export default function PorteriaGuaicaramoPage() {
         </section>
 
         <section id="programacion">
-          <h2>
-            <span className="fase">Antes de la visita</span>La programación semanal
-          </h2>
+          <span className="fase">Antes de la visita</span>
+          <h2>La programación semanal</h2>
           <p className="prosa">
             Todo ingreso empieza días antes de que alguien llegue a la barrera. Si la programación está completa y
             autorizada, la portería solo confirma; no decide.
@@ -269,25 +393,9 @@ export default function PorteriaGuaicaramoPage() {
                   El líder entra a la app y registra el personal y los visitantes de su área para la semana: nombre,
                   documento, empresa, fecha y motivo del ingreso.
                 </p>
-                <div className="fotos fotos--par">
-                  <figure>
-                    <div className="foto">
-                      <span className="foto__id">Foto 02 — Líder de área diligenciando</span>
-                      <span className="foto__spec">
-                        Persona real de un área usando la app desde su computador o celular, en su puesto de trabajo.
-                        Plano medio, que se le vea la cara y la pantalla encendida.
-                      </span>
-                    </div>
-                  </figure>
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 01 — Formulario de programación</span>
-                      <span className="foto__spec">
-                        Pantalla del formulario con los campos visibles y datos de prueba. Captura nativa, no foto de la
-                        pantalla.
-                      </span>
-                    </div>
-                  </figure>
+                <div className="capturas">
+                  {/* Captura 02 — formulario de programación semanal */}
+                  <Marco />
                 </div>
               </div>
             </article>
@@ -301,25 +409,9 @@ export default function PorteriaGuaicaramoPage() {
                   Recepción revisa qué áreas ya enviaron y quiénes faltan, corrige datos incompletos y arma una sola
                   programación para toda la semana.
                 </p>
-                <div className="fotos fotos--par">
-                  <figure>
-                    <div className="foto">
-                      <span className="foto__id">Foto 03 — Recepción trabajando</span>
-                      <span className="foto__spec">
-                        Recepción frente al computador con la app abierta. Plano medio horizontal; el mostrador de
-                        recepción de fondo ubica al lector.
-                      </span>
-                    </div>
-                  </figure>
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 02 — Consolidado por área</span>
-                      <span className="foto__spec">
-                        Vista con el listado de áreas y su estado (enviado / pendiente). Ideal que se vean los dos
-                        estados al mismo tiempo.
-                      </span>
-                    </div>
-                  </figure>
+                <div className="capturas">
+                  {/* Captura 03 — consolidado por área */}
+                  <Marco />
                 </div>
               </div>
             </article>
@@ -331,31 +423,22 @@ export default function PorteriaGuaicaramoPage() {
                 <h3>Control 1 autoriza</h3>
                 <p>
                   Control 1 valida la programación consolidada. A partir de ese momento, las personas autorizadas quedan
-                  disponibles para la portería.
+                  disponibles para la portería. Lo que no pasa por aquí, no entra.
                 </p>
-                <div className="fotos">
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 03 — Pantalla de validación</span>
-                      <span className="foto__spec">
-                        Vista de Control 1 con la programación y la acción de autorizar. Que se distinga con claridad lo
-                        autorizado de lo que está en revisión.
-                      </span>
-                    </div>
-                    <figcaption>La autorización es el punto de corte: lo que no pasa por aquí, no entra.</figcaption>
-                  </figure>
+                <div className="capturas">
+                  {/* Captura 04 — pantalla de validación de Control 1 */}
+                  <Marco />
                 </div>
               </div>
             </article>
           </div>
         </section>
 
-        <div className="barrera" role="presentation" />
+        <div className="separador" role="presentation" />
 
         <section id="porteria">
-          <h2>
-            <span className="fase">El día del ingreso</span>En la portería
-          </h2>
+          <span className="fase">El día del ingreso</span>
+          <h2>En la portería</h2>
           <p className="prosa">
             En la barrera el trabajo es de segundos: identificar, confirmar y registrar. La app responde con un estado
             claro y el vigilante actúa según ese estado.
@@ -368,26 +451,6 @@ export default function PorteriaGuaicaramoPage() {
                 <p className="quien">Visitante</p>
                 <h3>Llegada a la barrera</h3>
                 <p>La persona o el vehículo llega al punto de control y entrega su documento de identidad al vigilante.</p>
-                <div className="fotos fotos--par">
-                  <figure>
-                    <div className="foto">
-                      <span className="foto__id">Foto 04 — Vehículo en la barrera</span>
-                      <span className="foto__spec">
-                        Vehículo detenido frente a la barrera cerrada, con el vigilante acercándose. Horizontal, plano
-                        general.
-                      </span>
-                    </div>
-                  </figure>
-                  <figure>
-                    <div className="foto">
-                      <span className="foto__id">Foto 05 — Documento y dispositivo</span>
-                      <span className="foto__spec">
-                        Plano cerrado de las manos del vigilante con la cédula y el dispositivo donde consulta. La cédula
-                        debe ser de prueba o quedar ilegible.
-                      </span>
-                    </div>
-                  </figure>
-                </div>
               </div>
             </article>
 
@@ -397,30 +460,16 @@ export default function PorteriaGuaicaramoPage() {
                 <p className="quien">Portería</p>
                 <h3>Verificación en la app</h3>
                 <p>
-                  El vigilante busca el documento en la app y recibe una de dos respuestas:{' '}
+                  El vigilante busca el documento y recibe una de dos respuestas:{' '}
                   <span className="estado estado--ok">Autorizado</span> continúa al registro de ingreso;{' '}
                   <span className="estado estado--no">No autorizado</span> no ingresa hasta que el área responsable lo
                   programe.
                 </p>
-                <div className="fotos fotos--par">
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 04 — Resultado autorizado</span>
-                      <span className="foto__spec">
-                        Pantalla de consulta con un resultado autorizado: nombre, empresa, área que lo programó y
-                        vigencia.
-                      </span>
-                    </div>
-                  </figure>
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 05 — Resultado no autorizado</span>
-                      <span className="foto__spec">
-                        La misma pantalla con el resultado negativo. Las dos capturas juntas enseñan más que cualquier
-                        explicación.
-                      </span>
-                    </div>
-                  </figure>
+                <div className="capturas capturas--par">
+                  {/* Captura 05 — resultado autorizado */}
+                  <Marco />
+                  {/* Captura 06 — resultado no autorizado */}
+                  <Marco />
                 </div>
               </div>
             </article>
@@ -434,22 +483,9 @@ export default function PorteriaGuaicaramoPage() {
                   El vigilante confirma el ingreso en la app. Queda la hora exacta, quién entró y por dónde. Ahí se abre
                   la barrera y se entrega la identificación de visitante.
                 </p>
-                <div className="fotos fotos--par">
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 06 — Ingreso confirmado</span>
-                      <span className="foto__spec">Confirmación de ingreso con la hora registrada.</span>
-                    </div>
-                  </figure>
-                  <figure>
-                    <div className="foto">
-                      <span className="foto__id">Foto 06 — Ingreso autorizado</span>
-                      <span className="foto__spec">
-                        Barrera abriéndose o entrega de la escarapela de visitante. Es la foto que cierra la sensación de
-                        «ya entró».
-                      </span>
-                    </div>
-                  </figure>
+                <div className="capturas">
+                  {/* Captura 07 — confirmación de ingreso con hora */}
+                  <Marco />
                 </div>
               </div>
             </article>
@@ -463,24 +499,9 @@ export default function PorteriaGuaicaramoPage() {
                   Al salir, el vigilante marca la salida. En cualquier momento del día la app muestra quiénes están
                   dentro de la planta.
                 </p>
-                <div className="fotos fotos--par">
-                  <figure>
-                    <div className="foto foto--pantalla">
-                      <span className="foto__id">Captura 07 — Personas dentro de la planta</span>
-                      <span className="foto__spec">
-                        Listado en tiempo real de quienes están adentro, con la acción de registrar salida.
-                      </span>
-                    </div>
-                  </figure>
-                  <figure>
-                    <div className="foto">
-                      <span className="foto__id">Foto 07 — Salida al final del turno</span>
-                      <span className="foto__spec">
-                        Registro de salida en la portería, de preferencia en luz de tarde para que se lea como el cierre
-                        del día.
-                      </span>
-                    </div>
-                  </figure>
+                <div className="capturas">
+                  {/* Captura 08 — personas dentro de la planta */}
+                  <Marco />
                 </div>
               </div>
             </article>
@@ -488,6 +509,7 @@ export default function PorteriaGuaicaramoPage() {
         </section>
 
         <section id="casos">
+          <span className="fase">Excepciones</span>
           <h2>Casos que se salen del flujo</h2>
           <p className="prosa">
             Lo que más pregunta la portería no es el caso normal, es la excepción. Estas cuatro cubren casi todo.
@@ -516,22 +538,29 @@ export default function PorteriaGuaicaramoPage() {
         </section>
 
         <section id="registro">
+          <span className="fase">Trazabilidad</span>
           <h2>Qué queda registrado</h2>
           <p className="prosa">
             Cada ingreso y cada salida quedan con fecha, hora, documento, área responsable y quién autorizó. Con eso se
-            puede responder tres preguntas en cualquier momento: quién está dentro de la planta ahora, quién entró un
-            día específico y qué área respondía por esa visita.
+            responden tres preguntas en cualquier momento.
           </p>
-          <div className="fotos">
-            <figure>
-              <div className="foto foto--pantalla">
-                <span className="foto__id">Captura 08 — Histórico o reporte</span>
-                <span className="foto__spec">
-                  Vista del histórico de ingresos o del reporte que se descarga, con datos de prueba y varias filas para
-                  que se entienda el volumen.
-                </span>
-              </div>
-            </figure>
+          <div className="preguntas">
+            <div className="pregunta">
+              <b>Quién está dentro</b>
+              Las personas que registraron ingreso y todavía no marcan salida.
+            </div>
+            <div className="pregunta">
+              <b>Quién entró un día</b>
+              El detalle de un día específico, con hora de entrada y de salida.
+            </div>
+            <div className="pregunta">
+              <b>Quién respondía</b>
+              El área que programó la visita y el rol que la autorizó.
+            </div>
+          </div>
+          <div className="capturas">
+            {/* Captura 09 — histórico de ingresos / reporte */}
+            <Marco alto />
           </div>
         </section>
 
@@ -542,40 +571,6 @@ export default function PorteriaGuaicaramoPage() {
             pantalla. Con eso se resuelve mucho más rápido.
           </p>
         </section>
-
-        {/* Notas de producción: borrar este bloque antes de compartir la versión final */}
-        <aside className="notas">
-          <h2>Notas para armar esta página</h2>
-          <ul>
-            <li>
-              <strong>Cómo poner una foto:</strong> reemplazar el bloque{' '}
-              <code>&lt;div className=&quot;foto&quot;&gt;…&lt;/div&gt;</code> por{' '}
-              <code>
-                &lt;div className=&quot;foto&quot;&gt;&lt;img src=&quot;/porteria/01-porteria.jpg&quot;
-                alt=&quot;descripción&quot; /&gt;&lt;/div&gt;
-              </code>
-              . Las imágenes van en <code>public/porteria/</code>. El recorte y el tamaño ya están resueltos por CSS.
-            </li>
-            <li><strong>Total:</strong> 7 fotos de contexto + 8 capturas de pantalla.</li>
-            <li>
-              <strong>Datos personales:</strong> las capturas deben usar datos de prueba o llevar cédulas y nombres
-              difuminados. Las fotos con personas identificables necesitan autorización de uso de imagen.
-            </li>
-            <li>
-              <strong>Capturas:</strong> nativas del dispositivo (nunca foto de la pantalla), tema claro, misma
-              resolución en todas.
-            </li>
-            <li>
-              <strong>Fotos:</strong> horizontales, misma franja horaria para que la luz sea consistente, sin flash, la
-              app visible pero no legible en detalle.
-            </li>
-            <li>
-              <strong>Verificar antes de publicar:</strong> los nombres de los pasos 1 a 7 y de los casos de excepción
-              están redactados según el flujo conocido; confirmar con recepción y Control 1 que coinciden con la
-              operación real.
-            </li>
-          </ul>
-        </aside>
       </main>
     </div>
   );
