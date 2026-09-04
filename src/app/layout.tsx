@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
+import ChromeSitio from '@/components/ChromeSitio';
 
 // Si quieres usar la fuente Museo Slab, necesitarías agregarla como una fuente personalizada
 // Aquí usamos Inter como fuente de respaldo
@@ -25,9 +24,7 @@ export default function RootLayout({
         {/* <link rel="stylesheet" href="path-to-museo-slab-font" /> */}
       </head>
       <body className={`${inter.className} antialiased`}>
-        <NavBar />
-        {children}
-        <Footer />
+        <ChromeSitio>{children}</ChromeSitio>
       </body>
     </html>
   );

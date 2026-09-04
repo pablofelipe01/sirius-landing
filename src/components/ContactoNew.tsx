@@ -1,5 +1,7 @@
 'use client';
 
+import { DIRECCION, EMAIL_CONTACTO, HORARIO, MAILTO_URL, TELEFONOS } from '@/lib/contacto';
+
 const ContactoFinalSection = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-slate-800 via-slate-900 to-green-900 text-white relative overflow-hidden -mt-1">
@@ -44,23 +46,25 @@ const ContactoFinalSection = () => {
               <div className="space-y-3">
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">📍</span>
-                  <span>Kl-7 Vía Cabuyaro Barranca de Upía</span>
+                  <span>{DIRECCION}</span>
                 </div>
-                <div className="flex items-center">
-                  <span className="text-2xl mr-3">📞</span>
-                  <span>+57 320 9568566</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-2xl mr-3">📞</span>
-                  <span>+57 321 2206923</span>
-                </div>
+                {TELEFONOS.map((telefono) => (
+                  <div key={telefono.numero} className="flex items-center">
+                    <span className="text-2xl mr-3">📞</span>
+                    <a href={`tel:+${telefono.numero}`} className="hover:underline">
+                      {telefono.etiqueta}
+                    </a>
+                  </div>
+                ))}
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">✉️</span>
-                  <span>marketing@siriusregenerative.com</span>
+                  <a href={MAILTO_URL} className="hover:underline break-all">
+                    {EMAIL_CONTACTO}
+                  </a>
                 </div>
                 <div className="flex items-center">
                   <span className="text-2xl mr-3">🕒</span>
-                  <span>Lun-Vie: 9am-6pm, Sáb: 9am-1pm</span>
+                  <span>{HORARIO.resumen}</span>
                 </div>
               </div>
             </div>

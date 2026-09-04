@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:asistencia": "node --test tests/asistencia.validation.test.mjs"
+    "test:asistencia": "node --test tests/asistencia.validation.test.mjs",
+    "qr": "node scripts/generar-qr.mjs"
   },
   "dependencies": {
     "@types/three": "^0.179.0",
@@ -31,6 +32,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

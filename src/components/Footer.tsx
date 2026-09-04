@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
+import { DIRECCION, EMAIL_CONTACTO, HORARIO, MAILTO_URL, TELEFONOS, WHATSAPP_URL } from '@/lib/contacto';
 
 const Footer = () => {
   return (
@@ -45,7 +46,7 @@ const Footer = () => {
                 <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
               </a>
               {/* <a 
-                href="https://wa.me/573209568566"
+                href={WHATSAPP_URL}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-green-400 transition-colors"
@@ -111,27 +112,30 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">📍</span>
-                <span className="text-gray-400 text-sm sm:text-base">Kl-7 Via Cabuyaro Barranca de Upía</span>
+                <span className="text-gray-400 text-sm sm:text-base">{DIRECCION}</span>
               </li>
-              <li className="flex items-start">
-                <span className="text-gray-400 mr-2 text-sm">📞</span>
-                <span className="text-gray-400 text-sm sm:text-base">+57 320 9568566</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-gray-400 mr-2 text-sm">📞</span>
-                <span className="text-gray-400 text-sm sm:text-base">+57 321 2206923</span>
-              </li>
+              {TELEFONOS.map((telefono) => (
+                <li key={telefono.numero} className="flex items-start">
+                  <span className="text-gray-400 mr-2 text-sm">📞</span>
+                  <a
+                    href={`tel:+${telefono.numero}`}
+                    className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
+                  >
+                    {telefono.etiqueta}
+                  </a>
+                </li>
+              ))}
               <li className="flex items-start">
                 <span className="text-gray-400 mr-2 text-sm">✉️</span>
-                <a href="mailto:marketing@siriusregenerative.com" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base break-all">
-                  marketing@siriusregenerative.com
+                <a href={MAILTO_URL} className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base break-all">
+                  {EMAIL_CONTACTO}
                 </a>
               </li>
               <li className="flex items-start mt-3 sm:mt-4">
                 <span className="text-gray-400 mr-2 text-sm">🕒</span>
                 <div className="text-gray-400 text-sm sm:text-base">
-                  <p>Lunes a Viernes: 9am - 6pm</p>
-                  <p>Sábados: 9am - 1pm</p>
+                  <p>{HORARIO.semana}</p>
+                  <p>{HORARIO.sabado}</p>
                 </div>
               </li>
             </ul>

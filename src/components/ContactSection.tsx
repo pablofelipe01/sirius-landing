@@ -4,6 +4,7 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaLinkedin,  } from 'react-icons/fa';
 import ScrollAnimation from './ScrollAnimation';
+import { DIRECCION, EMAIL_CONTACTO, HORARIO, MAILTO_URL, TELEFONOS, WHATSAPP_URL } from '@/lib/contacto';
 
 interface FormData {
   name: string;
@@ -255,7 +256,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700 text-sm sm:text-base">Dirección</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">Kl-7 Via Cabuyaro Barranca de Upía</p>
+                    <p className="text-gray-600 text-sm sm:text-base">{DIRECCION}</p>
                   </div>
                 </div>
                 
@@ -267,8 +268,15 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700 text-sm sm:text-base">Teléfono</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">+57 320 9568566</p>
-                    <p className="text-gray-600 text-sm sm:text-base">+57 321 2206923</p>
+                    {TELEFONOS.map((telefono) => (
+                      <a
+                        key={telefono.numero}
+                        href={`tel:+${telefono.numero}`}
+                        className="block text-gray-600 hover:text-green-700 transition-colors text-sm sm:text-base"
+                      >
+                        {telefono.etiqueta}
+                      </a>
+                    ))}
                   </div>
                 </div>
                 
@@ -280,7 +288,12 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700 text-sm sm:text-base">Correo</h4>
-                    <p className="text-gray-600 text-sm sm:text-base break-all">marketing@siriusregenerative.com</p>
+                    <a
+                      href={MAILTO_URL}
+                      className="text-gray-600 hover:text-green-700 transition-colors text-sm sm:text-base break-all"
+                    >
+                      {EMAIL_CONTACTO}
+                    </a>
                   </div>
                 </div>
                 
@@ -292,8 +305,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-700 text-sm sm:text-base">Horario</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">Lunes a Viernes: 9am - 6pm</p>
-                    <p className="text-gray-600 text-sm sm:text-base">Sábados: 9am - 1pm</p>
+                    <p className="text-gray-600 text-sm sm:text-base">{HORARIO.semana}</p>
+                    <p className="text-gray-600 text-sm sm:text-base">{HORARIO.sabado}</p>
                   </div>
                 </div>
               </div>
@@ -321,7 +334,7 @@ const ContactSection = () => {
                   <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6" />
                 </a>
                 {/* <a 
-                  href="https://wa.me/573209568566"
+                  href={WHATSAPP_URL}
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="bg-white/20 hover:bg-white/30 p-3 rounded-full transition-colors"

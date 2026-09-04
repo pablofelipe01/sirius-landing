@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ScrollAnimation from './ScrollAnimation';
+import { DIRECCION, EMAIL_CONTACTO, HORARIO, TELEFONOS, WHATSAPP_URL } from '@/lib/contacto';
 
 const ContactoFinalSection = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ const ContactoFinalSection = () => {
     {
       name: 'WhatsApp',
       icon: '💬',
-      url: 'https://wa.me/573209568566',
+      url: WHATSAPP_URL,
       color: 'bg-green-500 hover:bg-green-600'
     }
   ];
@@ -63,32 +64,33 @@ const ContactoFinalSection = () => {
     icon: string;
     title: string;
     info: string;
-    info2?: string;
+    /** Lineas adicionales bajo `info` (ej. telefonos alternativos). */
+    extras?: string[];
     color: string;
   }[] = [
     {
       icon: '📍',
       title: 'Dirección',
-      info: 'Kl-7 Vía Cabuyaro Barranca de Upía',
+      info: DIRECCION,
       color: 'bg-blue-100 text-blue-600'
     },
     {
       icon: '📞',
       title: 'Teléfono',
-      info: '+57 320 9568566',
-      info2: '+57 321 2206923',
+      info: TELEFONOS[0].etiqueta,
+      extras: TELEFONOS.slice(1).map((telefono) => telefono.etiqueta),
       color: 'bg-green-100 text-green-600'
     },
     {
       icon: '✉️',
       title: 'Correo',
-      info: 'marketing@siriusregenerative.com',
+      info: EMAIL_CONTACTO,
       color: 'bg-purple-100 text-purple-600'
     },
     {
       icon: '🕒',
       title: 'Horario',
-      info: 'Lun-Vie: 9am-6pm, Sáb: 9am-1pm',
+      info: HORARIO.resumen,
       color: 'bg-orange-100 text-orange-600'
     }
   ];
@@ -224,9 +226,9 @@ const ContactoFinalSection = () => {
                       <div>
                         <h4 className="font-semibold text-white">{item.title}</h4>
                         <p className="text-white/80 text-sm">{item.info}</p>
-                        {item.info2 && (
-                          <p className="text-white/80 text-sm">{item.info2}</p>
-                        )}
+                        {item.extras?.map((extra) => (
+                          <p key={extra} className="text-white/80 text-sm">{extra}</p>
+                        ))}
                       </div>
                     </div>
                   ))}
