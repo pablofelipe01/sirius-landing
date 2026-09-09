@@ -16,8 +16,8 @@ import { FICHAS, type FichaProducto } from '@/lib/palma/productos';
 import { DIRECCION, EMAIL_CONTACTO } from '@/lib/contacto';
 
 export const metadata: Metadata = {
-  title: 'Ficha técnica | Sirius Char y Biochar Blend',
-  description: `Fichas técnicas de Sirius Char y Biochar Blend presentadas en ${EVENTO.nombre}.`,
+  title: 'Ficha técnica | Sirius Char Filtro y Biochar Blend',
+  description: `Fichas técnicas de Sirius Char Filtro y Biochar Blend presentadas en ${EVENTO.nombre}.`,
 };
 
 function FichaDisponible({ ficha }: { ficha: FichaProducto & { archivo: string } }) {

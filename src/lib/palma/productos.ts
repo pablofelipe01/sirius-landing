@@ -23,7 +23,17 @@ export interface FichaProducto {
   peso: string | null;
 }
 
+// El orden de este arreglo es el orden en que se muestran las fichas.
 export const FICHAS: FichaProducto[] = [
+  {
+    id: 'sirius-char-filtro',
+    nombre: 'Sirius Char Filtro',
+    claim: 'Biochar filtrante de pirólisis controlada',
+    archivo: '/fichas/sirius-char-filtro-ficha-tecnica.pdf',
+    // PENDIENTE: confirmar la version y fecha que declara el PDF.
+    version: null,
+    peso: '172 KB',
+  },
   {
     id: 'biochar-blend',
     nombre: 'Biochar Blend',
@@ -31,17 +41,6 @@ export const FICHAS: FichaProducto[] = [
     archivo: '/fichas/biochar-blend-ficha-tecnica.pdf',
     version: 'Versión 2.0 · Abril 2026',
     peso: '197 KB',
-  },
-  {
-    id: 'sirius-char',
-    nombre: 'Sirius Char',
-    claim: 'Biochar de pirólisis controlada',
-    // PENDIENTE: copiar el PDF a public/fichas/sirius-char-ficha-tecnica.pdf y
-    // llenar `archivo`, `version` y `peso`. Mientras siga en null, la ficha
-    // aparece anunciada pero sin enlace roto.
-    archivo: null,
-    version: null,
-    peso: null,
   },
 ];
 
