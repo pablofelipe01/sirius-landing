@@ -11,13 +11,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  DIRECCION,
-  EMAIL_CONTACTO,
-  HORARIO,
-  TELEFONO_PRINCIPAL,
-  TELEFONOS,
-} from '@/lib/contacto';
+import { DIRECCION, EMAIL_CONTACTO, TELEFONO_PRINCIPAL } from '@/lib/contacto';
 
 const SITIO = 'siriusregenerative.com';
 
@@ -30,9 +24,8 @@ export const metadata: Metadata = {
 /** Lo que hacemos, en el orden en que lo cuenta el equipo comercial. */
 const SOLUCIONES = [
   'Biochar Blend',
-  'Star Dust',
   'Sirius Bacter',
-  'Control preventivo de plagas',
+  'Control preventivo de plagas y enfermedades',
 ];
 
 const REDES = [
@@ -62,9 +55,9 @@ export default function TarjetaPage() {
             <span className="block text-green-400">con resultados en campo</span>
           </h1>
           <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-white/75">
-            Producimos biochar y biológicos en nuestra biofábrica de Barranca de Upía.
+            Producimos biochar y biológicos en nuestra sede de Barranca de Upía.
             Devolvemos vida al suelo para que el cultivo rinda más y dependa menos de
-            insumos de síntesis.
+            insumos de síntesis química.
           </p>
         </header>
 
@@ -109,24 +102,8 @@ export default function TarjetaPage() {
           </a>
         </div>
 
-        <section className="mt-8 space-y-3 rounded-2xl bg-white/5 p-5 text-sm text-white/75">
+        <section className="mt-8 rounded-2xl bg-white/5 p-5 text-sm text-white/75">
           <p>📍 {DIRECCION}, Meta, Colombia</p>
-          <p>
-            🕑 {HORARIO.semana}
-            <span className="block pl-6">{HORARIO.sabado}</span>
-          </p>
-          <div>
-            <p className="mb-1">☎️ Otras líneas:</p>
-            <ul className="space-y-1 pl-6">
-              {TELEFONOS.slice(1).map((telefono) => (
-                <li key={telefono.numero}>
-                  <a href={`tel:+${telefono.numero}`} className="hover:underline">
-                    {telefono.etiqueta}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </section>
 
         <footer className="mt-8 text-center text-sm">
