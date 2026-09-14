@@ -11,6 +11,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa6';
 import {
   DIRECCION,
   EMAIL_CONTACTO,
@@ -33,9 +34,37 @@ const SOLUCIONES = [
   'Control preventivo de plagas y enfermedades',
 ];
 
+/**
+ * Redes con el icono de marca actual (pack fa6). El color de hover es el de
+ * cada marca: a ese tamano el icono se reconoce por color antes que por forma.
+ */
 const REDES = [
-  { nombre: 'Instagram', url: 'https://www.instagram.com/sirius.colombia' },
-  { nombre: 'LinkedIn', url: 'https://www.linkedin.com/company/sirius-regenerative' },
+  {
+    nombre: 'Instagram',
+    url: 'https://www.instagram.com/sirius.colombia',
+    Icono: FaInstagram,
+    hover: 'hover:text-pink-400',
+  },
+  {
+    nombre: 'YouTube',
+    url: 'https://www.youtube.com/@thesiriuschannel',
+    Icono: FaYoutube,
+    hover: 'hover:text-red-500',
+  },
+  {
+    nombre: 'Facebook',
+    // URL canonica a la que redirige el enlace de compartir facebook.com/share/1JFvttHx2u:
+    // los share links de Facebook caducan, el perfil por id no.
+    url: 'https://www.facebook.com/people/Sirius-Regenerative/61575309277208/',
+    Icono: FaFacebookF,
+    hover: 'hover:text-blue-500',
+  },
+  {
+    nombre: 'LinkedIn',
+    url: 'https://www.linkedin.com/company/sirius-regenerative',
+    Icono: FaLinkedinIn,
+    hover: 'hover:text-sky-400',
+  },
 ];
 
 export default function TarjetaPage() {
@@ -124,16 +153,18 @@ export default function TarjetaPage() {
           <Link href="/" className="font-semibold text-green-400 hover:underline">
             🌐 {SITIO}
           </Link>
-          <div className="mt-4 flex justify-center gap-4 text-white/60">
-            {REDES.map((red) => (
+          <div className="mt-5 flex justify-center gap-3">
+            {REDES.map(({ nombre, url, Icono, hover }) => (
               <a
-                key={red.nombre}
-                href={red.url}
+                key={nombre}
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white hover:underline"
+                aria-label={nombre}
+                title={nombre}
+                className={`flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/70 transition hover:border-white/30 hover:bg-white/10 ${hover}`}
               >
-                {red.nombre}
+                <Icono size={18} />
               </a>
             ))}
           </div>
