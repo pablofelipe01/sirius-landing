@@ -89,9 +89,7 @@ export default function TarjetaPage() {
             <span className="block text-green-400">con resultados en campo</span>
           </h1>
           <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-white/75">
-            Producimos biochar y biológicos en nuestra sede de Barranca de Upía.
-            Devolvemos vida al suelo para que el cultivo rinda más y dependa menos de
-            insumos de síntesis química.
+            Biochar y biológicos hechos en Barranca de Upía. Suelo vivo, menos química de síntesis y cultivos más resistentes a plagas y enfermedades.
           </p>
         </header>
 
