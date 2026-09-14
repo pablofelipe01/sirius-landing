@@ -128,12 +128,6 @@ export default function TarjetaPage() {
           >
             ✉️ {EMAIL_CONTACTO}
           </a>
-          <a
-            href="/tarjeta/contacto.vcf"
-            className="block rounded-2xl bg-white/10 px-6 py-3 text-center text-sm font-semibold text-white/80 transition hover:bg-white/15"
-          >
-            📇 Guardar contacto en el celular
-          </a>
         </div>
 
         <section className="mt-8 space-y-2 rounded-2xl bg-white/5 p-5 text-sm text-white/75">
