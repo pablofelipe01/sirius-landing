@@ -23,6 +23,9 @@ export const TELEFONOS: TelefonoContacto[] = [
 /** Telefono principal: primero en la lista y destino de los enlaces directos. */
 export const TELEFONO_PRINCIPAL = TELEFONOS[0];
 
+/** Linea alterna publicada: la que se ofrece cuando la principal no contesta. */
+export const TELEFONO_ALTERNATIVO = TELEFONOS[2];
+
 export const EMAIL_CONTACTO = 'direccion.comercial@siriusregenerative.com';
 
 export const DIRECCION = 'Kl-7 Vía Cabuyaro Barranca de Upía';

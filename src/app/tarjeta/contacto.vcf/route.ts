@@ -9,7 +9,12 @@
  * y iOS rechaza el archivo si solo lleva LF.
  */
 
-import { DIRECCION, EMAIL_CONTACTO, TELEFONOS } from '@/lib/contacto';
+import {
+  DIRECCION,
+  EMAIL_CONTACTO,
+  TELEFONO_ALTERNATIVO,
+  TELEFONO_PRINCIPAL,
+} from '@/lib/contacto';
 
 const SITIO = 'https://siriusregenerative.com';
 
@@ -21,7 +26,9 @@ export function GET() {
     'FN:Sirius Regenerative',
     'ORG:Sirius Regenerative Solutions',
     'TITLE:Agricultura regenerativa',
-    ...TELEFONOS.map((telefono) => `TEL;TYPE=WORK,VOICE:+${telefono.numero}`),
+    // Solo las dos lineas que la tarjeta publica: el resto no sale a la calle.
+    `TEL;TYPE=WORK,VOICE;PREF=1:+${TELEFONO_PRINCIPAL.numero}`,
+    `TEL;TYPE=WORK,VOICE:+${TELEFONO_ALTERNATIVO.numero}`,
     `EMAIL;TYPE=WORK:${EMAIL_CONTACTO}`,
     `ADR;TYPE=WORK:;;${DIRECCION};Barranca de Upía;Meta;;Colombia`,
     `URL:${SITIO}`,
