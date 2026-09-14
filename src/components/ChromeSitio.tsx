@@ -17,7 +17,7 @@ import NavBar from './NavBar';
 import Footer from './Footer';
 
 /** Prefijos de ruta que se sirven sin nav ni footer. */
-const RUTAS_SIN_CHROME = ['/palma'];
+const RUTAS_SIN_CHROME = ['/palma', '/tarjeta'];
 
 export default function ChromeSitio({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? '';
