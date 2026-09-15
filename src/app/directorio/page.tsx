@@ -179,7 +179,7 @@ export default function DirectorioPage() {
             return (
               // Alto fijo e igual para las cinco: al no repartirse el alto de
               // la pantalla, la reja necesita que la medida venga de aqui.
-              <li key={entrada.nombre} className={`flex h-20 sm:h-28 ${columnas}`}>
+              <li key={entrada.nombre} className={`flex h-32 sm:h-28 ${columnas}`}>
                 {entrada.interno ? (
                   <Link href={entrada.url} className={clases} style={estilo}>
                     {contenido}
