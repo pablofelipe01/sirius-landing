@@ -53,7 +53,7 @@ const ENTRADAS: Entrada[] = [
     url: '/tarjeta',
     interno: true,
     logo: '/logos/sirius.png',
-    alto: 'h-10 sm:h-12',
+    alto: 'h-11 sm:h-14',
     sigla: 'SR',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(0,102,180,0.7)]',
   },
@@ -62,7 +62,7 @@ const ENTRADAS: Entrada[] = [
     descripcion: 'Agroindustria de palma en Barranca de Upía',
     url: 'https://linktr.ee/Guaicaramo',
     logo: '/logos/guaicaramo.png',
-    alto: 'h-10 sm:h-12',
+    alto: 'h-11 sm:h-14',
     sigla: 'G',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(110,155,78,0.7)]',
   },
@@ -72,7 +72,7 @@ const ENTRADAS: Entrada[] = [
     url: 'https://linktr.ee/DelLlanoAltoOleico',
     logo: '/logos/del-llano.png',
     // Es el unico vertical: necesita mas alto para ocupar lo mismo de ancho.
-    alto: 'h-12 sm:h-16',
+    alto: 'h-14 sm:h-20',
     sigla: 'DLL',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(0,110,80,0.7)]',
   },
@@ -81,7 +81,7 @@ const ENTRADAS: Entrada[] = [
     descripcion: 'Programas sociales y ambientales en Barranca de Upía',
     url: 'https://linktr.ee/FundacionGuaicaramo',
     logo: '/logos/fundacion-guaicaramo.png',
-    alto: 'h-11 sm:h-14',
+    alto: 'h-12 sm:h-16',
     sigla: 'FG',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(140,170,110,0.7)]',
   },
@@ -91,7 +91,7 @@ const ENTRADAS: Entrada[] = [
     url: 'https://linktr.ee/HatoGuaicaramo',
     logo: '/logos/hato-guaicaramo.png',
     // El monograma es macizo y sin aire: queda por debajo del alto teorico.
-    alto: 'h-10 sm:h-12',
+    alto: 'h-12 sm:h-16',
     sigla: 'HG',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(234,120,60,0.7)]',
   },
@@ -124,7 +124,7 @@ function Logo({ entrada }: { entrada: Entrada }) {
       alt={entrada.nombre}
       width={384}
       height={160}
-      className={`relative w-auto max-w-[70%] object-contain transition duration-300 group-hover:scale-[1.04] ${entrada.alto}`}
+      className={`relative w-auto max-w-[88%] object-contain transition duration-300 group-hover:scale-[1.04] ${entrada.alto}`}
     />
   );
 }
@@ -137,7 +137,7 @@ export default function DirectorioPage() {
           Alto: el bloque toma la pantalla menos el respiro de arriba y abajo
           (svh, no vh, para que la barra del navegador movil no lo corte), con
           un tope para que en un monitor grande no se estire sin control. */}
-      <div className="flex h-[calc(100svh-3rem)] max-h-[36rem] w-full max-w-[17rem] flex-col sm:h-[calc(100svh-4rem)] sm:max-w-xs">
+      <div className="flex h-[calc(100svh-3rem)] max-h-[36rem] w-full max-w-[14rem] flex-col sm:h-[calc(100svh-4rem)] sm:max-w-[15rem]">
         <ul className="flex flex-1 flex-col gap-3 sm:gap-4">
           {ENTRADAS.map((entrada, indice) => {
             const contenido = (
@@ -154,7 +154,7 @@ export default function DirectorioPage() {
             const clases = [
               // h-full: la tarjeta llena la fila que le reparte el <ul>, asi que
               // las cinco son el mismo rectangulo y el logo se centra dentro.
-              'entrada-tarjeta group relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl px-6 sm:rounded-3xl',
+              'entrada-tarjeta group relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl px-3 sm:rounded-3xl',
               'bg-white/20 backdrop-blur-xl backdrop-brightness-125 backdrop-saturate-150 ring-1 ring-white/40 shadow-lg shadow-black/25',
               'transition duration-300 ease-out hover:-translate-y-1 hover:bg-white/30 hover:ring-white/60',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6E9B4E]',
