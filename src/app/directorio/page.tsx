@@ -13,6 +13,10 @@
  * globals.css) con un velo oscuro encima. Las tarjetas son de vidrio: dejan
  * pasar el paisaje difuminado, asi que el texto va en blanco.
  *
+ * La composicion va anclada abajo y en dos filas (2 + 3) para dejar libre la
+ * mitad de arriba de la foto, que es donde estan el cielo y las palmas. El
+ * orden de ENTRADAS es el de lectura: las dos primeras forman la fila ancha.
+ *
  * Todo es CSS: la pagina se sirve como server component, sin JS de cliente.
  */
 
@@ -131,14 +135,16 @@ function Logo({ entrada }: { entrada: Entrada }) {
 
 export default function DirectorioPage() {
   return (
-    <main className="fondo-directorio flex min-h-screen items-center justify-center px-4 py-6 text-white sm:py-8">
-      {/* Angosto a proposito: el contenido de cada fila es un logo de ~100px,
-          en una columna ancha queda nadando entre aire a lado y lado.
-          Alto: el bloque toma la pantalla menos el respiro de arriba y abajo
-          (svh, no vh, para que la barra del navegador movil no lo corte), con
-          un tope para que en un monitor grande no se estire sin control. */}
-      <div className="flex h-[calc(100svh-3rem)] max-h-[36rem] w-full max-w-[14rem] flex-col sm:h-[calc(100svh-4rem)] sm:max-w-[15rem]">
-        <ul className="flex flex-1 flex-col gap-3 sm:gap-4">
+    <main className="fondo-directorio flex min-h-screen items-end justify-center px-4 pb-6 pt-24 text-white sm:pb-10 sm:pt-32">
+      {/* items-end en el <main>: el bloque se pega abajo y todo lo que sobra
+          de alto queda arriba, que es la parte de la foto que se quiere ver.
+          El ancho tiene tope porque en un monitor grande una fila de tres se
+          estiraria hasta dejar cada logo nadando en su tarjeta. */}
+      <div className="w-full max-w-sm sm:max-w-xl">
+        {/* Seis columnas para que las dos filas cuadren con la misma reja:
+            las dos primeras tarjetas toman tres columnas y las otras tres
+            toman dos. Asi los bordes de ambas filas caen alineados. */}
+        <ul className="grid grid-cols-6 gap-3 sm:gap-4">
           {ENTRADAS.map((entrada, indice) => {
             const contenido = (
               <>
@@ -152,8 +158,8 @@ export default function DirectorioPage() {
             );
 
             const clases = [
-              // h-full: la tarjeta llena la fila que le reparte el <ul>, asi que
-              // las cinco son el mismo rectangulo y el logo se centra dentro.
+              // h-full / w-full: la tarjeta toma la celda entera que le da la
+              // reja, y el logo se centra dentro sin mover nada alrededor.
               'entrada-tarjeta group relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl px-3 sm:rounded-3xl',
               'bg-white/20 backdrop-blur-xl backdrop-brightness-125 backdrop-saturate-150 ring-1 ring-white/40 shadow-lg shadow-black/25',
               'transition duration-300 ease-out hover:-translate-y-1 hover:bg-white/30 hover:ring-white/60',
@@ -166,10 +172,14 @@ export default function DirectorioPage() {
             // en vez de aparecer todas de golpe.
             const estilo = { animationDelay: `${indice * 90}ms` };
 
+            // Las dos primeras van en la fila de arriba (tres columnas cada
+            // una), las otras tres en la de abajo (dos cada una).
+            const columnas = indice < 2 ? 'col-span-3' : 'col-span-2';
+
             return (
-              // flex-1 en cada fila: las cinco se reparten el alto por igual,
-              // asi que siguen midiendo lo mismo entre si y no sobra espacio.
-              <li key={entrada.nombre} className="flex min-h-16 flex-1">
+              // Alto fijo e igual para las cinco: al no repartirse el alto de
+              // la pantalla, la reja necesita que la medida venga de aqui.
+              <li key={entrada.nombre} className={`flex h-20 sm:h-28 ${columnas}`}>
                 {entrada.interno ? (
                   <Link href={entrada.url} className={clases} style={estilo}>
                     {contenido}
