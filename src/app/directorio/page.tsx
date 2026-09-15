@@ -16,14 +16,14 @@
  * Todo es CSS: la pagina se sirve como server component, sin JS de cliente.
  */
 
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: 'Directorio | Sirius Regenerative',
+  title: "Directorio | Sirius Regenerative",
   description:
-    'Enlaces oficiales de Sirius Regenerative, Guaicaramo, Del Llano Alto Oleico, Fundación Guaicaramo y Hato Guaicaramo.',
+    "Enlaces oficiales de Sirius Regenerative, Guaicaramo, Del Llano Alto Oleico, Fundación Guaicaramo y Hato Guaicaramo.",
 };
 
 type Entrada = {
@@ -48,52 +48,52 @@ type Entrada = {
 
 const ENTRADAS: Entrada[] = [
   {
-    nombre: 'Sirius Regenerative',
-    descripcion: 'Biochar y biológicos para agricultura regenerativa',
-    url: '/tarjeta',
+    nombre: "Sirius Regenerative",
+    descripcion: "Biochar y biológicos para agricultura regenerativa",
+    url: "/tarjeta",
     interno: true,
-    logo: '/logos/sirius.png',
-    alto: 'h-9 sm:h-10',
-    sigla: 'SR',
-    halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(0,102,180,0.7)]',
+    logo: "/logos/sirius.png",
+    alto: "h-9 sm:h-10",
+    sigla: "SR",
+    halo: "group-hover:shadow-[0_16px_38px_-18px_rgba(0,102,180,0.7)]",
   },
   {
-    nombre: 'Guaicaramo',
-    descripcion: 'Agroindustria de palma en Barranca de Upía',
-    url: 'https://linktr.ee/Guaicaramo',
-    logo: '/logos/guaicaramo.png',
-    alto: 'h-9 sm:h-10',
-    sigla: 'G',
-    halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(110,155,78,0.7)]',
+    nombre: "Guaicaramo",
+    descripcion: "Agroindustria de palma en Barranca de Upía",
+    url: "https://linktr.ee/Guaicaramo",
+    logo: "/logos/guaicaramo.png",
+    alto: "h-9 sm:h-10",
+    sigla: "G",
+    halo: "group-hover:shadow-[0_16px_38px_-18px_rgba(110,155,78,0.7)]",
   },
   {
-    nombre: 'Del Llano Alto Oleico',
-    descripcion: 'Aceite de palma alto oleico del Llano',
-    url: 'https://linktr.ee/DelLlanoAltoOleico',
-    logo: '/logos/del-llano.png',
+    nombre: "Del Llano Alto Oleico",
+    descripcion: "Aceite de palma alto oleico del Llano",
+    url: "https://linktr.ee/DelLlanoAltoOleico",
+    logo: "/logos/del-llano.png",
     // Es el unico vertical: necesita mas alto para ocupar lo mismo de ancho.
-    alto: 'h-11 sm:h-14',
-    sigla: 'DLL',
-    halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(0,110,80,0.7)]',
+    alto: "h-11 sm:h-14",
+    sigla: "DLL",
+    halo: "group-hover:shadow-[0_16px_38px_-18px_rgba(0,110,80,0.7)]",
   },
   {
-    nombre: 'Fundación Guaicaramo',
-    descripcion: 'Programas sociales y ambientales en Barranca de Upía',
-    url: 'https://linktr.ee/FundacionGuaicaramo',
-    logo: '/logos/fundacion-guaicaramo.png',
-    alto: 'h-10 sm:h-12',
-    sigla: 'FG',
-    halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(140,170,110,0.7)]',
+    nombre: "Fundación Guaicaramo",
+    descripcion: "Programas sociales y ambientales en Barranca de Upía",
+    url: "https://linktr.ee/FundacionGuaicaramo",
+    logo: "/logos/fundacion-guaicaramo.png",
+    alto: "h-10 sm:h-12",
+    sigla: "FG",
+    halo: "group-hover:shadow-[0_16px_38px_-18px_rgba(140,170,110,0.7)]",
   },
   {
-    nombre: 'Hato Guaicaramo',
-    descripcion: 'Ganadería del grupo en el Llano',
-    url: 'https://linktr.ee/HatoGuaicaramo',
-    logo: '/logos/hato-guaicaramo.png',
+    nombre: "Hato Guaicaramo",
+    descripcion: "Ganadería del grupo en el Llano",
+    url: "https://linktr.ee/HatoGuaicaramo",
+    logo: "/logos/hato-guaicaramo.png",
     // El monograma es macizo y sin aire: queda por debajo del alto teorico.
-    alto: 'h-9 sm:h-11',
-    sigla: 'HG',
-    halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(234,120,60,0.7)]',
+    alto: "h-9 sm:h-11",
+    sigla: "HG",
+    halo: "group-hover:shadow-[0_16px_38px_-18px_rgba(234,120,60,0.7)]",
   },
 ];
 
@@ -133,8 +133,8 @@ export default function DirectorioPage() {
   return (
     <main className="fondo-directorio flex min-h-screen items-center justify-center px-4 py-12 text-white">
       {/* Angosto a proposito: el contenido de cada fila es un logo de ~100px,
-            en una columna ancha queda nadando entre aire a lado y lado. */}
-        <div className="w-full max-w-[17rem] sm:max-w-xs">
+          en una columna ancha queda nadando entre aire a lado y lado. */}
+      <div className="w-full max-w-[17rem] sm:max-w-xs">
         <ul className="space-y-3 sm:space-y-4">
           {ENTRADAS.map((entrada, indice) => {
             const contenido = (
@@ -151,13 +151,13 @@ export default function DirectorioPage() {
             const clases = [
               // Alto fijo: las cinco filas son el mismo rectangulo y el logo se centra
               // dentro, pese lo que pese. Sin esto cada tarjeta crece con su logo.
-              'entrada-tarjeta group relative flex h-16 items-center justify-center overflow-hidden rounded-2xl px-6 sm:h-[4.5rem] sm:rounded-3xl',
-              'bg-white/20 backdrop-blur-xl backdrop-brightness-125 backdrop-saturate-150 ring-1 ring-white/40 shadow-lg shadow-black/25',
-              'transition duration-300 ease-out hover:-translate-y-1 hover:bg-white/30 hover:ring-white/60',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6E9B4E]',
-              'motion-reduce:transition-none motion-reduce:hover:translate-y-0',
+              "entrada-tarjeta group relative flex h-16 items-center justify-center overflow-hidden rounded-2xl px-6 sm:h-[4.5rem] sm:rounded-3xl",
+              "bg-white/20 backdrop-blur-xl backdrop-brightness-125 backdrop-saturate-150 ring-1 ring-white/40 shadow-lg shadow-black/25",
+              "transition duration-300 ease-out hover:-translate-y-1 hover:bg-white/30 hover:ring-white/60",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6E9B4E]",
+              "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
               entrada.halo,
-            ].join(' ');
+            ].join(" ");
 
             // El retardo escalona la entrada: las tarjetas caen una tras otra
             // en vez de aparecer todas de golpe.
