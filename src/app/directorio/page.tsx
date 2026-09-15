@@ -135,7 +135,7 @@ function Logo({ entrada }: { entrada: Entrada }) {
 
 export default function DirectorioPage() {
   return (
-    <main className="fondo-directorio flex min-h-screen items-end justify-center px-4 pb-6 pt-24 text-white sm:pb-10 sm:pt-32">
+    <main className="fondo-directorio flex min-h-screen items-end justify-center px-4 pb-12 pt-24 text-white sm:pb-20 sm:pt-32">
       {/* items-end en el <main>: el bloque se pega abajo y todo lo que sobra
           de alto queda arriba, que es la parte de la foto que se quiere ver.
           El ancho tiene tope porque en un monitor grande una fila de tres se
