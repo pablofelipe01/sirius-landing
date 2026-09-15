@@ -26,6 +26,15 @@ export const TELEFONO_PRINCIPAL = TELEFONOS[0];
 /** Linea alterna publicada: la que se ofrece cuando la principal no contesta. */
 export const TELEFONO_ALTERNATIVO = TELEFONOS[2];
 
+/**
+ * Linea atendida por el chatbot conversacional: es el destino del boton de
+ * WhatsApp de la tarjeta digital, no de los enlaces del sitio principal.
+ */
+export const WHATSAPP_BOT: TelefonoContacto = {
+  etiqueta: '+57 322 4183251',
+  numero: '573224183251',
+};
+
 export const EMAIL_CONTACTO = 'direccion.comercial@siriusregenerative.com';
 
 export const DIRECCION = 'Kl-7 Vía Cabuyaro Barranca de Upía';

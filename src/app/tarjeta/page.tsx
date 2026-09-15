@@ -17,6 +17,7 @@ import {
   EMAIL_CONTACTO,
   TELEFONO_ALTERNATIVO,
   TELEFONO_PRINCIPAL,
+  WHATSAPP_BOT,
 } from '@/lib/contacto';
 
 const SITIO = 'siriusregenerative.com';
@@ -68,8 +69,10 @@ const REDES = [
 ];
 
 export default function TarjetaPage() {
-  const whatsapp = `https://wa.me/${TELEFONO_PRINCIPAL.numero}?text=${encodeURIComponent(
-    'Hola Sirius, escaneé su código QR y quiero más información.'
+  // Va al numero del chatbot, no al telefono principal: quien escanea el QR
+  // recibe respuesta inmediata y el mensaje precargado ya dice de donde viene.
+  const whatsapp = `https://wa.me/${WHATSAPP_BOT.numero}?text=${encodeURIComponent(
+    'Hola, vengo de la Conferencia de Palma 2026 y quiero información sobre biochar y biológicos.'
   )}`;
 
   return (
