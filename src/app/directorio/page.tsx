@@ -13,10 +13,6 @@
  * globals.css) con un velo oscuro encima. Las tarjetas son de vidrio: dejan
  * pasar el paisaje difuminado, asi que el texto va en blanco.
  *
- * La composicion va anclada abajo y en dos filas (2 + 3) para dejar libre la
- * mitad de arriba de la foto, que es donde estan el cielo y las palmas. El
- * orden de ENTRADAS es el de lectura: las dos primeras forman la fila ancha.
- *
  * Todo es CSS: la pagina se sirve como server component, sin JS de cliente.
  */
 
@@ -36,14 +32,15 @@ type Entrada = {
   url: string;
   /** true cuando la URL es de este sitio: se navega con Link, sin abrir pestana. */
   interno?: boolean;
-  /** Archivo en /public/logos. */
-  logo: string | null;
   /**
-   * Alto del logo dentro de la fila. No es el mismo para todos: los logos van
-   * de 2.5:1 (Guaicaramo) a 0.78:1 (Del Llano) y a igual altura los apaisados
-   * pesan el triple. Cada valor sale de igualar area aparente, no altura.
+   * Archivo en /public/logos. Los cuatro logos oficiales son oscuros sobre
+   * transparente, por eso la placa que los contiene es blanca: sobre el fondo
+   * slate de la pagina el marron de la Fundacion y el azul de Sirius
+   * desaparecerian.
    */
-  alto: string;
+  logo: string | null;
+  /** Relleno de la placa. Se baja para los logos que ya traen aire propio. */
+  relleno?: string;
   /** Iniciales del monograma mientras no haya logo oficial. */
   sigla: string;
   /** Color del halo de la tarjeta al pasar el mouse, tomado de la marca. */
@@ -57,7 +54,6 @@ const ENTRADAS: Entrada[] = [
     url: '/tarjeta',
     interno: true,
     logo: '/logos/sirius.png',
-    alto: 'h-11 sm:h-14',
     sigla: 'SR',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(0,102,180,0.7)]',
   },
@@ -66,7 +62,6 @@ const ENTRADAS: Entrada[] = [
     descripcion: 'Agroindustria de palma en Barranca de Upía',
     url: 'https://linktr.ee/Guaicaramo',
     logo: '/logos/guaicaramo.png',
-    alto: 'h-11 sm:h-14',
     sigla: 'G',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(110,155,78,0.7)]',
   },
@@ -75,8 +70,8 @@ const ENTRADAS: Entrada[] = [
     descripcion: 'Aceite de palma alto oleico del Llano',
     url: 'https://linktr.ee/DelLlanoAltoOleico',
     logo: '/logos/del-llano.png',
-    // Es el unico vertical: necesita mas alto para ocupar lo mismo de ancho.
-    alto: 'h-14 sm:h-20',
+    // El isotipo es vertical y sin margen propio: necesita mas aire que los demas.
+    relleno: 'p-2.5 sm:p-3.5',
     sigla: 'DLL',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(0,110,80,0.7)]',
   },
@@ -85,7 +80,6 @@ const ENTRADAS: Entrada[] = [
     descripcion: 'Programas sociales y ambientales en Barranca de Upía',
     url: 'https://linktr.ee/FundacionGuaicaramo',
     logo: '/logos/fundacion-guaicaramo.png',
-    alto: 'h-12 sm:h-16',
     sigla: 'FG',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(140,170,110,0.7)]',
   },
@@ -94,57 +88,56 @@ const ENTRADAS: Entrada[] = [
     descripcion: 'Ganadería del grupo en el Llano',
     url: 'https://linktr.ee/HatoGuaicaramo',
     logo: '/logos/hato-guaicaramo.png',
-    // El monograma es macizo y sin aire: queda por debajo del alto teorico.
-    alto: 'h-12 sm:h-16',
+    // El monograma viene recortado al filo de la letra: sin este aire extra
+    // toca los bordes de la placa y se ve mas grande que los demas logos.
+    relleno: 'px-4 py-2.5 sm:px-6 sm:py-4',
     sigla: 'HG',
     halo: 'group-hover:shadow-[0_16px_38px_-18px_rgba(234,120,60,0.7)]',
   },
 ];
 
 /**
- * El logo, directo sobre el vidrio de la tarjeta.
+ * Placa del logo: blanca, de tamano fijo, con el logo en `object-contain`.
  *
- * Los logos vienen en proporciones muy distintas (Guaicaramo es apaisado, el de
- * Del Llano es vertical), asi que cada uno trae su propio alto (`entrada.alto`)
- * y `object-contain` le deja el ancho que necesite sin deformarlo. Como la fila
- * mide siempre lo mismo, cambiar un alto no mueve la tarjeta: solo centra otro
- * tamano dentro del mismo rectangulo.
+ * Los logos vienen en proporciones muy distintas (Guaicaramo es apaisado, el
+ * de Del Llano es vertical). La placa fija el area y `object-contain` deja que
+ * cada uno use lo que necesite sin deformarse ni desalinear las filas.
  *
- * `alt` con el nombre de la empresa es lo unico que nombra el enlace ahora que
- * no hay texto visible: sin el, un lector de pantalla solo anuncia una URL.
+ * En movil la placa encoge: la pagina se ve sobre la foto del morichal y cada
+ * pixel que no ocupa una tarjeta es paisaje que se ve.
  */
 function Logo({ entrada }: { entrada: Entrada }) {
+  const placa =
+    'relative flex h-14 w-[4.25rem] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white/85 backdrop-blur-sm shadow-sm ring-1 ring-white/50 transition duration-300 group-hover:scale-[1.04] group-hover:bg-white group-hover:shadow-md sm:h-[4.5rem] sm:w-24 sm:rounded-2xl';
+
   if (!entrada.logo) {
     return (
-      <span className="relative block text-center text-2xl font-extrabold tracking-tight text-white">
-        {entrada.sigla}
-      </span>
+      <div className={placa} aria-hidden>
+        <span className="text-xl font-extrabold tracking-tight text-[#6E9B4E]">
+          {entrada.sigla}
+        </span>
+      </div>
     );
   }
 
   return (
-    <Image
-      src={entrada.logo}
-      alt={entrada.nombre}
-      width={384}
-      height={160}
-      className={`relative w-auto max-w-[88%] object-contain transition duration-300 group-hover:scale-[1.04] ${entrada.alto}`}
-    />
+    <div className={`${placa} ${entrada.relleno ?? 'p-2 sm:p-2.5'}`}>
+      <Image
+        src={entrada.logo}
+        alt={entrada.nombre}
+        width={192}
+        height={144}
+        className="h-full w-full object-contain"
+      />
+    </div>
   );
 }
 
 export default function DirectorioPage() {
   return (
-    <main className="fondo-directorio flex min-h-screen items-end justify-center px-4 pb-12 pt-24 text-white sm:pb-20 sm:pt-32">
-      {/* items-end en el <main>: el bloque se pega abajo y todo lo que sobra
-          de alto queda arriba, que es la parte de la foto que se quiere ver.
-          El ancho tiene tope porque en un monitor grande una fila de tres se
-          estiraria hasta dejar cada logo nadando en su tarjeta. */}
-      <div className="w-full max-w-sm sm:max-w-xl">
-        {/* Seis columnas para que las dos filas cuadren con la misma reja:
-            las dos primeras tarjetas toman tres columnas y las otras tres
-            toman dos. Asi los bordes de ambas filas caen alineados. */}
-        <ul className="grid grid-cols-6 gap-3 sm:gap-4">
+    <main className="fondo-directorio flex min-h-screen items-center justify-center px-4 py-12 text-white">
+      <div className="w-full max-w-[19rem] sm:max-w-md">
+        <ul className="space-y-3 sm:space-y-4">
           {ENTRADAS.map((entrada, indice) => {
             const contenido = (
               <>
@@ -154,15 +147,30 @@ export default function DirectorioPage() {
                   className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
                 />
                 <Logo entrada={entrada} />
+                <span className="relative min-w-0">
+                  <span className="block text-sm font-bold leading-tight text-white drop-shadow-sm sm:text-base">
+                    {entrada.nombre}
+                  </span>
+                  {/* La descripcion es lo que obliga a la tarjeta a crecer a dos
+                      lineas. En movil se oculta: el logo y el nombre ya dicen a
+                      donde lleva el enlace, y la foto de fondo gana el espacio. */}
+                  <span className="mt-1 hidden text-xs leading-relaxed text-white/75 sm:block">
+                    {entrada.descripcion}
+                  </span>
+                </span>
+                <span
+                  className="relative ml-auto text-lg text-white/50 transition-all sm:text-xl duration-300 group-hover:translate-x-1 group-hover:text-white"
+                  aria-hidden
+                >
+                  →
+                </span>
               </>
             );
 
             const clases = [
-              // h-full / w-full: la tarjeta toma la celda entera que le da la
-              // reja, y el logo se centra dentro sin mover nada alrededor.
-              'entrada-tarjeta group relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl px-3 sm:rounded-3xl',
-              'bg-white/20 backdrop-blur-xl backdrop-brightness-125 backdrop-saturate-150 ring-1 ring-white/40 shadow-lg shadow-black/25',
-              'transition duration-300 ease-out hover:-translate-y-1 hover:bg-white/30 hover:ring-white/60',
+              'entrada-tarjeta group relative flex items-center gap-3 overflow-hidden rounded-2xl p-2.5 sm:gap-4 sm:rounded-3xl sm:p-4',
+              'bg-white/10 backdrop-blur-xl backdrop-saturate-150 ring-1 ring-white/25 shadow-xl shadow-black/30',
+              'transition duration-300 ease-out hover:-translate-y-1 hover:bg-white/20 hover:ring-white/45',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6E9B4E]',
               'motion-reduce:transition-none motion-reduce:hover:translate-y-0',
               entrada.halo,
@@ -172,14 +180,8 @@ export default function DirectorioPage() {
             // en vez de aparecer todas de golpe.
             const estilo = { animationDelay: `${indice * 90}ms` };
 
-            // Las dos primeras van en la fila de arriba (tres columnas cada
-            // una), las otras tres en la de abajo (dos cada una).
-            const columnas = indice < 2 ? 'col-span-3' : 'col-span-2';
-
             return (
-              // Alto fijo e igual para las cinco: al no repartirse el alto de
-              // la pantalla, la reja necesita que la medida venga de aqui.
-              <li key={entrada.nombre} className={`flex h-24 sm:h-28 ${columnas}`}>
+              <li key={entrada.nombre}>
                 {entrada.interno ? (
                   <Link href={entrada.url} className={clases} style={estilo}>
                     {contenido}
