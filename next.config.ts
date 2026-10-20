@@ -8,12 +8,12 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: {
-    // ProductsSection usa quality={100}. Desde Next 16 cada valor de quality
-    // debe estar declarado aqui; 75 es el default que usan las demas imagenes.
-    qualities: [75, 100],
-  },
-  /* config options here */
+  poweredByHeader: false,
+  // Rutas del sitio anterior que cambiaron de nombre con el rediseño: los enlaces viejos siguen llegando
+  redirects: async () => [
+    { source: "/inovacion", destination: "/biofabrica", permanent: true },
+    { source: "/ventas", destination: "/productos", permanent: true },
+  ],
 };
 
 export default nextConfig;

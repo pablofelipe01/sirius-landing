@@ -1,64 +1,73 @@
-'use client';
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import { ButtonLink, Eyebrow, PageHero } from '@/components/ui';
+import { optionalEnv } from '@/lib/env';
 
-import React from 'react';
-import ScrollAnimation from '@/components/ScrollAnimation';
-
-const CarbonCalculatorPage = () => {
-  return (
-    <main className="pt-24 pb-12">
-      <div className="container mx-auto px-4">
-        <ScrollAnimation direction="up">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-800">
-              Calculadora de Carbono
-            </h1>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Calcula tu huella de carbono y descubre cómo nuestros productos pueden ayudarte a compensarla.
-            </p>
-          </div>
-        </ScrollAnimation>
-
-        <ScrollAnimation direction="up" delay={0.2}>
-          <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
-            <div className="p-4 md:p-0">
-              <iframe 
-                className="airtable-embed w-full h-[533px] border border-gray-200 rounded-lg"
-                src="https://airtable.com/embed/apprXBBomgiKhVc50/shr6xsVYrJJe428P1" 
-                frameBorder="0"
-                style={{ background: 'transparent' }}
-                title="Calculadora de Carbono"
-              ></iframe>
-            </div>
-          </div>
-        </ScrollAnimation>
-
-        <ScrollAnimation direction="up" delay={0.4}>
-          <div className="bg-green-50 border border-green-100 rounded-xl p-6 md:p-8 mt-8 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">
-              ¿Por qué calcular tu huella de carbono?
-            </h2>
-            <p className="text-gray-700 mb-4">
-              Conocer tu huella de carbono es el primer paso para reducir tu impacto ambiental. En Sirius Regenerative 
-              estamos comprometidos con soluciones que no solo reducen emisiones, sino que ayudan a capturar el carbono 
-              ya presente en la atmósfera.
-            </p>
-            <p className="text-gray-700">
-              Nuestro biochar es una solución efectiva para la captura de carbono a largo plazo, contribuyendo activamente 
-              a la lucha contra el cambio climático mientras mejora la calidad y productividad de tus suelos.
-            </p>
-            <div className="mt-6">
-              <a 
-                href="/contacto" 
-                className="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors"
-              >
-                Contacta con nuestros expertos
-              </a>
-            </div>
-          </div>
-        </ScrollAnimation>
-      </div>
-    </main>
-  );
+export const metadata: Metadata = {
+  title: 'Calculadora de carbono',
+  description: 'Calcula tu huella de carbono y descubre cómo el biochar de Sirius ayuda a compensarla mientras mejora tus suelos.',
 };
 
-export default CarbonCalculatorPage;
+// El formulario vive en Airtable. Su enlace de inserción se lee del entorno para no dejar
+// el ID de la base escrito en el código; sin la variable, la página ofrece el contacto.
+const EMBED_URL = optionalEnv('CALCULADORA_CARBONO_EMBED_URL');
+
+export default function CalculadoraPage() {
+  return (
+    <>
+      <PageHero
+        eyebrow="Calculadora de carbono"
+        title="Calcula tu huella de carbono"
+        text="Conócela y descubre cómo nuestros productos pueden ayudarte a compensarla."
+        image="/img/campo/palma-aerea.webp"
+      />
+
+      <section className="container-page grid gap-12 py-20 sm:py-28 lg:grid-cols-12">
+        <div data-reveal="up" className="lg:col-span-8">
+          {EMBED_URL ? (
+            <div className="overflow-hidden rounded-3xl bg-white shadow-xl shadow-night-900/5 ring-1 ring-paper-200">
+              <iframe src={EMBED_URL} title="Calculadora de carbono" className="block h-[40rem] w-full" />
+            </div>
+          ) : (
+            <div className="rounded-3xl bg-white p-8 ring-1 ring-paper-200 sm:p-10">
+              <h2 className="font-display text-2xl font-semibold text-night-900">La calculadora no está disponible en este momento</h2>
+              <p className="mt-3 text-muted">Escríbenos y te ayudamos a estimar tu huella de carbono.</p>
+              <div className="mt-6">
+                <ButtonLink href="/contacto" variant="secondary">
+                  Contactar a un experto
+                </ButtonLink>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <aside className="lg:col-span-4">
+          <div data-reveal="up" data-reveal-delay="0.15" className="rounded-3xl bg-bio-100 p-7 sm:p-8">
+            <Eyebrow>Por qué calcularla</Eyebrow>
+            <h2 className="font-display text-2xl font-semibold text-night-900">El primer paso para reducir tu impacto</h2>
+            <p className="mt-4 leading-relaxed text-night-900/80">
+              En Sirius Regenerative estamos comprometidos con soluciones que no solo reducen emisiones: también ayudan a capturar el carbono ya presente en la atmósfera.
+            </p>
+            <p className="mt-4 leading-relaxed text-night-900/80">
+              Nuestro biochar captura carbono a largo plazo y, al mismo tiempo, mejora la calidad y la productividad de tus suelos.
+            </p>
+            <div className="mt-6">
+              <ButtonLink href="/contacto" variant="secondary">
+                Contacta a nuestros expertos
+              </ButtonLink>
+            </div>
+          </div>
+          <div data-reveal="pop" data-reveal-delay="0.3" className="float-soft mx-auto mt-8 w-56">
+            <Image
+              src="/img/fotos/carbono-banera.webp"
+              alt="Ilustración de una bañera: el grifo reduce las emisiones y el drenaje remueve el CO₂ acumulado en la atmósfera"
+              width={434}
+              height={509}
+              className="rounded-3xl shadow-xl"
+            />
+          </div>
+        </aside>
+      </section>
+    </>
+  );
+}

@@ -1,165 +1,107 @@
-'use client';
+import Image from "next/image";
+import Link from "next/link";
+import { contact, footer, navigation } from "@/lib/content/site";
+import { Chat, Clock, Instagram, LinkedIn, Mail, MapPin, Phone } from "./icons";
 
-import Link from 'next/link';
-import Image from 'next/image';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
-import { DIRECCION, EMAIL_CONTACTO, HORARIO, MAILTO_URL, TELEFONOS, WHATSAPP_URL } from '@/lib/contacto';
-
-const Footer = () => {
+export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white pt-12 pb-6">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {/* Logo y descripción */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <Link href="/">
-              <Image 
-                src="/logo.png" 
-                alt="Sirius Regenerative" 
-                width={120} 
-                height={40} 
-                className="h-auto mb-4 w-auto max-w-[120px] sm:max-w-[150px]" 
-              />
-            </Link>
-            <p className="text-gray-400 mt-4 text-sm sm:text-base">
-              Transformamos la agricultura convencional con soluciones regenerativas 
-              que nutren el suelo y potencian tus cultivos.
-            </p>
-            <div className="flex space-x-3 sm:space-x-4 mt-6">
-              <a 
-                href="https://www.instagram.com/sirius.colombia" 
-                target="_blank" 
+    <footer id="conversemos" className="scroll-mt-20 bg-night-950 text-white">
+      <div data-reveal-stagger className="container-page grid gap-12 py-16 sm:py-20 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <Image src="/img/brand/logo-sirius.webp" alt="Sirius" width={800} height={355} sizes="144px" className="h-12 w-auto" />
+          <p className="font-display mt-8 text-3xl leading-tight font-semibold text-balance sm:text-4xl">{footer.title}</p>
+          <p className="mt-5 max-w-md leading-relaxed text-white/75">{footer.text}</p>
+          <div className="mt-8 flex gap-3">
+            {contact.social.map((s) => (
+              <a
+                key={s.href}
+                href={s.href}
+                target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-400 transition-colors"
-                aria-label="Instagram"
+                aria-label={`Sirius en ${s.label}`}
+                className="inline-flex size-11 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-brand-600"
               >
-                <FaInstagram size={20} className="sm:w-6 sm:h-6" />
+                {s.label === "Instagram" ? <Instagram className="size-5" /> : <LinkedIn className="size-5" />}
               </a>
-              <a 
-                href="https://www.linkedin.com/company/sirius-regenerative" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-400 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
-              </a>
-              {/* <a 
-                href={WHATSAPP_URL}
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-green-400 transition-colors"
-                aria-label="WhatsApp"
-              >
-                <FaWhatsapp size={24} />
-              </a> */}
-            </div>
-          </div>
-
-          {/* Enlaces rápidos */}
-          <div className="col-span-1">
-            <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-green-400">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link href="/productos" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Productos
-                </Link>
-              </li>
-              <li>
-                <Link href="/calculadora" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Calculadora de Carbono
-                </Link>
-              </li>
-              <li>
-                <Link href="/contacto" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Contacto
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Productos */}
-          <div className="col-span-1">
-            <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-green-400">Nuestros Productos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/productos#biochar-blend" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Biochar Blend
-                </Link>
-              </li>
-              <li>
-                <Link href="/productos#star-dust" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Star Dust
-                </Link>
-              </li>
-              <li>
-                <Link href="/ventas" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
-                  Ofertas Especiales
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contacto */}
-          <div className="col-span-1 sm:col-span-2 lg:col-span-1">
-            <h4 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-green-400">Información de contacto</h4>
-            <ul className="space-y-2">
-              <li className="flex items-start">
-                <span className="text-gray-400 mr-2 text-sm">📍</span>
-                <span className="text-gray-400 text-sm sm:text-base">{DIRECCION}</span>
-              </li>
-              {TELEFONOS.map((telefono) => (
-                <li key={telefono.numero} className="flex items-start">
-                  <span className="text-gray-400 mr-2 text-sm">📞</span>
-                  <a
-                    href={`tel:+${telefono.numero}`}
-                    className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
-                  >
-                    {telefono.etiqueta}
-                  </a>
-                </li>
-              ))}
-              <li className="flex items-start">
-                <span className="text-gray-400 mr-2 text-sm">✉️</span>
-                <a href={MAILTO_URL} className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base break-all">
-                  {EMAIL_CONTACTO}
-                </a>
-              </li>
-              <li className="flex items-start mt-3 sm:mt-4">
-                <span className="text-gray-400 mr-2 text-sm">🕒</span>
-                <div className="text-gray-400 text-sm sm:text-base">
-                  <p>{HORARIO.semana}</p>
-                  <p>{HORARIO.sabado}</p>
-                </div>
-              </li>
-            </ul>
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-4 sm:pt-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-gray-500 text-xs sm:text-sm mb-3 sm:mb-0">
-              &copy; {new Date().getFullYear()} Sirius Regenerative. Todos los derechos reservados.
-            </p>
-            <div className="flex space-x-4 sm:space-x-6">
-              <Link href="/privacypolicy" className="text-gray-500 hover:text-white text-xs sm:text-sm transition-colors">
-                Política de Privacidad
+        <div className="lg:col-span-4">
+          <h2 className="text-sm font-semibold tracking-[0.18em] text-bio-300 uppercase">Conversemos</h2>
+          <ul className="mt-5 space-y-4 text-white/85">
+            <li className="flex gap-3">
+              <MapPin className="mt-0.5 size-5 shrink-0 text-bio-300" />
+              {contact.address}
+            </li>
+            <li className="flex gap-3">
+              <Phone className="mt-0.5 size-5 shrink-0 text-bio-300" />
+              <span className="flex flex-col">
+                {contact.phones.map((p) => (
+                  <a key={p.href} href={p.href} className="hover:text-white hover:underline">
+                    {p.label}
+                  </a>
+                ))}
+              </span>
+            </li>
+            <li>
+              <a href={contact.whatsapp.href} target="_blank" rel="noopener noreferrer" className="flex gap-3 hover:text-white">
+                <Chat className="mt-0.5 size-5 shrink-0 text-bio-300" />
+                WhatsApp {contact.whatsapp.label}
+              </a>
+            </li>
+            <li>
+              {/* El correo es largo: si no cabe, parte después de la @ y no en una letra suelta */}
+              <a href={contact.mailto} className="flex gap-3 hover:text-white">
+                <Mail className="mt-0.5 size-5 shrink-0 text-bio-300" />
+                <span className="min-w-0">
+                  {contact.email.split("@")[0]}@<wbr />
+                  {contact.email.split("@")[1]}
+                </span>
+              </a>
+            </li>
+            <li className="flex gap-3">
+              <Clock className="mt-0.5 size-5 shrink-0 text-bio-300" />
+              <span className="flex flex-col">
+                {contact.schedule.map((h) => (
+                  <span key={h}>{h}</span>
+                ))}
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <nav aria-label="Pie de página" className="lg:col-span-3">
+          <h2 className="text-sm font-semibold tracking-[0.18em] text-bio-300 uppercase">Explora</h2>
+          <ul className="mt-5 space-y-2.5 text-white/85">
+            {navigation.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="hover:text-white hover:underline">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <div className="border-t border-white/10">
+        <div className="container-page flex flex-col gap-4 py-6 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Sirius Regenerative. Barranca de Upía, Meta.</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            <li>
+              <Link href="/privacypolicy" className="hover:text-white hover:underline">
+                Política de privacidad
               </Link>
-              <Link href="/terminos" className="text-gray-500 hover:text-white text-xs sm:text-sm transition-colors">
-                Términos y Condiciones
+            </li>
+            <li>
+              <Link href="/directorio" className="hover:text-white hover:underline">
+                Empresas del grupo
               </Link>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

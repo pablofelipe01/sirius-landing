@@ -1,21 +1,16 @@
-import Link from 'next/link';
+import { ButtonLink } from '@/components/ui';
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-32 text-white">
-      <div className="mx-auto max-w-2xl rounded-3xl border border-white/10 bg-white/10 p-8 text-center shadow-2xl backdrop-blur">
-        <p className="text-sm font-bold uppercase tracking-[0.3em] text-green-300">404</p>
-        <h1 className="mt-4 text-4xl font-black">Página no encontrada</h1>
-        <p className="mt-4 text-slate-200">
-          La ruta que estás buscando no existe o fue movida.
-        </p>
-        <Link
-          href="/"
-          className="mt-8 inline-flex rounded-full bg-green-500 px-6 py-3 font-bold text-white transition hover:bg-green-600"
-        >
-          Volver al inicio
-        </Link>
+    <section className="bg-night-950 pt-40 pb-28 text-white">
+      <div className="container-page max-w-2xl text-center">
+        <p className="font-display text-7xl font-semibold text-bio-300">404</p>
+        <h1 className="font-display mt-6 text-3xl font-semibold sm:text-4xl">Esta página no está en el camino</h1>
+        <p className="mt-4 text-white/75">Puede que el enlace haya cambiado con el nuevo sitio. Te invitamos a volver al inicio.</p>
+        <div className="mt-8">
+          <ButtonLink href="/">Volver al inicio</ButtonLink>
+        </div>
       </div>
-    </main>
+    </section>
   );
 }
