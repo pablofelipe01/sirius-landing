@@ -1,4 +1,5 @@
-// Somos Sirius. Hitos, propósito y pilares del sitio anterior (HistorySection y ZoomBackgroundSection).
+// Somos Sirius. Misión, visión y valores del Manual de Marca 2023 (pp. 6-7);
+// hitos del sitio anterior (HistorySection).
 
 export const FOUNDED = 2018;
 
@@ -7,14 +8,8 @@ export const about = {
   paragraphs: [
     "Sirius Regenerative transforma la agricultura convencional con soluciones regenerativas que nutren el suelo y potencian los cultivos. Desde Barranca de Upía convertimos residuos orgánicos en bioinsumos de alto impacto a través de tecnologías limpias como la pirólisis.",
     "Nuestra biofábrica es el corazón de una agricultura regenerativa y circular, diseñada para devolverle vida al suelo y resiliencia a los cultivos. Allí el fuego ancestral se encuentra con la ciencia viva: biochar, microorganismos benéficos, inteligencia artificial y formulaciones a la medida.",
-    "Sirius es una empresa con conocimiento y amor. Más que una marca, somos un movimiento que invita a regenerar el mundo empezando por el suelo que nos alimenta.",
   ],
-  // Frases que se resaltan; deben aparecer tal cual en los párrafos
-  highlights: ["soluciones regenerativas", "la pirólisis", "agricultura regenerativa y circular", "conocimiento y amor"],
 };
-
-// Cada ilustración entra de una forma distinta (ver components/HistoryTimeline.tsx)
-export type MilestoneAnim = "drive" | "pop" | "grow" | "develop" | "spin" | "slide" | "assemble" | "roll" | "rise" | "focus" | "lift" | "drift";
 
 export type Milestone = {
   year: string;
@@ -22,7 +17,6 @@ export type Milestone = {
   text: string;
   image: string;
   alt: string;
-  anim: MilestoneAnim;
 };
 
 export const timeline: Milestone[] = [
@@ -32,7 +26,6 @@ export const timeline: Milestone[] = [
     text: "Primera planta de pirólisis con la que inició Sirius, utilizada para los primeros ensayos y aprendizajes.",
     image: "/img/procesos/horno.webp",
     alt: "Brasas encendidas dentro de un horno de pirólisis",
-    anim: "develop",
   },
   {
     year: "2019",
@@ -40,7 +33,6 @@ export const timeline: Milestone[] = [
     text: "Nuestra segunda planta sirvió como maestra de pirólisis durante tres años y nos dejó hallazgos invaluables.",
     image: "/img/procesos/biochar-salida.webp",
     alt: "Biochar saliendo del proceso de pirólisis",
-    anim: "drive",
   },
   {
     year: "2020",
@@ -48,39 +40,34 @@ export const timeline: Milestone[] = [
     text: "En noviembre llegó el equipo de microbiología y empezamos a trabajar con biológicos.",
     image: "/img/laboratorio/petri.webp",
     alt: "Colonias de microorganismos en una caja de Petri",
-    anim: "pop",
   },
   {
     year: "2022",
     title: "Rafaela 1.0",
-    text: "En agosto diseñamos y construimos nuestro primer reactor propio. Siguió una fase de encendido y comisionamiento de más de un año.",
+    text: "Diseñamos y construimos nuestro primer reactor propio. Siguió una fase de encendido y comisionamiento de más de un año.",
     image: "/img/procesos/reactor.webp",
     alt: "Interior del reactor de pirólisis",
-    anim: "roll",
   },
   {
     year: "2023",
-    title: "Consolidación comercial en biológicos",
-    text: "Alcanzamos ocho clientes constantes, consolidamos la producción y seguimos mejorando.",
+    title: "Consolidación comercial",
+    text: "Alcanzamos ocho clientes constantes en biológicos, consolidamos la producción y seguimos mejorando.",
     image: "/img/fotos/encuentro-clientes.webp",
     alt: "Encuentro al aire libre con clientes y aliados",
-    anim: "slide",
   },
   {
     year: "2024",
     title: "Rafaela 2.0",
-    text: "En febrero rediseñamos la planta para eliminar el proceso de condensados y enfocarnos en la calidad del biochar, con mejoras incrementales y más capacidad.",
+    text: "Rediseñamos la planta para eliminar el proceso de condensados y enfocarnos en la calidad del biochar, con más capacidad.",
     image: "/img/procesos/planta-noche.webp",
     alt: "Planta de pirólisis de Sirius en operación durante la noche",
-    anim: "lift",
   },
   {
     year: "2024",
-    title: "Laboratorio de análisis microbiológico",
-    text: "Construimos un laboratorio propio para medir la calidad y las poblaciones microbianas en los suelos de nuestros clientes.",
+    title: "Laboratorio propio",
+    text: "Construimos un laboratorio para medir la calidad y las poblaciones microbianas en los suelos de nuestros clientes.",
     image: "/img/laboratorio/microscopio.webp",
     alt: "Objetivo de microscopio sobre una muestra",
-    anim: "focus",
   },
   {
     year: "2025",
@@ -88,46 +75,32 @@ export const timeline: Milestone[] = [
     text: "Nos propusimos ampliar la capacidad de pirólisis y consolidar el portafolio de biológicos y Biochar Blend.",
     image: "/img/campo/palma-aerea.webp",
     alt: "Vista aérea de un cultivo de palma",
-    anim: "drift",
   },
 ];
 
-export const purpose = {
-  purpose:
-    "“Sirius está aquí para ayudar a recordar quiénes somos.” Sanar el ser y el entorno es el primer paso para regenerar el mundo: por eso cuidamos el suelo, a quienes lo trabajan y a la comunidad que nos rodea.",
-  vision:
-    "Construir un futuro climáticamente positivo. Cada producto, cada proyecto y cada alma contribuye a un planeta próspero: nuestra meta es regenerar 100.000 hectáreas para 2030.",
-};
+// Manual de Marca 2023, p. 6 (la frase corta de cada una)
+export const mission =
+  "Ser una guía que brinda las herramientas para llevar el campo hacia la regeneración del suelo, de la biodiversidad y de los seres.";
+export const vision = "Capturar CO₂ en el orden de gigatoneladas y alimentar de manera sana y consciente a millones de seres.";
 
-// Pilares (el "ciclo" del sitio anterior). color: fondo de la tarjeta, con contraste AA para texto blanco
-export const pillars = [
+// Manual de Marca 2023, p. 7
+export const values = [
   {
-    name: "Regeneración holística",
-    text: "**Sanar el ser y el entorno.** Devolverle la vida al suelo es también devolvérsela a quienes lo trabajan.",
-    color: "#004e9d",
-    image: "/img/campo/mano-biochar.webp",
-    alt: "Mano con biochar sobre un cultivo",
+    name: "Alegría",
+    motto: "We are Sirius, but not that serious.",
+    text: "La alegría es la manifestación de los seres al celebrar la oportunidad de cada día estar con vida.",
+    tint: "cotiledon" as const,
   },
   {
-    name: "Comunidad consciente",
-    text: "**Una familia unida por amor y colaboración**, que crece junto a los agricultores y aliados.",
-    color: "#4a7a00",
-    image: "/img/fotos/encuentro-clientes.webp",
-    alt: "Encuentro de Sirius con agricultores y aliados",
-    position: "30% center",
+    name: "Transparencia",
+    motto: "Reales en los datos y en la esencia.",
+    text: "La transparencia se manifiesta en todas nuestras acciones. Somos reales en nuestros datos y en nuestra esencia.",
+    tint: "sutileza" as const,
   },
   {
-    name: "Transformación auténtica",
-    text: "**Despertar el potencial individual** de cada persona y de cada suelo.",
-    color: "#0070b8",
-    image: "/img/procesos/plantulas.webp",
-    alt: "Plántulas creciendo en sustrato",
-  },
-  {
-    name: "Visión regenerativa",
-    text: "**Construir un futuro climáticamente positivo**, una hectárea a la vez.",
-    color: "#10396b",
-    image: "/img/fotos/mono-aullador.webp",
-    alt: "Mono aullador en el bosque",
+    name: "Energía limpia",
+    motto: "Todo es energía.",
+    text: "La transformación energética va más allá de la red. Buscamos esa transformación en todos los seres y agradecemos el regalo de cada experiencia.",
+    tint: "retono" as const,
   },
 ];

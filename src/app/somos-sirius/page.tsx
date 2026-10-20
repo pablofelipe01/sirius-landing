@@ -1,87 +1,109 @@
 import type { Metadata } from 'next';
-import { AboutIntro } from '@/components/AboutIntro';
-import { HistoryTimeline } from '@/components/HistoryTimeline';
-import { MissionVisionCard } from '@/components/MissionVisionCard';
-import { ValueCard } from '@/components/ValueCard';
-import { TiltCard } from '@/components/ui/3d-card';
-import { PageHero, SectionHeading } from '@/components/ui';
-import { FOUNDED, about, pillars, purpose, timeline } from '@/lib/content/somos';
+import Image from 'next/image';
+import { TimelineRail } from '@/components/TimelineRail';
+import { Accent, Dots, Label, PageHero, SectionHeading } from '@/components/ui';
+import { FOUNDED, about, mission, timeline, values, vision } from '@/lib/content/somos';
 
 export const metadata: Metadata = {
   title: 'Somos Sirius',
   description: about.paragraphs[0],
 };
 
+const tints = { cotiledon: 'bg-cotiledon', sutileza: 'bg-sutileza', retono: 'bg-retono' } as const;
+
 export default function SomosPage() {
+  const years = new Date().getFullYear() - FOUNDED;
+
   return (
     <>
-      <PageHero eyebrow="Somos Sirius" title={about.lead} image="/img/campo/aerea.webp" />
-
-      <AboutIntro
-        eyebrow="Quiénes somos"
-        title="Una empresa con conocimiento y amor"
-        image="/img/campo/aplicacion.webp"
-        imageAlt="Integrante de Sirius aplicando un bioinsumo en el suelo"
-        years={new Date().getFullYear() - FOUNDED}
-        paragraphs={about.paragraphs}
-        highlights={about.highlights}
+      <PageHero
+        label="Somos Sirius"
+        title={
+          <>
+            Sirius es <Accent>regeneración</Accent>
+          </>
+        }
+        text={`${about.lead}.`}
+        image="/img/fotos/mono-aullador.webp"
+        imageAlt="Mono aullador entre las ramas del bosque"
       />
 
-      <section id="historia" className="relative scroll-mt-24 overflow-hidden bg-paper-100 pt-20 pb-40 sm:pt-28 sm:pb-56">
-        {/* Manchas de luz con los colores del logo */}
-        <div aria-hidden className="drift-blob pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-cielo-300/25 blur-3xl" />
-        <div aria-hidden className="drift-blob-reverse pointer-events-none absolute top-1/2 -left-32 size-96 rounded-full bg-bio-300/25 blur-3xl" />
-
-        <div className="container-page relative">
-          <SectionHeading
-            eyebrow="Nuestra historia"
-            title={
-              <>
-                Así empezó <span className="text-brand-600 underline decoration-bio-500/70 decoration-4 underline-offset-8">el camino.</span>
-              </>
-            }
-            text="Desde 2018, un viaje de innovación continua en pirólisis y biotecnología."
-          />
-          <HistoryTimeline items={timeline} />
-
-          <div data-reveal="up" className="relative mt-20 border-l-4 border-bio-500 pl-6">
-            <p className="font-display text-3xl font-semibold text-night-900 sm:text-4xl">
-              Nuestra historia <span className="text-brand-600">sigue creciendo</span>
-            </p>
+      <section id="quienes-somos" className="container-page grid scroll-mt-28 gap-12 py-20 sm:py-28 lg:grid-cols-12">
+        <div data-reveal="up" className="lg:col-span-5">
+          <Label>Quiénes somos</Label>
+          <p className="font-serif text-4xl leading-tight text-barranca italic sm:text-5xl">“Let&apos;s get Sirius!”</p>
+          <div className="mt-8 flex items-baseline gap-3">
+            <span data-counter={years} className="heading text-7xl text-alegria-700">
+              {years}
+            </span>
+            <span className="text-lg font-semibold text-ink/80">años regenerando el suelo desde Barranca de Upía</span>
           </div>
         </div>
-
-        {/* Lomas al pie de la sección, en los verdes y azules de la marca */}
-        <svg aria-hidden viewBox="0 0 1440 180" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-28 w-full sm:h-40">
-          <path d="M0 120 C 200 40, 380 40, 560 110 S 900 170, 1100 90 S 1350 40, 1440 80 V180 H0 Z" className="fill-bio-500/80" />
-          <path d="M0 150 C 260 90, 480 90, 700 140 S 1100 190, 1440 120 V180 H0 Z" className="fill-brand-600" />
-        </svg>
-      </section>
-
-      <section id="proposito" className="container-page scroll-mt-24 py-20 sm:py-28">
-        <SectionHeading title="Propósito y visión" />
-        <div data-reveal-stagger className="mt-12 grid gap-6 lg:grid-cols-2">
-          {[
-            { label: 'Propósito', text: purpose.purpose, front: 'bg-brand-100 text-night-900', back: 'bg-brand-600 text-white', accent: 'text-cielo-300' },
-            { label: 'Visión', text: purpose.vision, front: 'bg-bio-100 text-night-900', back: 'bg-night-900 text-white', accent: 'text-bio-300' },
-          ].map((b) => (
-            <MissionVisionCard key={b.label} {...b} />
+        <div data-reveal-stagger className="space-y-6 text-lg leading-relaxed text-ink/85 lg:col-span-7">
+          {about.paragraphs.map((p) => (
+            <p key={p.slice(0, 24)}>{p}</p>
           ))}
         </div>
       </section>
 
-      <section id="pilares" className="scroll-mt-24 bg-paper-100 py-20 sm:py-28">
+      <section id="valores" className="container-page scroll-mt-28 pb-20 sm:pb-28">
+        <SectionHeading
+          label="Nuestros valores"
+          title={
+            <>
+              Somos Sirius, pero no <Accent tone="alegria">tan serios</Accent>
+            </>
+          }
+          text="Nuestra personalidad es deliberadamente humana, cálida y alegre. Somos transparentes con lo que hacemos y creemos en la transformación de los seres y la regeneración del suelo."
+        />
+        <ul data-reveal-stagger className="mt-12 grid gap-5 md:grid-cols-3">
+          {values.map((v, i) => (
+            <li key={v.name} className={`${tints[v.tint]} flex flex-col rounded-[2rem] p-8 sm:p-10`}>
+              <span className="font-serif text-2xl text-barranca/60 italic">0{i + 1}</span>
+              <h3 className="heading mt-10 text-4xl text-barranca">{v.name}</h3>
+              <p className="mt-2 font-serif text-xl text-alegria-700 italic">{v.motto}</p>
+              <p className="mt-4 leading-relaxed text-ink/80">{v.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section id="historia" className="bg-sutileza scroll-mt-28 py-20 sm:py-28">
         <div className="container-page">
-          <SectionHeading eyebrow="Nuestro ciclo" title="Los pilares de un movimiento regenerativo" />
-          <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {pillars.map((p, i) => (
-              <li key={p.name} className="lg:min-h-[34rem]">
-                <TiltCard className="h-full rounded-3xl">
-                  <ValueCard index={i} {...p} />
-                </TiltCard>
-              </li>
-            ))}
-          </ul>
+          <SectionHeading
+            label="Nuestra historia"
+            title={
+              <>
+                Así empezó <Accent>el camino</Accent>
+              </>
+            }
+            text="Desde 2018, un viaje de innovación continua en pirólisis y biotecnología."
+          />
+        </div>
+        <div className="mt-6">
+          <TimelineRail items={timeline} />
+        </div>
+      </section>
+
+      <section id="mision" className="container-page scroll-mt-28 py-20 sm:py-28">
+        <div className="grid gap-5 lg:grid-cols-2">
+          <article data-reveal="up" className="relative overflow-hidden rounded-[2rem] bg-barranca p-8 text-white sm:p-12">
+            <p className="flex items-center gap-2.5 text-sm font-semibold text-white/80">
+              <Dots />
+              Misión
+            </p>
+            <p className="heading mt-8 text-3xl sm:text-4xl">{mission}</p>
+          </article>
+          <article data-reveal="up" data-reveal-delay="0.12" className="bg-cotiledon relative overflow-hidden rounded-[2rem] p-8 sm:p-12">
+            <p className="flex items-center gap-2.5 text-sm font-semibold text-barranca">
+              <Dots />
+              Visión
+            </p>
+            <p className="heading mt-8 text-3xl text-barranca sm:text-4xl">{vision}</p>
+          </article>
+        </div>
+        <div data-reveal="up" className="relative mt-5 aspect-[21/9] overflow-hidden rounded-[2rem]">
+          <Image src="/img/campo/aerea.webp" alt="Vista aérea de un sendero entre cultivos" fill sizes="100vw" className="object-cover" />
         </div>
       </section>
     </>

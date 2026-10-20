@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { Playfair_Display } from 'next/font/google';
-import localFont from 'next/font/local';
+import { Figtree, Instrument_Serif } from 'next/font/google';
 import ChromeSitio from '@/components/ChromeSitio';
 import './globals.css';
 
@@ -8,22 +7,19 @@ import './globals.css';
 // invisibles y no parpadean. Sin JS o con prefers-reduced-motion todo se ve de inmediato.
 const motionScript = `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("js")`;
 
-// Textos. Poppins recortada a WOFF2 con los caracteres latinos (≈9 KB cada grosor, licencia en OFL.txt).
-// Solo los grosores que usa el sitio: si una clase pide otro (p. ej. font-light), añadir aquí su archivo.
-const poppins = localFont({
-  variable: '--font-poppins',
-  src: [
-    { path: './fonts/poppins/Poppins-Regular.woff2', weight: '400', style: 'normal' },
-    { path: './fonts/poppins/Poppins-Medium.woff2', weight: '500', style: 'normal' },
-    { path: './fonts/poppins/Poppins-SemiBold.woff2', weight: '600', style: 'normal' },
-    { path: './fonts/poppins/Poppins-Bold.woff2', weight: '700', style: 'normal' },
-  ],
+// Tipografía primaria del manual: Utile (sans orgánica y alegre). Figtree es su equivalente libre.
+// Fuente variable: Next la descarga al compilar y la sirve desde el propio sitio.
+const figtree = Figtree({
+  variable: '--font-figtree',
+  subsets: ['latin'],
 });
 
-// Títulos y subtítulos. Fuente variable (400–900): Next la descarga al compilar y la sirve desde el propio sitio.
-const playfair = Playfair_Display({
-  variable: '--font-playfair',
+// Tipografía secundaria: IvyPresto Italic, "solo para frases de marca". Instrument Serif es su equivalente libre.
+const instrument = Instrument_Serif({
+  variable: '--font-instrument',
   subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -45,7 +41,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es-CO" className={`${poppins.variable} ${playfair.variable} antialiased`} suppressHydrationWarning>
+    <html lang="es-CO" className={`${figtree.variable} ${instrument.variable} antialiased`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>

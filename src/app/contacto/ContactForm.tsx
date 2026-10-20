@@ -9,8 +9,8 @@ const SUBJECTS = ['Información general', 'Compras', 'Soporte técnico', 'Visita
 type Status = { state: 'idle' } | { state: 'sending' } | { state: 'sent' } | { state: 'error'; message: string };
 
 const field =
-  'w-full rounded-2xl border border-paper-200 bg-white px-4 py-3 text-ink outline-none transition placeholder:text-muted/70 focus:border-brand-600 focus:ring-4 focus:ring-brand-600/15';
-const label = 'mb-2 block text-sm font-medium text-night-900';
+  'w-full rounded-xl border-2 border-line bg-white px-4 py-3 text-ink outline-none transition placeholder:text-muted/70 focus:border-barranca focus:ring-4 focus:ring-cielo/20';
+const label = 'mb-2 block text-sm font-bold text-barranca';
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ state: 'idle' });
@@ -40,16 +40,16 @@ export function ContactForm() {
 
   if (status.state === 'sent') {
     return (
-      <div role="status" className="rounded-3xl bg-bio-100 p-8 text-center sm:p-10">
-        <span className="mx-auto inline-flex size-14 items-center justify-center rounded-full bg-bio-500 text-night-950">
+      <div role="status" className="bg-cotiledon rounded-[2rem] p-8 text-center sm:p-10">
+        <span className="mx-auto inline-flex size-14 items-center justify-center rounded-full bg-barranca text-white">
           <Check className="size-7" />
         </span>
-        <h3 className="font-display mt-5 text-2xl font-semibold text-night-900">¡Mensaje enviado!</h3>
-        <p className="mt-2 text-night-900/80">Gracias por escribirnos. Te responderemos pronto.</p>
+        <h3 className="heading mt-5 text-3xl text-barranca">¡Mensaje enviado!</h3>
+        <p className="mt-2 text-ink/80">Gracias por escribirnos. Te responderemos pronto.</p>
         <button
           type="button"
           onClick={() => setStatus({ state: 'idle' })}
-          className="mt-6 text-sm font-semibold text-brand-600 underline-offset-4 hover:underline"
+          className="mt-6 text-sm font-semibold text-barranca underline-offset-4 hover:underline"
         >
           Enviar otro mensaje
         </button>
@@ -105,7 +105,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={sending}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-lg disabled:cursor-wait disabled:opacity-70 sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border-2 border-barranca bg-barranca px-6 py-3 font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-barranca-700 hover:shadow-lg disabled:cursor-wait disabled:opacity-70 sm:w-auto"
       >
         {sending ? 'Enviando…' : 'Enviar mensaje'}
         {!sending && <ArrowRight className="size-4" />}

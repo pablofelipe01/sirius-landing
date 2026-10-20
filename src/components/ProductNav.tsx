@@ -1,7 +1,7 @@
 "use client";
 
-// Índice fijo de secciones (productos, pilares): resalta el producto que está en pantalla y una barra muestra cuánto se ha recorrido.
-// Los enlaces son #anclas normales (Lenis los desplaza con el alto del navbar descontado).
+// Índice fijo de secciones (productos): resalta la que está en pantalla. Va justo debajo de la
+// barra flotante del sitio. Los enlaces son #anclas normales (Lenis descuenta el alto del header).
 
 import { useEffect, useRef, useState } from "react";
 
@@ -28,18 +28,19 @@ export function ProductNav({ items, label = "Productos" }: { items: Item[]; labe
 
   // En móvil la lista se desplaza en horizontal: mantiene visible la pestaña activa
   useEffect(() => {
-    const link = listRef.current?.querySelector<HTMLElement>(`[data-id="${active}"]`);
     const list = listRef.current;
+    const link = list?.querySelector<HTMLElement>(`[data-id="${active}"]`);
     if (link && list) list.scrollTo({ left: link.offsetLeft - 16, behavior: "smooth" });
   }, [active]);
 
-  const index = Math.max(0, items.findIndex((it) => it.id === active));
-
   return (
-    <nav aria-label={label} className="sticky top-16 z-30 border-b border-paper-200 bg-paper-50/85 backdrop-blur-md lg:top-[4.5rem]">
+    <nav aria-label={label} className="sticky top-[5.25rem] z-30 py-3">
       <div className="container-page">
-        <ul ref={listRef} className="-mx-4 flex gap-1 overflow-x-auto px-4 py-3 [scrollbar-width:none] sm:mx-0 sm:px-0">
-          {items.map((it, i) => {
+        <ul
+          ref={listRef}
+          className="no-scrollbar mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-2xl border border-line bg-white/90 p-1.5 shadow-[0_10px_30px_-18px_rgba(1,84,172,0.45)] backdrop-blur-xl"
+        >
+          {items.map((it) => {
             const isActive = it.id === active;
             return (
               <li key={it.id} className="shrink-0">
@@ -47,24 +48,16 @@ export function ProductNav({ items, label = "Productos" }: { items: Item[]; labe
                   href={`#${it.id}`}
                   data-id={it.id}
                   aria-current={isActive ? "true" : undefined}
-                  className={`flex items-center gap-2.5 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
-                    isActive ? "bg-night-900 text-white" : "text-night-900 hover:bg-paper-200"
+                  className={`block rounded-xl px-4 py-2 text-sm font-bold transition-colors duration-300 ${
+                    isActive ? "bg-barranca text-white" : "text-barranca hover:bg-sutileza-50"
                   }`}
                 >
-                  <span className={`font-display tabular-nums transition-colors ${isActive ? "text-bio-300" : "text-muted"}`}>0{i + 1}</span>
                   {it.name}
                 </a>
               </li>
             );
           })}
         </ul>
-      </div>
-      {/* Avance por los productos */}
-      <div aria-hidden className="h-0.5 bg-paper-200">
-        <div
-          className="h-full origin-left bg-linear-to-r from-bio-500 via-cielo-500 to-brand-600 transition-transform duration-700 ease-out"
-          style={{ transform: `scaleX(${(index + 1) / items.length})` }}
-        />
       </div>
     </nav>
   );

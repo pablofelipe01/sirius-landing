@@ -15,8 +15,8 @@ export function SmoothScroll() {
 
     const lenis = new Lenis({
       lerp: 0.1,
-      // Enlaces #ancla con el alto del navbar descontado
-      anchors: { offset: -88 },
+      // Enlaces #ancla con el alto de la barra flotante descontado
+      anchors: { offset: -110 },
       stopInertiaOnNavigate: true,
     });
     setLenis(lenis);

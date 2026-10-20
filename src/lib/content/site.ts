@@ -23,9 +23,9 @@ export const navigation: NavItem[] = [
     href: "/somos-sirius",
     children: [
       { label: "Quiénes somos", href: "/somos-sirius#quienes-somos" },
+      { label: "Nuestros valores", href: "/somos-sirius#valores" },
       { label: "Nuestra historia", href: "/somos-sirius#historia" },
-      { label: "Propósito y visión", href: "/somos-sirius#proposito" },
-      { label: "Nuestros pilares", href: "/somos-sirius#pilares" },
+      { label: "Misión y visión", href: "/somos-sirius#mision" },
     ],
   },
   {

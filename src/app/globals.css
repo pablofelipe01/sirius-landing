@@ -1,36 +1,34 @@
 @import "tailwindcss";
 
-/* Identidad Sirius, tomada del logo: azul de la palabra, celeste y verde de los puntos.
-   La estructura de tokens es la del sitio de Guaicaramo: fondos oscuros (night), color de
-   marca (brand), acentos (cielo y bio) y neutros (paper). */
+/* Identidad Sirius según el Manual de Marca 2023 (p. 19, paleta primaria).
+   Azul Barranca y Verde Alegría son los colores característicos; los gradientes son siempre
+   sutiles y dentro de una misma escala, "para dar sensación de iluminación". */
 @theme {
-  --color-night-950: #04152b;
-  --color-night-900: #071f3d;
-  --color-night-800: #0b2c55;
-  --color-night-700: #10396b;
-  --color-brand-700: #003d7c;
-  --color-brand-600: #004e9d;
-  --color-brand-500: #1463b8;
-  --color-brand-100: #e2edf9;
-  --color-cielo-600: #0082d4;
-  --color-cielo-500: #009dff;
-  --color-cielo-300: #7fcbff;
-  --color-cielo-100: #e0f2ff;
-  --color-bio-700: #4a7a00;
-  --color-bio-600: #5c9400;
-  --color-bio-500: #6eb100;
-  --color-bio-300: #b4dd6a;
-  --color-bio-100: #eef6dc;
-  --color-paper-50: #f7f9fb;
-  --color-paper-100: #edf2f7;
-  --color-paper-200: #dce5ee;
-  --color-ink: #0d1b2a;
-  --color-muted: #4f5d6d;
+  --color-barranca: #0154ac;
+  --color-barranca-700: #01438a;
+  --color-barranca-900: #012a57;
+  --color-cielo: #00a3ff;
+  --color-cielo-700: #0077bd; /* texto celeste sobre blanco con contraste AA */
+  --color-alegria: #00b602;
+  --color-alegria-700: #007a02; /* texto verde sobre blanco con contraste AA */
+  --color-sutileza: #bcd7ea;
+  --color-sutileza-50: #ecf1f4;
+  --color-cotiledon: #bcd983;
+  --color-cotiledon-50: #f2ffdd;
+  --color-retono: #cfe4bf;
+  --color-retono-50: #f3f9f0;
+  --color-imperial: #1a1a33;
+  --color-ink: #1a1a33;
+  --color-muted: #4d566b;
+  --color-line: #d7e3ec;
 
-  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-playfair), ui-serif, Georgia, serif;
+  /* Utile y IvyPresto son las fuentes del manual (de pago); Figtree e Instrument Serif son sus
+     equivalentes libres más cercanos: sans humanista para todo, serif itálica solo para frases de marca */
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
 
-  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-spin-slow: spin 24s linear infinite;
 
   @keyframes marquee {
     from {
@@ -42,14 +40,54 @@
   }
 }
 
+/* Gradientes del manual: verticales, de la tinta clara al tono casi blanco */
+@utility bg-sutileza {
+  background-image: linear-gradient(180deg, var(--color-sutileza) 0%, var(--color-sutileza-50) 100%);
+}
+@utility bg-cotiledon {
+  background-image: linear-gradient(180deg, var(--color-cotiledon) 0%, var(--color-cotiledon-50) 100%);
+}
+@utility bg-retono {
+  background-image: linear-gradient(180deg, var(--color-retono) 0%, var(--color-retono-50) 100%);
+}
+/* Imperial: del Azul Barranca a la noche, como la muestra del manual */
+@utility bg-imperial {
+  background-image: linear-gradient(160deg, var(--color-barranca) 0%, var(--color-imperial) 55%, #0c0c18 100%);
+}
+
+/* Titulares: Utile Bold con seguimiento negativo (manual, p. 31) */
+@utility heading {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+/* Marco en arco: el motivo de forma del sitio (brote, cúpula de la biofábrica) */
+@utility arch {
+  border-radius: 999px 999px 1.75rem 1.75rem;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
 :root {
   color-scheme: light;
 }
 
 html {
   scroll-behavior: smooth;
-  /* Tipografía más grande en todo el sitio: 17px en móvil, 18px desde tablet.
-     Tailwind usa rem, así que todos los tamaños de texto escalan a la vez. */
   font-size: 106.25%;
   @media (width >= 40rem) {
     font-size: 112.5%;
@@ -62,31 +100,19 @@ html.lenis {
 }
 
 body {
-  background: var(--color-paper-50);
+  background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
-  /* Correos o URL largas parten línea en vez de ensanchar la página */
   overflow-wrap: break-word;
 }
 
-/* Móviles pequeños (≈320 px): los títulos en Playfair con palabras largas no caben en una línea;
-   se dividen con guion en español (lang="es-CO") en lugar de desbordar */
-@media (width < 24rem) {
-  h1,
-  h2,
-  h3,
-  .font-display {
-    hyphens: auto;
-  }
-}
-
 ::selection {
-  background: var(--color-bio-300);
-  color: var(--color-night-950);
+  background: var(--color-cotiledon);
+  color: var(--color-imperial);
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-cielo-500);
+  outline: 3px solid var(--color-cielo);
   outline-offset: 2px;
 }
 
@@ -104,13 +130,7 @@ body {
 
 /* Entradas animadas (components/motion/ScrollReveal.tsx): invisibles hasta que GSAP las anima */
 html.js [data-reveal],
-html.js [data-reveal-stagger] > *,
-html.js [data-hero-item],
-html.js [data-tl-node],
-html.js [data-tl-year],
-html.js [data-tl-text],
-html.js [data-tl-figure],
-html.js [data-about-badge] {
+html.js [data-reveal-stagger] > * {
   opacity: 0;
 }
 
@@ -120,84 +140,16 @@ html.js [data-split-word] {
 }
 
 /* Fotos con revelado tipo cortina: cerradas hasta que GSAP las abre */
-html.js [data-reveal-mask],
-html.js [data-about-frame] {
-  clip-path: inset(100% 0% 0% 0% round 1.5rem);
+html.js [data-reveal-mask] {
+  clip-path: inset(100% 0% 0% 0%);
 }
 
-@utility container-page {
-  width: 100%;
-  max-width: 80rem;
-  margin-inline: auto;
-  padding-inline: 1rem;
-  @media (width >= 40rem) {
-    padding-inline: 1.5rem;
-  }
-  @media (width >= 64rem) {
-    padding-inline: 2rem;
-  }
+/* Desplazamiento horizontal sin barra visible (línea de tiempo, cinta de palabras) */
+.no-scrollbar {
+  scrollbar-width: none;
 }
-
-/* Flotación suave para ilustraciones y manchas de luz de fondo; sin movimiento si se pide reducirlo */
-@media (prefers-reduced-motion: no-preference) {
-  .float-soft {
-    animation: float-soft 6s ease-in-out infinite;
-  }
-  .drift-blob {
-    animation: drift-blob 18s ease-in-out infinite alternate;
-  }
-  .drift-blob-reverse {
-    animation: drift-blob 22s ease-in-out infinite alternate-reverse;
-  }
-}
-@keyframes drift-blob {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(8%, -12%) scale(1.15);
-  }
-  100% {
-    transform: translate(-10%, 6%) scale(0.95);
-  }
-}
-@keyframes float-soft {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-12px) rotate(1.5deg);
-  }
-}
-
-/* Tarjetas que giran (components/ui/perspective-flip-card.tsx) */
-.flip-card {
-  perspective: 1200px;
-}
-.flip-card-inner {
-  transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.flip-card[data-flipped="true"] .flip-card-inner {
-  transform: rotateY(180deg);
-}
-@media (hover: hover) {
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-}
-/* Al tabular hasta un enlace de la cara trasera, la tarjeta gira para mostrarlo */
-.flip-card:focus-within .flip-card-inner {
-  transform: rotateY(180deg);
-}
-.flip-card-face,
-/* Los hijos con translateZ forman su propio plano 3D: sin esto, el texto trasero se transparenta por el frente */
-.flip-card-face * {
-  backface-visibility: hidden;
-}
-.flip-card-back {
-  transform: rotateY(180deg);
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Preguntas frecuentes (/contacto): el marcador nativo de <summary> se reemplaza por el ícono */
