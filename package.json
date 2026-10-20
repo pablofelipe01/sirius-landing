@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:asistencia": "node --test tests/asistencia.validation.test.mjs",
     "qr": "node scripts/generar-qr.mjs"
   },
   "dependencies": {
@@ -20,7 +19,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "recharts": "^2.15.3",
     "three": "^0.179.1"
   },
   "devDependencies": {
