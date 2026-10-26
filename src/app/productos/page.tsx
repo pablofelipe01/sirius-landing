@@ -4,7 +4,6 @@ import { Check, Download, FileText } from '@/components/icons';
 import { ProductNav } from '@/components/ProductNav';
 import { Accent, ButtonLink, PageHero, SectionHeading } from '@/components/ui';
 import { fichas, productos, productosIntro } from '@/lib/content/productos';
-import { shopUrl } from '@/lib/content/site';
 
 export const metadata: Metadata = {
   title: 'Productos',
@@ -30,10 +29,7 @@ export default function ProductosPage() {
         tint="cotiledon"
       >
         <div data-reveal="up" data-reveal-delay="0.3" className="mt-9 flex flex-wrap gap-3">
-          <ButtonLink href={shopUrl}>Comprar en la tienda</ButtonLink>
-          <ButtonLink href="/contacto" variant="light">
-            Solicitar asesoría
-          </ButtonLink>
+          <ButtonLink href="/contacto">Solicitar asesoría</ButtonLink>
         </div>
       </PageHero>
 
@@ -74,10 +70,7 @@ export default function ProductosPage() {
                     ))}
                   </ul>
                   <div data-reveal="up" data-reveal-delay="0.2" className="mt-9 flex flex-wrap gap-3">
-                    <ButtonLink href={shopUrl}>Comprar</ButtonLink>
-                    <ButtonLink href="/contacto" variant="light">
-                      Preguntar por {p.name}
-                    </ButtonLink>
+                    <ButtonLink href="/contacto">Preguntar por {p.name}</ButtonLink>
                   </div>
                 </div>
               </div>
@@ -119,9 +112,6 @@ export default function ProductosPage() {
           </div>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/contacto">Solicitar asesoría</ButtonLink>
-            <ButtonLink href={shopUrl} variant="light">
-              Ir a la tienda
-            </ButtonLink>
           </div>
         </div>
       </section>

@@ -70,7 +70,7 @@ export const fichas = [
 export const faqs = [
   {
     q: "¿Cómo puedo comenzar a utilizar sus productos?",
-    a: "Nuestros productos son fáciles de usar. Puedes adquirirlos en nuestra tienda o contactarnos para recibir asesoría personalizada según las necesidades específicas de tu cultivo.",
+    a: "Nuestros productos son fáciles de usar. Contáctanos y te damos asesoría personalizada según las necesidades específicas de tu cultivo.",
   },
   {
     q: "¿Son efectivos en todo tipo de suelos?",

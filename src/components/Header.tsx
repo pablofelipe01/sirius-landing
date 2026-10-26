@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { navigation, shopUrl } from "@/lib/content/site";
-import { ArrowUpRight, ChevronDown, Close, Menu } from "./icons";
+import { navigation } from "@/lib/content/site";
+import { ChevronDown, Close, Menu } from "./icons";
 import { getLenis } from "./motion/lenis-store";
 
 // Barra flotante en forma de cápsula. Las cabeceras de todas las páginas son claras, así que
@@ -90,27 +90,16 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2">
-            <a
-              href={shopUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden items-center gap-1.5 rounded-xl border-2 border-barranca bg-cotiledon px-4 py-2 text-[0.9rem] font-bold text-barranca transition-all hover:-translate-y-0.5 hover:bg-white sm:inline-flex"
-            >
-              Tienda
-              <ArrowUpRight className="size-4" />
-            </a>
-            <button
-              type="button"
-              className="inline-flex size-11 items-center justify-center rounded-xl text-barranca transition-colors hover:bg-sutileza-50 lg:hidden"
-              aria-expanded={open}
-              aria-controls="menu-movil"
-              aria-label={open ? "Cerrar menú" : "Abrir menú"}
-              onClick={() => setOpen((v) => !v)}
-            >
-              {open ? <Close className="size-6" /> : <Menu className="size-6" />}
-            </button>
-          </div>
+          <button
+            type="button"
+            className="inline-flex size-11 items-center justify-center rounded-xl text-barranca transition-colors hover:bg-sutileza-50 lg:hidden"
+            aria-expanded={open}
+            aria-controls="menu-movil"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <Close className="size-6" /> : <Menu className="size-6" />}
+          </button>
         </div>
 
         {open && (
@@ -153,16 +142,6 @@ export function Header() {
                 </li>
               ))}
             </ul>
-            <a
-              href={shopUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={close}
-              className="mt-3 flex items-center justify-center gap-2 rounded-xl border-2 border-barranca bg-cotiledon px-5 py-3.5 font-bold text-barranca"
-            >
-              Ir a la tienda
-              <ArrowUpRight className="size-4" />
-            </a>
           </nav>
         )}
       </div>

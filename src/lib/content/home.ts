@@ -1,7 +1,5 @@
 // Inicio. Textos del sitio anterior de Sirius y del Manual de Marca 2023.
 
-import { shopUrl } from "./site";
-
 export const hero = {
   greeting: "¡Buenos días en alegría!",
   // El titular se arma en la página para poner "regenera" en la serif de marca
@@ -60,5 +58,4 @@ export const homeQuote = {
   source: "Filosofía Sirius",
   mission:
     "Nuestra misión es ser una guía que brinda las herramientas para llevar el campo hacia la regeneración del suelo, de la biodiversidad y de los seres.",
-  shop: shopUrl,
 };

@@ -52,9 +52,6 @@ export const navigation: NavItem[] = [
   { label: "Contacto", href: "/contacto" },
 ];
 
-// Tienda de pedidos: es otra aplicación, se abre en una pestaña nueva
-export const shopUrl = "https://pedidos-sirius.vercel.app/";
-
 export const contact = {
   address: DIRECCION,
   phones: TELEFONOS.map((t) => ({ label: t.etiqueta, href: `tel:+${t.numero}` })),

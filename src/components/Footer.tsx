@@ -98,8 +98,9 @@ export function Footer() {
         </div>
       </div>
 
-      {/* El lema de la marca, a todo lo ancho. Decorativo: el texto ya está en el titular de arriba */}
-      <p aria-hidden className="heading mt-16 overflow-hidden px-4 text-center text-[16vw] leading-[0.85] whitespace-nowrap text-white/[0.07] select-none sm:mt-20">
+      {/* El lema de la marca, a todo lo ancho. Decorativo: el texto ya está en el titular de arriba.
+          El pb en em deja sitio a la cola de la "g", que con este interlineado tocaba la línea de abajo */}
+      <p aria-hidden className="heading mt-10 overflow-hidden px-4 pb-[0.2em] text-center text-[16vw] leading-[0.85] whitespace-nowrap text-white/[0.07] select-none sm:mt-14">
         Let&apos;s get <span className="font-serif font-normal tracking-normal italic">Sirius!</span>
       </p>
 

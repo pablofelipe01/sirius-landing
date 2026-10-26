@@ -197,10 +197,7 @@ export default function Home() {
             {homeQuote.mission}
           </p>
           <div data-reveal="up" data-reveal-delay="0.3" className="mt-10 flex flex-wrap justify-center gap-3">
-            <ButtonLink href={homeQuote.shop}>Comprar bioinsumos</ButtonLink>
-            <ButtonLink href="/contacto" variant="light">
-              Hablar con un asesor
-            </ButtonLink>
+            <ButtonLink href="/contacto">Hablar con un asesor</ButtonLink>
           </div>
         </div>
       </section>
