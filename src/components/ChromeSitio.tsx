@@ -16,6 +16,7 @@
 import { usePathname } from 'next/navigation';
 import { Footer } from './Footer';
 import { Header } from './Header';
+import { ScrollProgress } from './motion/ScrollProgress';
 import { ScrollReveal } from './motion/ScrollReveal';
 import { SmoothScroll } from './motion/SmoothScroll';
 import { SiteCursor } from './SiteCursor';
@@ -36,6 +37,7 @@ export default function ChromeSitio({ children }: { children: React.ReactNode })
       <SiteCursor />
       <SmoothScroll />
       <ScrollReveal />
+      <ScrollProgress />
       <Header />
       <main id="contenido" className="flex-1">
         {children}

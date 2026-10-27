@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   description: biofabricaIntro,
 };
 
+// Fotos nítidas (no fotogramas de video): la planta y el laboratorio ya se ven en los videos de los pilares
+const galeria = [
+  { image: '/img/campo/aplicacion.webp', alt: 'Persona aplicando un producto Sirius al suelo', shape: 'arch', speed: 4 },
+  { image: '/img/laboratorio/petri.webp', alt: 'Colonias de microorganismos en una caja de Petri', shape: 'rounded-[2rem]', speed: -6 },
+  { image: '/img/procesos/plantulas.webp', alt: 'Plántulas en hileras sobre suelo oscuro', shape: 'rounded-full', speed: 9 },
+];
+
 export default function BiofabricaPage() {
   return (
     <>
@@ -28,8 +35,11 @@ export default function BiofabricaPage() {
       {/* Fondo partido: la mitad de arriba continúa el hero y la de abajo ya es la página */}
       <div className="bg-[linear-gradient(to_bottom,var(--color-sutileza-50)_50%,#fff_50%)]">
         <div className="container-page">
-          <div data-reveal="up" className="relative aspect-[1297/823] overflow-hidden rounded-[2.5rem] shadow-[0_30px_60px_-30px_rgba(1,84,172,0.45)] sm:aspect-[21/10]">
-            <Image src="/img/fotos/biofabrica-ilustracion.webp" alt="Ilustración de la biofábrica de Sirius entre la selva y las montañas" fill priority sizes="100vw" className="object-cover" />
+          {/* La ilustración se acerca mientras se baja: arranca más pequeña y termina a todo el ancho */}
+          <div data-scale-in className="relative aspect-[1297/823] overflow-hidden rounded-[2.5rem] shadow-[0_30px_60px_-30px_rgba(1,84,172,0.45)] sm:aspect-[21/10]">
+            <div data-parallax="6" className="absolute -inset-y-[8%] inset-x-0">
+              <Image src="/img/fotos/biofabrica-ilustracion.webp" alt="Ilustración de la biofábrica de Sirius entre la selva y las montañas" fill priority quality={90} sizes="100vw" className="object-cover" />
+            </div>
           </div>
         </div>
       </div>
@@ -50,16 +60,17 @@ export default function BiofabricaPage() {
       </section>
 
       <section className="container-page pb-20 sm:pb-28">
-        <div data-reveal-stagger className="grid gap-5 md:grid-cols-3">
-          <div className="arch relative aspect-[3/4] overflow-hidden">
-            <Image src="/img/procesos/planta-noche.webp" alt="Planta de pirólisis de Sirius en operación durante la noche" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-          </div>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-[2rem] md:mt-16">
-            <Image src="/img/laboratorio/equipo.webp" alt="Equipo de laboratorio para el análisis de muestras" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-          </div>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-full md:mt-8">
-            <Image src="/img/procesos/biochar-granulado.webp" alt="Biochar granulado visto de cerca" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-          </div>
+        {/* Collage en parallax: cada columna corre a su propia velocidad y cada foto se abre como cortina */}
+        <div className="grid gap-5 md:grid-cols-3 md:py-12">
+          {galeria.map((g, i) => (
+            <div key={g.image} data-parallax={g.speed} className={i === 1 ? 'md:mt-16' : i === 2 ? 'md:mt-8' : ''}>
+              <div className={`relative aspect-[3/4] overflow-hidden ${g.shape}`}>
+                <div data-reveal-mask data-reveal-delay={i * 0.12} className="absolute inset-0">
+                  <Image src={g.image} alt={g.alt} fill quality={90} sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

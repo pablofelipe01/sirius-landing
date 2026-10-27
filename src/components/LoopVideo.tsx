@@ -8,7 +8,20 @@ import { useEffect, useRef } from "react";
 // prefers-reduced-motion queda el fotograma de reposo (poster). Es decorativo: no lleva controles.
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
 
-export function LoopVideo({ src, poster, paused = false, className = "" }: { src: string; poster: string; paused?: boolean; className?: string }) {
+// `eager`: para el video del hero, que se ve al cargar; los demás no descargan nada hasta acercarse
+export function LoopVideo({
+  src,
+  poster,
+  paused = false,
+  eager = false,
+  className = "",
+}: {
+  src: string;
+  poster: string;
+  paused?: boolean;
+  eager?: boolean;
+  className?: string;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
   const inView = useRef(false);
   const pausedRef = useRef(paused);
@@ -43,5 +56,5 @@ export function LoopVideo({ src, poster, paused = false, className = "" }: { src
     sync();
   }, [paused]);
 
-  return <video ref={ref} src={src} poster={poster} muted loop playsInline preload="none" aria-hidden className={className} />;
+  return <video ref={ref} src={src} poster={poster} muted loop playsInline preload={eager ? "auto" : "none"} aria-hidden className={className} />;
 }

@@ -5,9 +5,10 @@ export const hero = {
   greeting: "¡Buenos días en alegría!",
   // El titular se arma en la página para poner "regenera" en la cursiva de marca
   text: "Bioinsumos y biochar para devolverle la vida al suelo. Desde Barranca de Upía, Meta.",
-  // Foto fija (no fotograma de video): el arco del hero la muestra grande y debe verse nítida
-  image: "/img/productos/biochar-en-mano.webp",
-  imageAlt: "Mano sosteniendo material negro sobre un cultivo",
+  // Video en bucle dentro del arco; el poster es su primer fotograma, para que no salte al arrancar
+  video: "/video/web/biochar-en-mano.mp4",
+  poster: "/video/web/biochar-en-mano.webp",
+  imageAlt: "Mano sosteniendo biochar sobre un cultivo",
   facts: ["7 productos con ficha técnica", "Sirius Char con Registro ICA 14623", "Acompañamiento agronómico en campo"],
   product: {
     name: "Biochar Blend",
@@ -45,6 +46,26 @@ export const bento = {
     href: "/contacto",
   },
 };
+
+// Ventana en arco bajo el hero: la frase del Manual de Marca (p. 6) partida a los dos lados del arco
+export const ventana = {
+  left: "Sirius es",
+  right: "regeneración",
+  video: "/video/web/biochar-flor.mp4",
+  poster: "/video/web/biochar-flor.webp",
+};
+
+// Galería horizontal: solo fotos propias del campo, la biofábrica y el laboratorio. Los pies dicen
+// lo que se ve, no prometen resultados.
+export const galeria = [
+  { image: "/img/campo/mano-biochar.webp", alt: "Mano sosteniendo biochar sobre plantas jóvenes", caption: "Biochar en la mano" },
+  { image: "/img/campo/aplicacion.webp", alt: "Persona aplicando un producto Sirius al suelo", caption: "Aplicación en campo" },
+  { image: "/img/procesos/plantulas.webp", alt: "Plántulas en hileras sobre suelo oscuro", caption: "Plántulas" },
+  { image: "/img/laboratorio/petri.webp", alt: "Colonias de microorganismos en una caja de Petri", caption: "Laboratorio" },
+  { image: "/img/campo/palma-aerea.webp", alt: "Vista aérea de un cultivo de palma", caption: "Cultivo de palma" },
+  { image: "/img/procesos/app-campo.webp", alt: "Persona consultando datos en un celular", caption: "Registro de datos" },
+  { image: "/img/campo/aerea.webp", alt: "Vista aérea de un sendero entre cultivos", caption: "Desde el aire" },
+];
 
 // Origen: lo que Sirius contó sobre por qué nació y lo que las fichas dicen de sus procesos
 export const origen = {

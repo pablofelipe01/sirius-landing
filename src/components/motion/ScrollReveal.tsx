@@ -27,11 +27,19 @@ import { PLAY_ONCE } from "@/components/motion/play-once";
 //   data-kenburns                             imagen de fondo que se aleja lentamente al cargar
 //   data-draw                                 ícono SVG cuyos trazos se dibujan al entrar
 //     data-draw-delay="0.3"                   retardo en segundos
+//   data-scrub-text                           las palabras se encienden una a una al ritmo del scroll
+//                                             (lo genera <ScrubText>)
+//   data-scale-in                             crece de 0,88 a tamaño completo mientras entra (scrub)
+//   data-progress                             línea que se llena (scaleX) al ritmo del scroll
+//   data-rise="40"                            sube un 40 % y aparece mientras su padre entra (scrub)
+//   data-depth="20"                           se mueve hasta 20 px siguiendo al puntero dentro de su
+//                                             [data-depth-scene] (solo con mouse)
 //
 // Antes de hidratar, html.js (ver layout) deja estos elementos invisibles para que no parpadeen.
 // Con prefers-reduced-motion no se añade esa clase y aquí no se anima nada.
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+const FINE_POINTER = "(hover: hover) and (pointer: fine)";
 const EASE = "power3.out";
 
 const FROM: Record<string, gsap.TweenVars> = {
@@ -54,6 +62,7 @@ export function ScrollReveal() {
   useLayoutEffect(() => {
     if (window.matchMedia(REDUCED_MOTION).matches) return;
     gsap.registerPlugin(ScrollTrigger);
+    const cleanups: (() => void)[] = [];
 
     const ctx = gsap.context(() => {
       document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
@@ -179,10 +188,74 @@ export function ScrollReveal() {
           },
         );
       });
+
+      document.querySelectorAll<HTMLElement>("[data-scrub-text]").forEach((el) => {
+        gsap.fromTo(
+          el.querySelectorAll("[data-scrub-word]"),
+          { opacity: 0.14 },
+          { opacity: 1, ease: "none", stagger: 0.1, scrollTrigger: { trigger: el, start: "top 82%", end: "bottom 50%", scrub: true } },
+        );
+      });
+
+      document.querySelectorAll<HTMLElement>("[data-scale-in]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { scale: 0.88, borderRadius: "4rem" },
+          { scale: 1, borderRadius: "2.5rem", ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "top 25%", scrub: true } },
+        );
+      });
+
+      document.querySelectorAll<HTMLElement>("[data-progress]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { scaleX: 0, transformOrigin: "left" },
+          { scaleX: 1, ease: "none", scrollTrigger: { trigger: el.parentElement ?? el, start: "top 75%", end: "bottom 55%", scrub: true } },
+        );
+      });
+
+      document.querySelectorAll<HTMLElement>("[data-rise]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { yPercent: Number(el.dataset.rise || 40), opacity: 0 },
+          // El disparador es el padre: medir el propio elemento incluiría su desplazamiento inicial.
+          // Termina cuando el padre asoma entero, así llega al final aunque esté al pie de la página
+          { yPercent: 0, opacity: 1, ease: "none", scrollTrigger: { trigger: el.parentElement ?? el, start: "top bottom", end: "bottom bottom", scrub: true } },
+        );
+      });
+
+      // Capas que siguen al puntero: cada una se mueve según su profundidad, con inercia
+      if (window.matchMedia(FINE_POINTER).matches) {
+        document.querySelectorAll<HTMLElement>("[data-depth-scene]").forEach((scene) => {
+          const layers = Array.from(scene.querySelectorAll<HTMLElement>("[data-depth]")).map((el) => ({
+            depth: Number(el.dataset.depth ?? 12),
+            x: gsap.quickTo(el, "x", { duration: 1.1, ease: "power3.out" }),
+            y: gsap.quickTo(el, "y", { duration: 1.1, ease: "power3.out" }),
+          }));
+          const onMove = (e: PointerEvent) => {
+            const r = scene.getBoundingClientRect();
+            const nx = (e.clientX - r.left) / r.width - 0.5;
+            const ny = (e.clientY - r.top) / r.height - 0.5;
+            for (const l of layers) {
+              l.x(nx * l.depth * 2);
+              l.y(ny * l.depth * 2);
+            }
+          };
+          const onLeave = () => layers.forEach((l) => (l.x(0), l.y(0)));
+          scene.addEventListener("pointermove", onMove);
+          scene.addEventListener("pointerleave", onLeave);
+          cleanups.push(() => {
+            scene.removeEventListener("pointermove", onMove);
+            scene.removeEventListener("pointerleave", onLeave);
+          });
+        });
+      }
     });
 
     ScrollTrigger.refresh();
-    return () => ctx.revert();
+    return () => {
+      cleanups.forEach((fn) => fn());
+      ctx.revert();
+    };
   }, [pathname]);
 
   return null;

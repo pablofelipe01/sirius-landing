@@ -27,17 +27,7 @@
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
 
-  --animate-marquee: marquee 38s linear infinite;
   --animate-spin-slow: spin 24s linear infinite;
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
 }
 
 /* Gradientes del manual: verticales, de la tinta clara al tono casi blanco */
@@ -142,6 +132,24 @@ html.js [data-split-word] {
 /* Fotos con revelado tipo cortina: cerradas hasta que GSAP las abre */
 html.js [data-reveal-mask] {
   clip-path: inset(100% 0% 0% 0%);
+}
+
+/* Ventana en arco (components/motion/ExpandMedia.tsx): antes de hidratar ya se ve cerrada, con la
+   misma medida que calcula clip() en JS, y el texto sobre el video espera a que se abra */
+html.js [data-expand] [data-frame] {
+  clip-path: inset(
+    max(17svh, calc(50svh - 40.3vw)) 19vw max(17svh, calc(50svh - 40.3vw)) 19vw round 999px 999px 28px 28px
+  );
+  @media (width >= 40rem) {
+    clip-path: inset(
+      max(17svh, calc(50svh - min(19.5vw, 273px))) max(35vw, calc(50vw - 210px)) max(17svh, calc(50svh - min(19.5vw, 273px)))
+        max(35vw, calc(50vw - 210px)) round 999px 999px 28px 28px
+    );
+  }
+}
+html.js [data-expand] [data-veil],
+html.js [data-expand] [data-copy] {
+  opacity: 0;
 }
 
 /* Desplazamiento horizontal sin barra visible (línea de tiempo, cinta de palabras) */

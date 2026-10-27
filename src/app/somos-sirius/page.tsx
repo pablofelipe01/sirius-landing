@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { SplitWords } from '@/components/motion/SplitWords';
 import { TimelineRail } from '@/components/TimelineRail';
 import { Accent, Dots, Label, PageHero, SectionHeading } from '@/components/ui';
 import { FOUNDED, about, mission, timeline, values, vision } from '@/lib/content/somos';
@@ -31,7 +32,9 @@ export default function SomosPage() {
       <section id="quienes-somos" className="container-page grid scroll-mt-28 gap-12 py-20 sm:py-28 lg:grid-cols-12">
         <div data-reveal="up" className="lg:col-span-5">
           <Label>Quiénes somos</Label>
-          <p className="font-serif text-4xl leading-tight text-barranca italic sm:text-5xl">“Let&apos;s get Sirius!”</p>
+          <SplitWords as="p" className="block font-serif text-4xl leading-tight text-barranca italic sm:text-5xl">
+            “Let&apos;s get Sirius!”
+          </SplitWords>
           <div className="mt-8 flex items-baseline gap-3">
             <span data-counter={years} className="heading text-7xl text-alegria-700">
               {years}
@@ -102,8 +105,11 @@ export default function SomosPage() {
             <p className="heading mt-8 text-3xl text-barranca sm:text-4xl">{vision}</p>
           </article>
         </div>
-        <div data-reveal="up" className="relative mt-5 aspect-[21/9] overflow-hidden rounded-[2rem]">
-          <Image src="/img/campo/aerea.webp" alt="Vista aérea de un sendero entre cultivos" fill sizes="100vw" className="object-cover" />
+        {/* La foto crece hasta su tamaño mientras entra, y adentro se desplaza más despacio */}
+        <div data-scale-in className="relative mt-5 aspect-[4/3] overflow-hidden rounded-[2.5rem] sm:aspect-[21/9]">
+          <div data-parallax="10" className="absolute -inset-y-[12%] inset-x-0">
+            <Image src="/img/campo/aerea.webp" alt="Vista aérea de un sendero entre cultivos" fill quality={90} sizes="100vw" className="object-cover" />
+          </div>
         </div>
       </section>
     </>

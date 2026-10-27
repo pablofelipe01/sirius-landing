@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Download, FileText } from '@/components/icons';
+import { SplitWords } from '@/components/motion/SplitWords';
 import { ProductNav } from '@/components/ProductNav';
 import { Accent, ButtonLink, Label, PageHero, SectionHeading } from '@/components/ui';
 import { lineas, productos, productosIntro } from '@/lib/content/productos';
@@ -61,18 +62,22 @@ export default function ProductosPage() {
                   className={`${tints[linea.id][i % 2]} scroll-mt-40 overflow-hidden rounded-[2.5rem] p-6 sm:p-10 lg:p-14`}
                 >
                   <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-                    <div data-reveal="up" className={`lg:col-span-5 ${reverse ? 'lg:order-2' : ''}`}>
-                      <div className="arch group relative mx-auto aspect-[4/5] max-w-sm overflow-hidden ring-8 ring-white/70 lg:max-w-none">
-                        <Image src={p.image} alt={p.alt} fill sizes="(min-width: 1024px) 36vw, 90vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <div className={`lg:col-span-5 ${reverse ? 'lg:order-2' : ''}`}>
+                      <div className="arch group relative mx-auto aspect-[4/5] max-w-sm overflow-hidden bg-white/50 ring-8 ring-white/70 lg:max-w-none">
+                        <div data-reveal-mask className="absolute inset-0">
+                          <div data-parallax="8" className="absolute -inset-y-[10%] inset-x-0">
+                            <Image src={p.image} alt={p.alt} fill quality={90} sizes="(min-width: 1024px) 36vw, 90vw" className="object-cover" />
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className={`lg:col-span-7 ${reverse ? 'lg:order-1' : ''}`}>
                       <p data-reveal="up" className="text-sm font-semibold tracking-wide text-barranca/70 uppercase">
                         {p.rotulo}
                       </p>
-                      <h2 id={`${p.id}-nombre`} data-reveal="up" data-reveal-delay="0.05" className="heading mt-3 text-5xl text-barranca sm:text-6xl">
+                      <SplitWords as="h2" id={`${p.id}-nombre`} delay={0.05} className="heading mt-3 block text-5xl text-barranca sm:text-6xl">
                         {p.name}
-                      </h2>
+                      </SplitWords>
                       <p data-reveal="up" data-reveal-delay="0.1" className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/85">
                         {p.text}
                       </p>

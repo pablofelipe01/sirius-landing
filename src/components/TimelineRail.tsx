@@ -1,15 +1,58 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Milestone } from "@/lib/content/somos";
 import { ArrowLeft, ArrowRight } from "./icons";
 
 // Historia como un camino horizontal: tarjetas que se deslizan de lado (con el dedo, el
 // trackpad o los botones), cada una con su año en grande y una línea que las une.
 // data-lenis-prevent: el scroll suave vertical no debe capturar el desplazamiento horizontal.
+// En pantallas grandes el camino se fija y avanza solo con el scroll de la página: la rueda baja y
+// las tarjetas pasan de lado. Ahí sobran los botones y el carrusel nativo.
+const PINNED = "(min-width: 1024px) and (prefers-reduced-motion: no-preference)";
+
 export function TimelineRail({ items }: { items: Milestone[] }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLOListElement>(null);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    const rail = railRef.current;
+    if (!root || !rail) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const mm = gsap.matchMedia();
+    mm.add(PINNED, () => {
+      root.dataset.pinned = "";
+      // Fijado, el scroll es de la página y lo debe suavizar Lenis
+      rail.removeAttribute("data-lenis-prevent");
+      rail.scrollLeft = 0;
+      const distance = () => rail.scrollWidth - rail.clientWidth;
+      gsap.to(rail, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: root,
+          start: "center center",
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+        },
+      });
+      return () => {
+        delete root.dataset.pinned;
+        rail.setAttribute("data-lenis-prevent", "");
+      };
+    });
+
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
+    return () => mm.revert();
+  }, []);
 
   const scrollBy = (dir: 1 | -1) => {
     const rail = railRef.current;
@@ -20,8 +63,8 @@ export function TimelineRail({ items }: { items: Milestone[] }) {
   };
 
   return (
-    <div>
-      <div className="container-page flex justify-end gap-2">
+    <div ref={rootRef} className="overflow-x-clip">
+      <div className="container-page flex justify-end gap-2 in-data-[pinned]:hidden">
         <button
           type="button"
           onClick={() => scrollBy(-1)}
@@ -46,7 +89,7 @@ export function TimelineRail({ items }: { items: Milestone[] }) {
         tabIndex={0}
         aria-label="Hitos de la historia de Sirius"
         // Margen lateral = el del contenedor de la página, para que la primera tarjeta se alinee con el titular
-        className="no-scrollbar mt-8 flex snap-x snap-mandatory scroll-px-[max(1rem,calc((100vw_-_80rem)/2_+_2rem))] gap-6 overflow-x-auto scroll-smooth px-[max(1rem,calc((100vw_-_80rem)/2_+_2rem))] pb-6 focus-visible:outline-offset-4"
+        className="no-scrollbar mt-8 flex in-data-[pinned]:snap-none in-data-[pinned]:overflow-visible snap-x snap-mandatory scroll-px-[max(1rem,calc((100vw_-_80rem)/2_+_2rem))] gap-6 overflow-x-auto scroll-smooth px-[max(1rem,calc((100vw_-_80rem)/2_+_2rem))] pb-6 focus-visible:outline-offset-4"
       >
         {items.map((m, i) => (
           <li key={`${m.year}-${m.title}`} className="relative w-[78vw] max-w-[22rem] shrink-0 snap-start">

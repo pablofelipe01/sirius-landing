@@ -16,8 +16,19 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
 
+  // Al bajar, la barra se esconde para dejarle la pantalla a la página; reaparece apenas se sube
+  const [hidden, setHidden] = useState(false);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > 240);
+        last = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -38,7 +49,11 @@ export function Header() {
   const close = () => setOpen(false);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-[padding] duration-300 ${scrolled ? "pt-2" : "pt-4"}`}>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-[padding,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] focus-within:translate-y-0 ${scrolled ? "pt-2" : "pt-4"} ${
+        hidden && !open ? "-translate-y-[130%]" : "translate-y-0"
+      }`}
+    >
       <a
         href="#contenido"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:rounded-xl focus:bg-white focus:px-4 focus:py-2 focus:text-barranca"

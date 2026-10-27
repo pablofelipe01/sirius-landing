@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight, ArrowUpRight } from "./icons";
+import { SplitWords } from "./motion/SplitWords";
 
 // Los dos puntos del logo (celeste y verde) marcan cada sección: es el símbolo de la marca
 export function Dots({ className = "" }: { className?: string }) {
@@ -43,10 +44,21 @@ export function SectionHeading({
 }) {
   const centered = align === "center";
   return (
-    <div data-reveal="up" className={`max-w-3xl ${centered ? "mx-auto text-center [&>p:first-child]:justify-center" : ""}`}>
-      {label && <Label tone={tone}>{label}</Label>}
-      <h2 className={`heading text-4xl sm:text-5xl lg:text-6xl ${tone === "light" ? "text-white" : "text-barranca"}`}>{title}</h2>
-      {text && <p className={`mt-5 text-lg leading-relaxed text-pretty ${tone === "light" ? "text-white/80" : "text-muted"}`}>{text}</p>}
+    <div className={`max-w-3xl ${centered ? "mx-auto text-center [&_p:first-child]:justify-center" : ""}`}>
+      {label && (
+        <div data-reveal="fade">
+          <Label tone={tone}>{label}</Label>
+        </div>
+      )}
+      {/* El titular sube palabra por palabra; el texto entra después */}
+      <SplitWords as="h2" className={`heading block text-4xl sm:text-5xl lg:text-6xl ${tone === "light" ? "text-white" : "text-barranca"}`}>
+        {title}
+      </SplitWords>
+      {text && (
+        <p data-reveal="up" data-reveal-delay="0.25" className={`mt-5 text-lg leading-relaxed text-pretty ${tone === "light" ? "text-white/80" : "text-muted"}`}>
+          {text}
+        </p>
+      )}
     </div>
   );
 }
@@ -118,9 +130,9 @@ export function PageHero({
           <div data-reveal="up">
             <Label>{label}</Label>
           </div>
-          <h1 data-reveal="up" data-reveal-delay="0.1" className="heading text-5xl text-barranca sm:text-6xl lg:text-7xl">
+          <SplitWords as="h1" delay={0.1} className="heading block text-5xl text-barranca sm:text-6xl lg:text-7xl">
             {title}
-          </h1>
+          </SplitWords>
           {text && (
             <p data-reveal="up" data-reveal-delay="0.2" className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/80 sm:text-xl">
               {text}
@@ -129,9 +141,14 @@ export function PageHero({
           {children}
         </div>
         {image && (
-          <div data-reveal="up" data-reveal-delay="0.15" className="lg:col-span-5">
-            <div className="arch relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden ring-8 ring-white/60 lg:max-w-none">
-              <Image src={image} alt={imageAlt} fill priority sizes="(min-width: 1024px) 38vw, 90vw" className="object-cover" />
+          <div className="lg:col-span-5">
+            {/* La foto se descubre como una cortina que sube dentro del arco y luego acompaña el scroll */}
+            <div className="arch relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden bg-white/50 ring-8 ring-white/60 lg:max-w-none">
+              <div data-reveal-mask data-reveal-delay="0.2" className="absolute inset-0">
+                <div data-parallax="7" className="absolute -inset-y-[9%] inset-x-0">
+                  <Image src={image} alt={imageAlt} fill priority quality={90} sizes="(min-width: 1024px) 38vw, 90vw" className="object-cover" />
+                </div>
+              </div>
             </div>
           </div>
         )}
