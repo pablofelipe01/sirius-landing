@@ -27,20 +27,19 @@ export interface FichaProducto {
 export const FICHAS: FichaProducto[] = [
   {
     id: 'sirius-char-filtro',
-    nombre: 'Sirius Char Filtro',
-    claim: 'Biochar filtrante de pirólisis controlada',
+    nombre: 'Sirius Char (F)',
+    claim: 'Material filtrante · biochar',
     archivo: '/fichas/sirius-char-filtro-ficha-tecnica.pdf',
-    // PENDIENTE: confirmar la version y fecha que declara el PDF.
-    version: null,
+    version: 'Versión 1.0 · Septiembre 2026',
     peso: '172 KB',
   },
   {
     id: 'biochar-blend',
     nombre: 'Biochar Blend',
-    claim: 'Acondicionador Orgánico de Suelos',
+    claim: 'Acondicionador orgánico de suelos',
     archivo: '/fichas/biochar-blend-ficha-tecnica.pdf',
-    version: 'Versión 2.0 · Abril 2026',
-    peso: '197 KB',
+    version: 'Versión 3.0 · Septiembre 2026',
+    peso: '1,1 MB',
   },
 ];
 

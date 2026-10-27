@@ -70,9 +70,11 @@ const buttonStyles = {
 
 export function ButtonLink({ href, children, variant = "primary", external, className = "" }: ButtonProps) {
   const cls = `inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border-2 px-6 py-3 text-[0.95rem] font-bold shadow-[0_6px_16px_-6px_rgba(1,84,172,0.4)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_22px_-8px_rgba(1,84,172,0.45)] [&>svg]:transition-transform hover:[&>svg]:translate-x-0.5 ${buttonStyles[variant]} ${className}`;
-  const isExternal = external ?? /^(https?:|mailto:|tel:)/.test(href);
+  // Los PDF de /fichas son archivos estáticos: van con <a> y en pestaña nueva, no con navegación de Next
+  const isPdf = href.endsWith(".pdf");
+  const isExternal = external ?? (isPdf || /^(https?:|mailto:|tel:)/.test(href));
   if (isExternal) {
-    const newTab = href.startsWith("http");
+    const newTab = href.startsWith("http") || isPdf;
     return (
       <a href={href} className={cls} {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
         {children}

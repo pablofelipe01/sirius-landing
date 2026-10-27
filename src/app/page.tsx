@@ -1,13 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Allies } from '@/components/Allies';
 import { ArrowRight, Check } from '@/components/icons';
 import { PillarTabs } from '@/components/PillarTabs';
 import { SpinBadge } from '@/components/SpinBadge';
 import { Ticker } from '@/components/Ticker';
 import { Accent, ButtonLink, Label, SectionHeading } from '@/components/ui';
 import { pilares } from '@/lib/content/biofabrica';
-import { bento, hero, homeMilestones, homeQuote, ticker } from '@/lib/content/home';
+import { bento, hero, homeQuote, origen, ticker } from '@/lib/content/home';
 
 export default function Home() {
   return (
@@ -80,7 +79,7 @@ export default function Home() {
               Bioinsumos que nacen en <Accent tone="alegria">nuestra</Accent> biofábrica
             </>
           }
-          text="Biochar, biológicos y análisis de laboratorio: tres líneas de trabajo con un mismo propósito, devolverle la vida al suelo."
+          text="Bioinsumos y biochar: dos líneas de trabajo con un mismo propósito, devolverle la vida al suelo."
         />
 
         <div data-reveal-stagger className="mt-12 grid gap-5 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
@@ -110,22 +109,21 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href={bento.laboratorio.href} className="group flex items-center gap-6 rounded-[2rem] border border-line bg-white p-8 sm:p-10">
-            {/* Lo micro en un círculo: la muestra vista al microscopio */}
+          <Link href={bento.siriusChar.href} className="group flex items-center gap-6 rounded-[2rem] border border-line bg-white p-8 sm:p-10">
             <span className="relative size-28 shrink-0 overflow-hidden rounded-full ring-4 ring-sutileza-50">
-              <Image src={bento.laboratorio.image} alt="" fill sizes="112px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Image src={bento.siriusChar.image} alt="" fill sizes="112px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
             </span>
             <span>
-              <span className="heading block text-2xl text-barranca">{bento.laboratorio.title}</span>
-              <span className="mt-2 block text-sm leading-relaxed text-muted">{bento.laboratorio.text}</span>
+              <span className="heading block text-2xl text-barranca">{bento.siriusChar.title}</span>
+              <span className="mt-2 block text-sm leading-relaxed text-muted">{bento.siriusChar.text}</span>
             </span>
           </Link>
 
-          <Link href={bento.carbono.href} className="bg-imperial group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 text-white sm:p-10">
-            <span className="heading block text-3xl">{bento.carbono.title}</span>
-            <span className="mt-3 block text-white/75">{bento.carbono.text}</span>
+          <Link href={bento.acompanamiento.href} className="bg-imperial group relative flex flex-col justify-between overflow-hidden rounded-[2rem] p-8 text-white sm:p-10">
+            <span className="heading block text-3xl">{bento.acompanamiento.title}</span>
+            <span className="mt-3 block text-white/75">{bento.acompanamiento.text}</span>
             <span className="mt-6 flex items-center gap-2 font-bold text-cielo">
-              Calcular ahora <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              Agendar una visita <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>
           </Link>
         </div>
@@ -135,29 +133,20 @@ export default function Home() {
       <section className="bg-retono py-20 sm:py-28">
         <div className="container-page">
           <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <SectionHeading
-              label="Así empezó el camino"
-              title={
-                <>
-                  Desde 2018 aprendiendo del <Accent tone="alegria">fuego</Accent> y del suelo
-                </>
-              }
-            />
+            <SectionHeading label="Así empezó el camino" title={origen.title} text={origen.text} />
             <div data-reveal="up" data-reveal-delay="0.15">
-              <ButtonLink href="/somos-sirius#historia" variant="light">
-                Recorre nuestra historia
+              <ButtonLink href="/somos-sirius" variant="light">
+                Conoce Sirius
               </ButtonLink>
             </div>
           </div>
-          <ol data-reveal-stagger className="relative mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            <span aria-hidden className="absolute top-2 right-0 left-0 hidden h-0.5 bg-alegria/30 lg:block" />
-            {homeMilestones.map((m, i) => (
-              <li key={m.year} className="relative">
+          <ol data-reveal-stagger className="relative mt-14 grid gap-10 sm:grid-cols-3 lg:gap-6">
+            <span aria-hidden className="absolute top-2 right-0 left-0 hidden h-0.5 bg-alegria/30 sm:block" />
+            {origen.puntos.map((p, i) => (
+              <li key={p.title} className="relative">
                 <span aria-hidden className={`relative block size-4 rounded-full ring-4 ring-retono-50 ${i % 2 === 0 ? 'bg-cielo' : 'bg-alegria'}`} />
-                <p data-counter={m.year} data-counter-from={String(Number(m.year) - 10)} data-counter-grouping="false" className="heading mt-6 text-6xl text-barranca tabular-nums">
-                  {m.year}
-                </p>
-                <p className="mt-3 max-w-60 text-lg text-ink/80">{m.text}</p>
+                <p className="heading mt-6 text-4xl text-barranca">{p.title}</p>
+                <p className="mt-3 max-w-72 text-lg text-ink/80">{p.text}</p>
               </li>
             ))}
           </ol>
@@ -202,13 +191,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Grupo empresarial */}
-      <section className="container-page py-20 sm:py-24">
-        <SectionHeading label="Grupo empresarial" title="Crecemos junto a las empresas del grupo" align="center" />
-        <div className="mt-12">
-          <Allies />
-        </div>
-      </section>
     </>
   );
 }

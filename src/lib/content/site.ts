@@ -32,9 +32,8 @@ export const navigation: NavItem[] = [
     label: "Productos",
     href: "/productos",
     children: [
-      { label: "Biochar Blend", href: "/productos#biochar-blend" },
-      { label: "Sirius Bacter", href: "/productos#sirius-bacter" },
-      { label: "Tratamiento preventivo de plagas", href: "/productos#tratamiento-preventivo" },
+      { label: "Bioinsumos", href: "/productos#bioinsumos" },
+      { label: "Biochar y acondicionadores", href: "/productos#biochar" },
       { label: "Fichas técnicas", href: "/productos#fichas" },
     ],
   },
@@ -48,7 +47,6 @@ export const navigation: NavItem[] = [
       { label: "Formulación a la medida", href: "/biofabrica#formulacion" },
     ],
   },
-  { label: "Calculadora de carbono", href: "/calculadora" },
   { label: "Contacto", href: "/contacto" },
 ];
 
@@ -67,7 +65,7 @@ export const contact = {
 
 export const footer = {
   title: "La tierra está esperando. Regeneremos juntos.",
-  text: "Transformamos la agricultura convencional con soluciones regenerativas que nutren el suelo y potencian tus cultivos.",
+  text: "Bioinsumos y biochar con ficha técnica pública, y acompañamiento agronómico en campo. Desde Barranca de Upía, Meta.",
 };
 
 // Empresas del grupo (las mismas de /directorio). width/height: tamaño intrínseco del archivo;

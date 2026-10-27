@@ -1,17 +1,20 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { Check, Download, FileText } from '@/components/icons';
+import { Download, FileText } from '@/components/icons';
 import { ProductNav } from '@/components/ProductNav';
-import { Accent, ButtonLink, PageHero, SectionHeading } from '@/components/ui';
-import { fichas, productos, productosIntro } from '@/lib/content/productos';
+import { Accent, ButtonLink, Label, PageHero, SectionHeading } from '@/components/ui';
+import { lineas, productos, productosIntro } from '@/lib/content/productos';
 
 export const metadata: Metadata = {
   title: 'Productos',
   description: productosIntro,
 };
 
-// Cada producto en su gradiente del manual: el biochar en verde, los biológicos en azul
-const tints = ['bg-cotiledon', 'bg-sutileza', 'bg-retono', 'bg-sutileza'];
+// Los bioinsumos en los gradientes azules del manual y el biochar en los verdes
+const tints: Record<string, string[]> = {
+  bioinsumos: ['bg-sutileza', 'bg-retono'],
+  biochar: ['bg-cotiledon', 'bg-retono'],
+};
 
 export default function ProductosPage() {
   return (
@@ -20,72 +23,97 @@ export default function ProductosPage() {
         label="Productos"
         title={
           <>
-            Bioinsumos que <Accent>transforman</Accent> suelos y almas
+            Bioinsumos y biochar para <Accent>regenerar</Accent> el suelo
           </>
         }
         text={productosIntro}
         image="/img/productos/sirius-bacter.webp"
-        imageAlt="Frascos de biológicos Sirius entre tallos de bambú"
+        imageAlt="Frascos con líquidos de colores entre tallos de bambú"
         tint="cotiledon"
       >
         <div data-reveal="up" data-reveal-delay="0.3" className="mt-9 flex flex-wrap gap-3">
           <ButtonLink href="/contacto">Solicitar asesoría</ButtonLink>
+          <ButtonLink href="#fichas" variant="light" external={false}>
+            Fichas técnicas
+          </ButtonLink>
         </div>
       </PageHero>
 
       <ProductNav items={productos} />
 
-      <div className="container-page space-y-6 pt-6 pb-20 sm:pb-28">
-        {productos.map((p, i) => {
-          const reverse = i % 2 === 1;
-          return (
-            <section
-              key={p.id}
-              id={p.id}
-              aria-labelledby={`${p.id}-titulo`}
-              className={`${tints[i % tints.length]} scroll-mt-40 overflow-hidden rounded-[2.5rem] p-6 sm:p-10 lg:p-14`}
-            >
-              <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-                <div data-reveal="up" className={`lg:col-span-5 ${reverse ? 'lg:order-2' : ''}`}>
-                  <div className="arch group relative mx-auto aspect-[4/5] max-w-sm overflow-hidden ring-8 ring-white/70 lg:max-w-none">
-                    <Image src={p.image} alt={p.alt} fill sizes="(min-width: 1024px) 36vw, 90vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  </div>
-                </div>
-                <div className={`lg:col-span-7 ${reverse ? 'lg:order-1' : ''}`}>
-                  <p data-reveal="up" className="font-serif text-2xl text-barranca/60 italic">
-                    0{i + 1}
-                  </p>
-                  <h2 id={`${p.id}-titulo`} data-reveal="up" data-reveal-delay="0.05" className="heading mt-3 text-5xl text-barranca sm:text-6xl">
-                    {p.name}
-                  </h2>
-                  <p data-reveal="up" data-reveal-delay="0.1" className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/85">
-                    {p.text}
-                  </p>
-                  <ul data-reveal-stagger className="mt-8 flex flex-wrap gap-2">
-                    {p.benefits.map((b) => (
-                      <li key={b} className="flex items-center gap-2 rounded-xl bg-white/80 px-3.5 py-2 text-sm font-semibold text-ink">
-                        <Check className="size-4 shrink-0 text-alegria-700" />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                  <div data-reveal="up" data-reveal-delay="0.2" className="mt-9 flex flex-wrap gap-3">
-                    <ButtonLink href="/contacto">Preguntar por {p.name}</ButtonLink>
-                  </div>
-                </div>
-              </div>
-            </section>
-          );
-        })}
-      </div>
+      {lineas.map((linea) => (
+        <section key={linea.id} id={linea.id} aria-labelledby={`${linea.id}-titulo`} className="container-page scroll-mt-40 pt-14 pb-6">
+          <div data-reveal="up" className="max-w-3xl">
+            <Label>{linea.name}</Label>
+            <p id={`${linea.id}-titulo`} className="text-lg leading-relaxed text-ink/80">
+              {linea.intro}
+            </p>
+          </div>
 
-      <section id="fichas" className="container-page scroll-mt-40 pb-20 sm:pb-28">
-        <SectionHeading label="Documentos" title="Fichas técnicas" text="Consulta y descarga la información técnica de nuestros productos." />
+          <div className="mt-8 space-y-6">
+            {linea.productos.map((p, i) => {
+              const reverse = i % 2 === 1;
+              return (
+                <article
+                  key={p.id}
+                  id={p.id}
+                  aria-labelledby={`${p.id}-nombre`}
+                  className={`${tints[linea.id][i % 2]} scroll-mt-40 overflow-hidden rounded-[2.5rem] p-6 sm:p-10 lg:p-14`}
+                >
+                  <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+                    <div data-reveal="up" className={`lg:col-span-5 ${reverse ? 'lg:order-2' : ''}`}>
+                      <div className="arch group relative mx-auto aspect-[4/5] max-w-sm overflow-hidden ring-8 ring-white/70 lg:max-w-none">
+                        <Image src={p.image} alt={p.alt} fill sizes="(min-width: 1024px) 36vw, 90vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                      </div>
+                    </div>
+                    <div className={`lg:col-span-7 ${reverse ? 'lg:order-1' : ''}`}>
+                      <p data-reveal="up" className="text-sm font-semibold tracking-wide text-barranca/70 uppercase">
+                        {p.rotulo}
+                      </p>
+                      <h2 id={`${p.id}-nombre`} data-reveal="up" data-reveal-delay="0.05" className="heading mt-3 text-5xl text-barranca sm:text-6xl">
+                        {p.name}
+                      </h2>
+                      <p data-reveal="up" data-reveal-delay="0.1" className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/85">
+                        {p.text}
+                      </p>
+                      <dl data-reveal-stagger className="mt-8 grid gap-3 sm:grid-cols-2">
+                        {p.datos.map((d) => (
+                          <div key={d.label} className="rounded-2xl bg-white/80 px-4 py-3">
+                            <dt className="text-xs font-semibold tracking-wide text-muted uppercase">{d.label}</dt>
+                            <dd className="mt-1 font-semibold text-ink">{d.value}</dd>
+                          </div>
+                        ))}
+                        <div className="rounded-2xl bg-white/80 px-4 py-3 sm:col-span-2">
+                          <dt className="text-xs font-semibold tracking-wide text-muted uppercase">Cultivos en la ficha</dt>
+                          <dd className="mt-1 font-semibold text-ink">{p.cultivos}</dd>
+                        </div>
+                      </dl>
+                      <div data-reveal="up" data-reveal-delay="0.2" className="mt-9 flex flex-wrap gap-3">
+                        <ButtonLink href={p.ficha} variant="light">
+                          Ficha técnica (PDF)
+                        </ButtonLink>
+                        <ButtonLink href="/contacto">Preguntar por {p.name}</ButtonLink>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+
+      <section id="fichas" className="container-page scroll-mt-40 py-20 sm:py-28">
+        <SectionHeading
+          label="Documentos"
+          title="Fichas técnicas"
+          text="Composición, presentación, uso y manejo de cada producto, tal como los declara su ficha. Versiones de septiembre de 2026."
+        />
         <ul data-reveal-stagger className="mt-10 grid gap-4 sm:grid-cols-2">
-          {fichas.map((f) => (
-            <li key={f.file}>
+          {productos.map((p) => (
+            <li key={p.id}>
               <a
-                href={f.file}
+                href={p.ficha}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 rounded-2xl border-2 border-barranca bg-white p-5 transition-all hover:-translate-y-0.5 hover:bg-sutileza-50 hover:shadow-[0_14px_30px_-18px_rgba(1,84,172,0.5)]"
@@ -93,7 +121,10 @@ export default function ProductosPage() {
                 <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-barranca text-white">
                   <FileText className="size-6" />
                 </span>
-                <span className="flex-1 font-bold text-barranca">{f.name}</span>
+                <span className="flex-1">
+                  <span className="block font-bold text-barranca">{p.name}</span>
+                  <span className="block text-sm text-muted">{p.rotulo}</span>
+                </span>
                 <Download className="size-5 shrink-0 text-barranca transition-transform group-hover:translate-y-0.5" />
                 <span className="sr-only">(PDF, se abre en una pestaña nueva)</span>
               </a>
@@ -108,7 +139,9 @@ export default function ProductosPage() {
             <h2 className="heading text-4xl text-barranca sm:text-5xl">
               ¿No sabes qué necesita <Accent>tu suelo</Accent>?
             </h2>
-            <p className="mt-4 text-lg text-ink/80">Nuestro equipo te ayuda a elegir la solución adecuada para tu cultivo y su estado actual.</p>
+            <p className="mt-4 text-lg text-ink/80">
+              Nuestras fichas incluyen acompañamiento agronómico en campo con agendamiento previo. Escríbenos y lo coordinamos.
+            </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/contacto">Solicitar asesoría</ButtonLink>
