@@ -5,6 +5,7 @@ import { LoopVideo } from '@/components/LoopVideo';
 import { ExpandMedia } from '@/components/motion/ExpandMedia';
 import { HorizontalGallery } from '@/components/motion/HorizontalGallery';
 import { ScrubText, SplitWords } from '@/components/motion/SplitWords';
+import { ViajeEstelar } from '@/components/motion/ViajeEstelar';
 import { PillarTabs } from '@/components/PillarTabs';
 import { SpinBadge } from '@/components/SpinBadge';
 import { Ticker } from '@/components/Ticker';
@@ -15,68 +16,71 @@ import { bento, galeria, hero, homeQuote, origen, ticker, ventana } from '@/lib/
 export default function Home() {
   return (
     <>
-      {/* Hero claro: gradiente Sutileza, titular que sube palabra por palabra y video en arco.
-          Con mouse, el arco, el sello y la tarjeta flotan a distinta profundidad */}
-      <section data-depth-scene className="bg-sutileza relative overflow-hidden">
-        <div className="container-page grid items-center gap-12 pt-32 pb-16 sm:pt-36 lg:grid-cols-12 lg:gap-8 lg:pb-24">
-          <div className="lg:col-span-7">
-            <p data-reveal="up" className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-sm font-semibold text-barranca shadow-sm">
-              <span className="size-2 rounded-full bg-alegria" aria-hidden />
-              {hero.greeting}
-            </p>
-            <SplitWords as="h1" delay={0.15} className="heading mt-6 block text-[3.1rem] text-barranca sm:text-7xl lg:text-[5.6rem]">
-              Despierta tu alma, <Accent>regenera</Accent> el mundo.
-            </SplitWords>
-            <p data-reveal="up" data-reveal-delay="0.2" className="mt-7 max-w-xl text-lg leading-relaxed text-ink/80 sm:text-xl">
-              {hero.text}
-            </p>
-            <div data-reveal="up" data-reveal-delay="0.3" className="mt-9 flex flex-wrap gap-3">
-              <ButtonLink href="/productos">Ver productos</ButtonLink>
-              <ButtonLink href="/somos-sirius" variant="leaf">
-                Conoce Sirius
-              </ButtonLink>
+      {/* Intro del logo (viaje estelar) y encima sube el hero claro: gradiente Sutileza, titular que sube
+          palabra por palabra y video en arco. Con mouse, el arco, el sello y la tarjeta flotan a distinta
+          profundidad. min-h-svh para que el hero cubra toda la escena al subir */}
+      <ViajeEstelar>
+        <section data-depth-scene className="bg-sutileza relative flex min-h-svh flex-col justify-center overflow-hidden">
+          <div className="container-page grid items-center gap-12 pt-32 pb-16 sm:pt-36 lg:grid-cols-12 lg:gap-8 lg:pb-24">
+            <div className="lg:col-span-7">
+              <p data-reveal="up" className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-sm font-semibold text-barranca shadow-sm">
+                <span className="size-2 rounded-full bg-alegria" aria-hidden />
+                {hero.greeting}
+              </p>
+              <SplitWords as="h1" delay={0.15} className="heading mt-6 block text-[3.1rem] text-barranca sm:text-7xl lg:text-[5.6rem]">
+                Despierta tu alma, <Accent>regenera</Accent> el mundo.
+              </SplitWords>
+              <p data-reveal="up" data-reveal-delay="0.2" className="mt-7 max-w-xl text-lg leading-relaxed text-ink/80 sm:text-xl">
+                {hero.text}
+              </p>
+              <div data-reveal="up" data-reveal-delay="0.3" className="mt-9 flex flex-wrap gap-3">
+                <ButtonLink href="/productos">Ver productos</ButtonLink>
+                <ButtonLink href="/somos-sirius" variant="leaf">
+                  Conoce Sirius
+                </ButtonLink>
+              </div>
+              <ul data-reveal="up" data-reveal-delay="0.4" className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-barranca">
+                {hero.facts.map((f) => (
+                  <li key={f} className="flex items-center gap-2">
+                    <Check className="size-4 text-alegria-700" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul data-reveal="up" data-reveal-delay="0.4" className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-barranca">
-              {hero.facts.map((f) => (
-                <li key={f} className="flex items-center gap-2">
-                  <Check className="size-4 text-alegria-700" />
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </div>
 
-          <div data-reveal="scale" data-reveal-delay="0.2" className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-            <div data-depth="10">
-              <div className="arch relative aspect-[4/5] overflow-hidden bg-sutileza-50 ring-8 ring-white/70">
-                <div data-parallax="6" className="absolute -inset-y-[8%] inset-x-0">
-                  <LoopVideo src={hero.video} poster={hero.poster} eager className="size-full object-cover object-[64%_50%]" />
+            <div data-reveal="scale" data-reveal-delay="0.2" className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+              <div data-depth="10">
+                <div className="arch relative aspect-[4/5] overflow-hidden bg-sutileza-50 ring-8 ring-white/70">
+                  <div data-parallax="6" className="absolute -inset-y-[8%] inset-x-0">
+                    <LoopVideo src={hero.video} poster={hero.poster} eager className="size-full object-cover object-[64%_50%]" />
+                  </div>
+                  <span className="sr-only">{hero.imageAlt}</span>
                 </div>
-                <span className="sr-only">{hero.imageAlt}</span>
+              </div>
+              <div data-depth="26" className="absolute -top-4 -right-2 sm:-right-6">
+                <SpinBadge />
+              </div>
+              {/* Producto destacado, sobre la esquina de la foto */}
+              <div data-depth="18" className="absolute -bottom-6 -left-2 sm:-left-8">
+                <Link
+                  href={hero.product.href}
+                  className="group flex max-w-[17rem] items-center gap-3 rounded-2xl bg-white p-3 pr-4 shadow-[0_20px_40px_-20px_rgba(1,84,172,0.55)] transition-transform hover:-translate-y-1"
+                >
+                  <span className="relative size-14 shrink-0 overflow-hidden rounded-xl">
+                    <Image src={hero.product.image} alt="" fill sizes="56px" className="object-cover" />
+                  </span>
+                  <span>
+                    <span className="block font-bold text-barranca">{hero.product.name}</span>
+                    <span className="block text-sm leading-snug text-muted">{hero.product.text}</span>
+                  </span>
+                  <ArrowRight className="size-4 shrink-0 text-barranca transition-transform group-hover:translate-x-0.5" />
+                </Link>
               </div>
             </div>
-            <div data-depth="26" className="absolute -top-4 -right-2 sm:-right-6">
-              <SpinBadge />
-            </div>
-            {/* Producto destacado, sobre la esquina de la foto */}
-            <div data-depth="18" className="absolute -bottom-6 -left-2 sm:-left-8">
-              <Link
-                href={hero.product.href}
-                className="group flex max-w-[17rem] items-center gap-3 rounded-2xl bg-white p-3 pr-4 shadow-[0_20px_40px_-20px_rgba(1,84,172,0.55)] transition-transform hover:-translate-y-1"
-              >
-                <span className="relative size-14 shrink-0 overflow-hidden rounded-xl">
-                  <Image src={hero.product.image} alt="" fill sizes="56px" className="object-cover" />
-                </span>
-                <span>
-                  <span className="block font-bold text-barranca">{hero.product.name}</span>
-                  <span className="block text-sm leading-snug text-muted">{hero.product.text}</span>
-                </span>
-                <ArrowRight className="size-4 shrink-0 text-barranca transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ViajeEstelar>
 
       <Ticker words={ticker} />
 
@@ -158,7 +162,7 @@ export default function Home() {
             </div>
             <div className="arch relative mx-8 mt-auto mb-8 min-h-72 flex-1 overflow-hidden">
               <div data-parallax="7" className="absolute -inset-y-[10%] inset-x-0">
-                <Image src={bento.biologicos.image} alt="" fill quality={90} sizes="(min-width: 1024px) 28vw, 90vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                <LoopVideo src={bento.biologicos.video} poster={bento.biologicos.poster} className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             </div>
           </Link>
@@ -192,7 +196,7 @@ export default function Home() {
             <h2 className="heading text-4xl sm:text-5xl">
               Lo que hacemos, <Accent tone="inherit">de cerca</Accent>
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/75">Imágenes de la biofábrica, el laboratorio y los cultivos.</p>
+            <p className="mt-5 text-lg leading-relaxed text-white/75">Imágenes de la biofábrica, el laboratorio, los cultivos y la vida que los rodea.</p>
           </>
         }
       />

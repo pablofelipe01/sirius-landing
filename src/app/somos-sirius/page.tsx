@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { LoopVideo } from '@/components/LoopVideo';
 import { SplitWords } from '@/components/motion/SplitWords';
 import { TimelineRail } from '@/components/TimelineRail';
 import { Accent, Dots, Label, PageHero, SectionHeading } from '@/components/ui';
-import { FOUNDED, about, mission, timeline, values, vision } from '@/lib/content/somos';
+import { FOUNDED, about, mission, regeneracion, timeline, values, vision } from '@/lib/content/somos';
 
 export const metadata: Metadata = {
   title: 'Somos Sirius',
@@ -105,6 +106,26 @@ export default function SomosPage() {
             <p className="heading mt-8 text-3xl text-barranca sm:text-4xl">{vision}</p>
           </article>
         </div>
+        {/* Las tres regeneraciones de la misión, cada una en su marco */}
+        <ul data-reveal-stagger className="mt-5 grid gap-5 sm:grid-cols-3">
+          {regeneracion.map((r, i) => (
+            <li key={r.name}>
+              <figure>
+                <div className={`relative aspect-[4/5] overflow-hidden ${i === 1 ? 'arch' : 'rounded-[2rem]'}`}>
+                  {r.video ? (
+                    <>
+                      <LoopVideo src={r.video} poster={r.image} className="size-full object-cover" />
+                      <span className="sr-only">{r.alt}</span>
+                    </>
+                  ) : (
+                    <Image src={r.image} alt={r.alt} fill quality={90} sizes="(min-width: 640px) 33vw, 100vw" className="object-cover" />
+                  )}
+                </div>
+                <figcaption className="heading mt-4 text-2xl text-barranca">{r.name}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
         {/* La foto crece hasta su tamaño mientras entra, y adentro se desplaza más despacio */}
         <div data-scale-in className="relative mt-5 aspect-[4/3] overflow-hidden rounded-[2.5rem] sm:aspect-[21/9]">
           <div data-parallax="10" className="absolute -inset-y-[12%] inset-x-0">

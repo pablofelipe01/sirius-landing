@@ -4,8 +4,10 @@ import Image from "next/image";
 import { useLayoutEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { LoopVideo } from "../LoopVideo";
 
-export type GalleryItem = { image: string; alt: string; caption: string };
+// Con `video`, la imagen es su poster (el primer fotograma) y el clip corre en bucle mientras se ve
+export type GalleryItem = { image: string; alt: string; caption: string; video?: string };
 
 // Galería que avanza de lado mientras se hace scroll hacia abajo: la sección se fija y la cinta de
 // fotos se desplaza; dentro de cada marco la foto corre un poco más despacio (parallax). Los marcos
@@ -74,7 +76,14 @@ export function HorizontalGallery({ items, intro }: { items: GalleryItem[]; intr
           <figure key={it.image} className={`flex shrink-0 snap-center flex-col ${i % 3 === 1 ? "md:self-end" : i % 3 === 2 ? "md:self-start" : ""}`}>
             <div className={`relative max-w-[80vw] overflow-hidden ${shapes[i % shapes.length]}`}>
               <div data-pan className="absolute inset-y-0 -inset-x-[10%]">
-                <Image src={it.image} alt={it.alt} fill quality={90} sizes="(min-width: 768px) 32rem, 80vw" className="object-cover" />
+                {it.video ? (
+                  <>
+                    <LoopVideo src={it.video} poster={it.image} className="absolute inset-0 size-full object-cover" />
+                    <span className="sr-only">{it.alt}</span>
+                  </>
+                ) : (
+                  <Image src={it.image} alt={it.alt} fill quality={90} sizes="(min-width: 768px) 32rem, 80vw" className="object-cover" />
+                )}
               </div>
             </div>
             <figcaption className="mt-4 flex items-center gap-2.5 text-sm font-semibold text-white/80">

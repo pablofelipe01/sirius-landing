@@ -16,15 +16,10 @@ export interface TelefonoContacto {
 
 export const TELEFONOS: TelefonoContacto[] = [
   { etiqueta: '+57 311 8882058', numero: '573118882058' },
-  { etiqueta: '+57 320 9568566', numero: '573209568566' },
-  { etiqueta: '+57 321 2206923', numero: '573212206923' },
 ];
 
 /** Telefono principal: primero en la lista y destino de los enlaces directos. */
 export const TELEFONO_PRINCIPAL = TELEFONOS[0];
-
-/** Linea alterna publicada: la que se ofrece cuando la principal no contesta. */
-export const TELEFONO_ALTERNATIVO = TELEFONOS[2];
 
 /**
  * Linea atendida por el chatbot conversacional: es el destino del boton de

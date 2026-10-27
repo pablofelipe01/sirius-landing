@@ -15,7 +15,6 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/f
 import {
   DIRECCION,
   EMAIL_CONTACTO,
-  TELEFONO_ALTERNATIVO,
   TELEFONO_PRINCIPAL,
   WHATSAPP_BOT,
 } from '@/lib/contacto';
@@ -133,15 +132,6 @@ export default function TarjetaPage() {
 
         <section className="mt-8 space-y-2 rounded-2xl bg-white/5 p-5 text-sm text-white/75">
           <p>📍 {DIRECCION}, Meta, Colombia</p>
-          <p>
-            ☎️ Linea alterna:{' '}
-            <a
-              href={`tel:+${TELEFONO_ALTERNATIVO.numero}`}
-              className="font-medium text-white hover:underline"
-            >
-              {TELEFONO_ALTERNATIVO.etiqueta}
-            </a>
-          </p>
         </section>
 
         <footer className="mt-8 text-center text-sm">

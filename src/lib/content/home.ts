@@ -31,7 +31,9 @@ export const bento = {
   biologicos: {
     title: "Bioinsumos",
     text: "Sirius Bacter, Trichoderma harzianum, Beauveria bassiana y Metarhizium anisopliae: bacterias y hongos en suspensión concentrada, cada uno con su ficha técnica.",
-    image: "/img/productos/sirius-bacter.webp",
+    // Polvo que cae sobre los frascos de biológicos; el poster es su primer fotograma
+    video: "/video/web/biologicos-polvo.mp4",
+    poster: "/video/web/biologicos-polvo.webp",
     href: "/productos#bioinsumos",
   },
   siriusChar: {
@@ -55,16 +57,25 @@ export const ventana = {
   poster: "/video/web/biochar-flor.webp",
 };
 
-// Galería horizontal: solo fotos propias del campo, la biofábrica y el laboratorio. Los pies dicen
-// lo que se ve, no prometen resultados.
+// Galería horizontal: solo fotos y clips propios del campo, la biofábrica y el laboratorio. Los pies
+// van en la voz de la marca (cálida, alegre) y no prometen resultados; lo que se ve está en `alt`. Los clips salen del video de marca (public/video1.mp4)
+// y de los videos de producto, recortados en public/video/web.
 export const galeria = [
-  { image: "/img/campo/mano-biochar.webp", alt: "Mano sosteniendo biochar sobre plantas jóvenes", caption: "Biochar en la mano" },
-  { image: "/img/campo/aplicacion.webp", alt: "Persona aplicando un producto Sirius al suelo", caption: "Aplicación en campo" },
-  { image: "/img/procesos/plantulas.webp", alt: "Plántulas en hileras sobre suelo oscuro", caption: "Plántulas" },
-  { image: "/img/laboratorio/petri.webp", alt: "Colonias de microorganismos en una caja de Petri", caption: "Laboratorio" },
-  { image: "/img/campo/palma-aerea.webp", alt: "Vista aérea de un cultivo de palma", caption: "Cultivo de palma" },
-  { image: "/img/procesos/app-campo.webp", alt: "Persona consultando datos en un celular", caption: "Registro de datos" },
-  { image: "/img/campo/aerea.webp", alt: "Vista aérea de un sendero entre cultivos", caption: "Desde el aire" },
+  { image: "/img/campo/mano-biochar.webp", alt: "Mano sosteniendo biochar sobre plantas jóvenes", caption: "La tierra en buenas manos" },
+  { image: "/video/web/hormigas.webp", video: "/video/web/hormigas.mp4", alt: "Hormigas arrieras cargando un pedazo de hoja", caption: "Trabajo en equipo" },
+  { image: "/img/campo/aplicacion.webp", alt: "Persona aplicando un producto Sirius al suelo", caption: "Manos a la tierra" },
+  { image: "/img/fotos/textura-hongo.webp", alt: "Colonia de hongo en anillos sobre un medio de cultivo", caption: "Pequeños gigantes" },
+  { image: "/video/web/capibara.webp", video: "/video/web/capibara.mp4", alt: "Chigüiro en el agua junto a una garza", caption: "Vecinos del agua" },
+  { image: "/img/procesos/plantulas.webp", alt: "Plántulas en hileras sobre suelo oscuro", caption: "Todo empieza pequeño" },
+  { image: "/img/laboratorio/petri.webp", alt: "Colonias de microorganismos en una caja de Petri", caption: "Ciencia viva" },
+  { image: "/img/laboratorio/microscopia.webp", alt: "Imagen ampliada en blanco y negro de una superficie porosa", caption: "El mundo en miniatura" },
+  { image: "/img/procesos/biochar-granulado.webp", alt: "Gránulos oscuros de biochar en primer plano", caption: "Nacido del fuego" },
+  { image: "/img/campo/palma-aerea.webp", alt: "Vista aérea de un cultivo de palma", caption: "La palma, desde arriba" },
+  { image: "/video/web/milpies.webp", video: "/video/web/milpies.mp4", alt: "Milpiés caminando sobre la hojarasca", caption: "Obreros del suelo" },
+  { image: "/img/fotos/textura-hoja.webp", alt: "Nervaduras rojas y verdes de una hoja vistas de cerca", caption: "Cada nervadura cuenta" },
+  { image: "/img/procesos/app-campo.webp", alt: "Persona consultando datos en un celular", caption: "Datos con los pies en la tierra" },
+  { image: "/img/campo/aerea.webp", alt: "Vista aérea de un sendero entre cultivos", caption: "Caminos que se abren" },
+  { image: "/img/campo/atardecer.webp", alt: "Sol entre nubes al atardecer", caption: "Hasta mañana, en alegría" },
 ];
 
 // Origen: lo que Sirius contó sobre por qué nació y lo que las fichas dicen de sus procesos

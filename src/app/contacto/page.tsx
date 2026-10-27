@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   const channels = [
     { icon: MapPin, title: 'Dirección', lines: [{ label: contact.address }] },
-    { icon: Phone, title: 'Teléfonos', lines: contact.phones },
+    { icon: Phone, title: 'Teléfono', lines: contact.phones },
     { icon: Chat, title: 'WhatsApp', lines: [{ label: contact.whatsapp.label, href: contact.whatsapp.href, external: true }] },
     { icon: Mail, title: 'Correo', lines: [{ label: contact.email, href: contact.mailto }] },
     { icon: Clock, title: 'Horario', lines: contact.schedule.map((label) => ({ label })) },

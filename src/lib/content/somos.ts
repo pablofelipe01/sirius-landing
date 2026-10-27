@@ -83,6 +83,18 @@ export const mission =
   "Ser una guía que brinda las herramientas para llevar el campo hacia la regeneración del suelo, de la biodiversidad y de los seres.";
 export const vision = "Capturar CO₂ en el orden de gigatoneladas y alimentar de manera sana y consciente a millones de seres.";
 
+// Las tres regeneraciones que nombra la misión (suelo, biodiversidad, seres), con nombre en voz de marca
+export const regeneracion = [
+  { name: "Suelo vivo", image: "/img/fotos/textura-raices.webp", alt: "Raíces finas y materia orgánica vistas de cerca" },
+  { name: "Biodiversidad que vuelve", image: "/img/fotos/rana.webp", alt: "Rana arborícola sobre una rama" },
+  {
+    name: "Seres que despiertan",
+    image: "/video/web/encuentro.webp",
+    video: "/video/web/encuentro.mp4",
+    alt: "Encuentro al aire libre con clientes y aliados",
+  },
+];
+
 // Manual de Marca 2023, p. 7
 export const values = [
   {
