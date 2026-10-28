@@ -5,7 +5,7 @@ export const hero = {
   greeting: "¡Buenos días en alegría!",
   // El titular se arma en la página para poner "regenera" en la cursiva de marca
   text: "Bioinsumos y biochar para devolverle la vida al suelo. Desde Barranca de Upía, Meta.",
-  // Video en bucle dentro del arco; el poster es su primer fotograma, para que no salte al arrancar
+  // Video en bucle dentro del marco orgánico; el poster es su primer fotograma, para que no salte al arrancar
   video: "/video/web/biochar-en-mano.mp4",
   poster: "/video/web/biochar-en-mano.webp",
   imageAlt: "Mano sosteniendo biochar sobre un cultivo",
@@ -49,32 +49,24 @@ export const bento = {
   },
 };
 
-// Ventana en arco bajo el hero: la frase del Manual de Marca (p. 6) partida a los dos lados del arco
+// Video de fondo de la sección de origen, bajo la cinta de palabras
 export const ventana = {
-  left: "Sirius es",
-  right: "regeneración",
   video: "/video/web/biochar-flor.mp4",
   poster: "/video/web/biochar-flor.webp",
 };
 
 // Galería horizontal: solo fotos y clips propios del campo, la biofábrica y el laboratorio. Los pies
-// van en la voz de la marca (cálida, alegre) y no prometen resultados; lo que se ve está en `alt`. Los clips salen del video de marca (public/video1.mp4)
+// van en la voz de la marca (cálida, alegre) y no prometen resultados; lo que se ve está en `alt`.
+// Ocho marcos: con más, la sección fijada se hacía demasiado larga al bajar. Los clips salen del video de marca (public/video1.mp4)
 // y de los videos de producto, recortados en public/video/web.
 export const galeria = [
   { image: "/img/campo/mano-biochar.webp", alt: "Mano sosteniendo biochar sobre plantas jóvenes", caption: "La tierra en buenas manos" },
   { image: "/video/web/hormigas.webp", video: "/video/web/hormigas.mp4", alt: "Hormigas arrieras cargando un pedazo de hoja", caption: "Trabajo en equipo" },
-  { image: "/img/campo/aplicacion.webp", alt: "Persona aplicando un producto Sirius al suelo", caption: "Manos a la tierra" },
   { image: "/img/fotos/textura-hongo.webp", alt: "Colonia de hongo en anillos sobre un medio de cultivo", caption: "Pequeños gigantes" },
+  { image: "/img/campo/aplicacion.webp", alt: "Persona aplicando un producto Sirius al suelo", caption: "Manos a la tierra" },
   { image: "/video/web/capibara.webp", video: "/video/web/capibara.mp4", alt: "Chigüiro en el agua junto a una garza", caption: "Vecinos del agua" },
-  { image: "/img/procesos/plantulas.webp", alt: "Plántulas en hileras sobre suelo oscuro", caption: "Todo empieza pequeño" },
   { image: "/img/laboratorio/petri.webp", alt: "Colonias de microorganismos en una caja de Petri", caption: "Ciencia viva" },
-  { image: "/img/laboratorio/microscopia.webp", alt: "Imagen ampliada en blanco y negro de una superficie porosa", caption: "El mundo en miniatura" },
-  { image: "/img/procesos/biochar-granulado.webp", alt: "Gránulos oscuros de biochar en primer plano", caption: "Nacido del fuego" },
-  { image: "/img/campo/palma-aerea.webp", alt: "Vista aérea de un cultivo de palma", caption: "La palma, desde arriba" },
   { image: "/video/web/milpies.webp", video: "/video/web/milpies.mp4", alt: "Milpiés caminando sobre la hojarasca", caption: "Obreros del suelo" },
-  { image: "/img/fotos/textura-hoja.webp", alt: "Nervaduras rojas y verdes de una hoja vistas de cerca", caption: "Cada nervadura cuenta" },
-  { image: "/img/procesos/app-campo.webp", alt: "Persona consultando datos en un celular", caption: "Datos con los pies en la tierra" },
-  { image: "/img/campo/aerea.webp", alt: "Vista aérea de un sendero entre cultivos", caption: "Caminos que se abren" },
   { image: "/img/campo/atardecer.webp", alt: "Sol entre nubes al atardecer", caption: "Hasta mañana, en alegría" },
 ];
 

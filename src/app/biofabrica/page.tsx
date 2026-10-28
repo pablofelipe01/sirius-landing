@@ -15,11 +15,11 @@ export const metadata: Metadata = {
 // Collage de dos filas: campo y laboratorio arriba, laboratorio y biochar abajo. Un marco lleva un
 // clip del video de marca en vez de foto (su poster es el primer fotograma).
 const galeria: { image: string; alt: string; shape: string; speed: number; video?: string }[] = [
-  { image: '/img/campo/aplicacion.webp', alt: 'Persona aplicando un producto Sirius al suelo', shape: 'arch', speed: 4 },
+  { image: '/img/campo/aplicacion.webp', alt: 'Persona aplicando un producto Sirius al suelo', shape: 'organic', speed: 4 },
   { image: '/img/laboratorio/petri.webp', alt: 'Colonias de microorganismos en una caja de Petri', shape: 'rounded-[2rem]', speed: -6 },
   { image: '/img/procesos/plantulas.webp', alt: 'Plántulas en hileras sobre suelo oscuro', shape: 'rounded-full', speed: 9 },
   { image: '/img/laboratorio/microscopio-detalle.webp', alt: 'Objetivo de microscopio de 100 aumentos sobre una lámina', shape: 'rounded-full', speed: 6 },
-  { image: '/video/web/biochar-piezas.webp', video: '/video/web/biochar-piezas.mp4', alt: 'Trozos de biochar en blanco y negro', shape: 'arch', speed: -4 },
+  { image: '/video/web/biochar-piezas.webp', video: '/video/web/biochar-piezas.mp4', alt: 'Trozos de biochar en blanco y negro', shape: 'organic-alt', speed: -4 },
   { image: '/img/laboratorio/equipo.webp', alt: 'Mano con guante manejando un equipo de laboratorio', shape: 'rounded-[2rem]', speed: 8 },
 ];
 

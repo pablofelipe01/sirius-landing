@@ -54,9 +54,36 @@
   text-wrap: balance;
 }
 
-/* Marco en arco: el motivo de forma del sitio (brote, cúpula de la biofábrica) */
-@utility arch {
-  border-radius: 999px 999px 1.75rem 1.75rem;
+/* Marco orgánico: el motivo de forma del sitio, un canto rodado de lados casi rectos y esquinas
+   desiguales (así recorta poco la foto). Con movimiento
+   permitido respira despacio entre tres siluetas; `organic-alt` va a contratiempo para que dos
+   marcos vecinos no se muevan igual. isolation evita que Safari deje escapar las esquinas de la
+   foto cuando el parallax la desplaza por dentro. */
+@utility organic {
+  border-radius: 46% 30% 40% 24% / 32% 28% 40% 36%;
+  isolation: isolate;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: organico 11s ease-in-out infinite;
+  }
+}
+@utility organic-alt {
+  border-radius: 30% 44% 26% 42% / 28% 38% 32% 40%;
+  isolation: isolate;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: organico 11s ease-in-out -5.5s infinite reverse;
+  }
+}
+@keyframes organico {
+  0%,
+  100% {
+    border-radius: 46% 30% 40% 24% / 32% 28% 40% 36%;
+  }
+  33% {
+    border-radius: 30% 44% 26% 42% / 28% 38% 32% 40%;
+  }
+  66% {
+    border-radius: 40% 26% 46% 32% / 38% 30% 36% 30%;
+  }
 }
 
 @utility container-page {
@@ -132,24 +159,6 @@ html.js [data-split-word] {
 /* Fotos con revelado tipo cortina: cerradas hasta que GSAP las abre */
 html.js [data-reveal-mask] {
   clip-path: inset(100% 0% 0% 0%);
-}
-
-/* Ventana en arco (components/motion/ExpandMedia.tsx): antes de hidratar ya se ve cerrada, con la
-   misma medida que calcula clip() en JS, y el texto sobre el video espera a que se abra */
-html.js [data-expand] [data-frame] {
-  clip-path: inset(
-    max(17svh, calc(50svh - 40.3vw)) 19vw max(17svh, calc(50svh - 40.3vw)) 19vw round 999px 999px 28px 28px
-  );
-  @media (width >= 40rem) {
-    clip-path: inset(
-      max(17svh, calc(50svh - min(19.5vw, 273px))) max(35vw, calc(50vw - 210px)) max(17svh, calc(50svh - min(19.5vw, 273px)))
-        max(35vw, calc(50vw - 210px)) round 999px 999px 28px 28px
-    );
-  }
-}
-html.js [data-expand] [data-veil],
-html.js [data-expand] [data-copy] {
-  opacity: 0;
 }
 
 /* Desplazamiento horizontal sin barra visible (línea de tiempo, cinta de palabras) */

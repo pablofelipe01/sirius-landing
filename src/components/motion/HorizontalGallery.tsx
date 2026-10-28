@@ -11,12 +11,12 @@ export type GalleryItem = { image: string; alt: string; caption: string; video?:
 
 // Galería que avanza de lado mientras se hace scroll hacia abajo: la sección se fija y la cinta de
 // fotos se desplaza; dentro de cada marco la foto corre un poco más despacio (parallax). Los marcos
-// alternan el arco del sitio con esquinas redondeadas.
+// alternan el marco orgánico del sitio con esquinas redondeadas.
 // En celular (o con prefers-reduced-motion) no se fija: la cinta se desliza con el dedo.
 const PINNED = "(min-width: 768px) and (prefers-reduced-motion: no-preference)";
 
 // Alto atado a la pantalla: la sección fijada nunca debe ser más alta que el viewport
-const shapes = ["arch aspect-[4/5] h-[min(60svh,28rem)]", "rounded-[2rem] aspect-[4/3] h-[min(44svh,21rem)]", "rounded-[2rem] aspect-square h-[min(50svh,24rem)]"];
+const shapes = ["organic aspect-[4/5] h-[min(60svh,28rem)]", "rounded-[2rem] aspect-[4/3] h-[min(44svh,21rem)]", "rounded-[2rem] aspect-square h-[min(50svh,24rem)]"];
 
 export function HorizontalGallery({ items, intro }: { items: GalleryItem[]; intro: ReactNode }) {
   const root = useRef<HTMLElement>(null);

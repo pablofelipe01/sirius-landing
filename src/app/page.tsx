@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check } from '@/components/icons';
 import { LoopVideo } from '@/components/LoopVideo';
-import { ExpandMedia } from '@/components/motion/ExpandMedia';
 import { HorizontalGallery } from '@/components/motion/HorizontalGallery';
 import { ScrubText, SplitWords } from '@/components/motion/SplitWords';
 import { ViajeEstelar } from '@/components/motion/ViajeEstelar';
@@ -16,9 +15,9 @@ import { bento, galeria, hero, homeQuote, origen, ticker, ventana } from '@/lib/
 export default function Home() {
   return (
     <>
-      {/* Intro del logo (viaje estelar) y encima sube el hero claro: gradiente Sutileza, titular que sube
-          palabra por palabra y video en arco. Con mouse, el arco, el sello y la tarjeta flotan a distinta
-          profundidad. min-h-svh para que el hero cubra toda la escena al subir */}
+      {/* Intro del logo (viaje estelar, 6 s, una vez por sesión) y al terminar entra el hero claro:
+          gradiente Sutileza, titular que sube palabra por palabra y video en marco orgánico. Con mouse, el marco,
+          el sello y la tarjeta flotan a distinta profundidad */}
       <ViajeEstelar>
         <section data-depth-scene className="bg-sutileza relative flex min-h-svh flex-col justify-center overflow-hidden">
           <div className="container-page grid items-center gap-12 pt-32 pb-16 sm:pt-36 lg:grid-cols-12 lg:gap-8 lg:pb-24">
@@ -51,7 +50,7 @@ export default function Home() {
 
             <div data-reveal="scale" data-reveal-delay="0.2" className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
               <div data-depth="10">
-                <div className="arch relative aspect-[4/5] overflow-hidden bg-sutileza-50 ring-8 ring-white/70">
+                <div className="organic relative aspect-[4/5] overflow-hidden bg-sutileza-50 ring-8 ring-white/70">
                   <div data-parallax="6" className="absolute -inset-y-[8%] inset-x-0">
                     <LoopVideo src={hero.video} poster={hero.poster} eager className="size-full object-cover object-[64%_50%]" />
                   </div>
@@ -84,20 +83,19 @@ export default function Home() {
 
       <Ticker words={ticker} />
 
-      {/* El momento de la página: el arco del sitio se abre hasta mostrar el biochar a pantalla completa */}
-      <ExpandMedia video={ventana.video} poster={ventana.poster} left={ventana.left} right={<Accent>{ventana.right}</Accent>}>
-        <div className="max-w-2xl">
-          <div data-copy>
+      {/* Origen: el biochar a todo lo ancho y el texto encima, visible desde que se llega (sin pin ni scroll) */}
+      <section className="bg-imperial relative flex min-h-[80svh] items-center overflow-hidden py-24">
+        <LoopVideo src={ventana.video} poster={ventana.poster} className="absolute inset-0 size-full object-cover" />
+        {/* Velo para leer el texto sobre el video: Imperial desde la izquierda, como el gradiente del manual */}
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(26,26,51,0.88)_0%,rgba(26,26,51,0.55)_45%,rgba(26,26,51,0.05)_80%)]" />
+        <div className="container-page relative text-white">
+          <div className="max-w-2xl">
             <Label tone="light">Así empezó el camino</Label>
+            <h2 className="heading text-4xl sm:text-5xl lg:text-6xl">{origen.title}</h2>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">{origen.text}</p>
           </div>
-          <h2 data-copy className="heading text-4xl sm:text-5xl lg:text-6xl">
-            {origen.title}
-          </h2>
-          <p data-copy className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">
-            {origen.text}
-          </p>
         </div>
-      </ExpandMedia>
+      </section>
 
       {/* El camino: tres pasos sobre una línea que se llena con el scroll */}
       <section className="bg-retono py-20 sm:py-28">
@@ -160,7 +158,7 @@ export default function Home() {
                 Ver biológicos <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </span>
             </div>
-            <div className="arch relative mx-8 mt-auto mb-8 min-h-72 flex-1 overflow-hidden">
+            <div className="organic-alt relative mx-8 mt-auto mb-8 min-h-72 flex-1 overflow-hidden">
               <div data-parallax="7" className="absolute -inset-y-[10%] inset-x-0">
                 <LoopVideo src={bento.biologicos.video} poster={bento.biologicos.poster} className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>

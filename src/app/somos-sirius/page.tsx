@@ -111,7 +111,7 @@ export default function SomosPage() {
           {regeneracion.map((r, i) => (
             <li key={r.name}>
               <figure>
-                <div className={`relative aspect-[4/5] overflow-hidden ${i === 1 ? 'arch' : 'rounded-[2rem]'}`}>
+                <div className={`relative aspect-[4/5] overflow-hidden ${i === 1 ? 'organic' : 'rounded-[2rem]'}`}>
                   {r.video ? (
                     <>
                       <LoopVideo src={r.video} poster={r.image} className="size-full object-cover" />

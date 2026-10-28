@@ -99,8 +99,9 @@ export function Footer() {
       </div>
 
       {/* El lema de la marca, a todo lo ancho, sube desde el borde mientras el pie entra. Decorativo: el texto ya está en el titular de arriba.
-          El pb en em deja sitio a la cola de la "g", que con este interlineado tocaba la línea de abajo */}
-      <p aria-hidden className="heading mt-10 overflow-hidden px-4 pb-[0.2em] text-center text-[16vw] leading-[0.85] whitespace-nowrap text-white/[0.07] select-none sm:mt-14">
+          El pb en em deja sitio a la cola de la "g", que con este interlineado tocaba la línea de abajo.
+          La frase mide unos 6,3 em: a 14vw ocupa ~89 % del ancho y cabe entera con el margen lateral */}
+      <p aria-hidden className="heading mt-10 overflow-hidden px-4 pb-[0.2em] text-center text-[14vw] leading-[0.85] whitespace-nowrap text-white/[0.07] select-none sm:mt-14">
         <span data-rise="70" className="inline-block">
           Let&apos;s get <span className="font-serif font-normal tracking-normal italic">Sirius!</span>
         </span>

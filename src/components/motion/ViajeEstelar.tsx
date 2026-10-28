@@ -2,22 +2,46 @@
 
 import { useLayoutEffect, useRef, type ReactNode } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getLenis } from "./lenis-store";
 import { COLOR, LETRAS, PUNTO_AZUL, PUNTO_VERDE, RADIO_PUNTO } from "./viaje-estelar-logo";
 
-// Intro del inicio: el "viaje estelar" del logo, la misma animación aprobada en Motion pero dibujada
-// en SVG y movida por el scroll. La escena queda fija (sticky) mientras se baja: un cielo de estrellas
-// avanza hacia la estrella azul, que crece hasta llenar la pantalla de blanco; desde muy cerca del
-// punto de la i la toma se aleja, aparece el logo completo y entra el lema. Después el contenido que
-// se le pasa (el hero) sube por encima mientras la escena se queda atrás más despacio.
-// Todo sale de una sola función del tiempo, dibujar(t): subir el scroll devuelve la animación exacta.
-// Sin JS o con prefers-reduced-motion (sin la clase html.js del layout) la intro no se muestra.
+// Intro del inicio: el "viaje estelar" del logo, la animación aprobada en Motion dibujada en SVG.
+// Se reproduce sola al cargar, en 6 segundos, sobre toda la pantalla: un cielo de estrellas avanza
+// hacia la estrella azul, que crece hasta llenar la pantalla de blanco; desde muy cerca del punto de
+// la i la toma se aleja, aparece el logo con su lema y al final el logo vuela a su lugar en la barra
+// mientras la escena se desvanece y el hero (children) entra con sus animaciones.
+// Se ve una vez por sesión; un clic, una tecla, la rueda o "Saltar" la terminan antes.
+// Sin JS, con prefers-reduced-motion (sin la clase html.js del layout), si la página carga ya
+// desplazada o con un #ancla, no se muestra.
 
-const SCRUB = 4; // pantallas de scroll que dura la animación
-const COVER = 1; // pantalla en la que el contenido siguiente sube por encima de la escena
-const FIN = 14.2; // segundos de la animación que recorre el scroll (los 15 s menos la pausa final)
+const VISTA = "sirius-intro-vista"; // sessionStorage: la intro ya se vio en esta sesión
 
-// Comienzo de cada escena, en segundos (los mismos de la película)
+// Reloj real (s) → tiempo de la película (s). La película dura 15 s; aquí se recorre por tramos:
+// el cosmos ya empezado, el viaje y la llegada al doble de velocidad y el cierre sin su pausa final
+const MAPA: [number, number][] = [
+  [0, 2.4],
+  [0.7, 3.5],
+  [2.7, 7.5],
+  [4.2, 10.6],
+  [4.35, 11.5],
+  [5.0, 13.0],
+];
+const SALIDA = 5.1; // el logo vuela a la barra y la escena se desvanece
+const VUELO = 0.9; // la intro termina en SALIDA + VUELO = 6 s
+
+function pelicula(r: number) {
+  if (r <= MAPA[0][0]) return MAPA[0][1];
+  for (let i = 1; i < MAPA.length; i++) {
+    const [r1, t1] = MAPA[i];
+    if (r <= r1) {
+      const [r0, t0] = MAPA[i - 1];
+      return t0 + ((r - r0) / (r1 - r0)) * (t1 - t0);
+    }
+  }
+  return MAPA[MAPA.length - 1][1];
+}
+
+// Comienzo de cada escena de la película, en segundos
 const VIAJE = 3.5;
 const LLEGADA = 7.5;
 const CIERRE = 11.5;
@@ -33,6 +57,9 @@ const DOT = [LOGO_X + PUNTO_AZUL[0] * ESCALA, LOGO_Y + PUNTO_AZUL[1] * ESCALA] a
 const ZOOM_LLEGADA = 6; // la llegada arranca con el punto azul visto así de cerca
 const RADIO_DISCO = RADIO_PUNTO * ESCALA * ZOOM_LLEGADA;
 const LEMA_Y = 793;
+
+// Dónde están las letras dentro de la imagen del logo de la barra (logo-sirius.webp, 800×355)
+const LETRAS_EN_BARRA = { x: 30 / 800, y: 106 / 355, w: 739 / 800 };
 
 // Colores de la noche: Azul Barranca hacia un azul casi negro, y la luz de la estrella mezclada con blanco
 const CIELO_CENTRO = "#044081";
@@ -146,28 +173,46 @@ const rayoTransform = (a: number, rot: number, largo: number) => `translate(${CX
 const estrellaTransform = (rot: number, s: number) => `translate(${CX} ${CY}) rotate(${n1(rot)}) scale(${s.toFixed(4)})`;
 
 // Primer cuadro, igual en servidor y cliente
-const E0 = estrella(0);
-const LINEAS0 = ESTRELLAS.map((_, i) => linea(i, 0, ENCUADRE_BASE, 1));
+const T0 = pelicula(0);
+const E0 = estrella(T0);
+const LINEAS0 = ESTRELLAS.map((_, i) => linea(i, T0, ENCUADRE_BASE, 1));
 
-// La intro se muestra solo con html.js; ahí el contenido siguiente sube una pantalla para cubrir la escena
-const CSS = `html:not(.js) [data-viaje-pista]{display:none}html.js [data-viaje-siguiente]{margin-top:-100vh;margin-top:-100svh}`;
+// Antes de hidratar: sin html.js (sin JS o con movimiento reducido) o ya vista en la sesión, la intro no se pinta
+const CSS = `html:not(.js) [data-intro],html.intro-vista [data-intro]{display:none}`;
+const SCRIPT = `try{if(sessionStorage.getItem("${VISTA}")==="1")document.documentElement.classList.add("intro-vista")}catch(e){}`;
 
 export function ViajeEstelar({ children }: { children: ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const wrap = root.current;
-    if (!wrap || !document.documentElement.classList.contains("js")) return;
-    gsap.registerPlugin(ScrollTrigger);
+    const intro = wrap?.querySelector<HTMLElement>("[data-intro]");
+    if (!wrap || !intro) return;
+    const html = document.documentElement;
+
+    let vista = false;
+    try {
+      vista = sessionStorage.getItem(VISTA) === "1";
+    } catch {
+      // Sin sessionStorage (p. ej. bloqueado): se muestra
+    }
+    if (!html.classList.contains("js") || vista || window.scrollY > 40 || window.location.hash) {
+      intro.style.display = "none";
+      return;
+    }
+    try {
+      sessionStorage.setItem(VISTA, "1");
+    } catch {
+      // Sin sessionStorage: se volverá a ver al recargar
+    }
 
     const uno = <T extends Element>(sel: string) => wrap.querySelector<T>(sel)!;
     const todos = <T extends Element>(sel: string) => Array.from(wrap.querySelectorAll<T>(sel));
-    const pista = uno<HTMLElement>("[data-viaje-pista]");
-    const escena = uno<HTMLElement>("[data-escena]");
-    const capa = uno<HTMLElement>("[data-capa]");
-    const sombra = uno<HTMLElement>("[data-sombra]");
-    const cue = uno<HTMLElement>("[data-desliza]");
-    const svg = uno<SVGSVGElement>("[data-svg]");
+    const fondo = uno<HTMLElement>("[data-fondo]");
+    const vuelo = uno<HTMLElement>("[data-vuelo]");
+    const saltar = uno<HTMLButtonElement>("[data-saltar]");
+    const siguiente = uno<HTMLElement>("[data-siguiente]");
+    const svgs = todos<SVGSVGElement>("[data-intro] svg");
     const cielo = uno<SVGRectElement>("[data-cielo]");
     const campo = uno<SVGGElement>("[data-campo]");
     const lineas = todos<SVGLineElement>("[data-campo] line");
@@ -184,29 +229,35 @@ export function ViajeEstelar({ children }: { children: ReactNode }) {
     const verde = uno<SVGCircleElement>("[data-verde]");
     const lema = uno<SVGTextElement>("[data-lema]");
     const brillos = todos<SVGGElement>("[data-brillo]");
-    if (!pista || !escena || !svg || lineas.length === 0) return;
+    // Logo de la barra: se esconde mientras dura la intro y reaparece cuando el logo de la escena aterriza
+    const logoBarra = document.querySelector<HTMLImageElement>('header a[href="/"] img');
 
     let vb = ENCUADRE_BASE;
     let grosor = 1;
     let radioBlanco = 1300;
     let medida = "";
-    let ultimo = -1;
+    let r = 0; // segundos de intro
+    let destino: { sc: number; tx: number; ty: number } | null = null;
+    let preparado = false;
+    let terminado = false;
 
     const mostrar = (el: SVGElement, si: boolean) => el.setAttribute("display", si ? "inline" : "none");
     const attr = (el: Element, nombre: string, valor: number | string) => el.setAttribute(nombre, String(valor));
 
-    // Encuadre según el tamaño de la escena fija; devuelve true si cambió
+    // Encuadre según el tamaño de la pantalla; devuelve true si cambió
     const encuadrar = () => {
-      const W = escena.clientWidth;
-      const H = escena.clientHeight;
+      const W = intro.clientWidth;
+      const H = intro.clientHeight;
       const clave = `${W}x${H}`;
       if (!W || !H || clave === medida) return false;
       medida = clave;
       vb = encuadre(W, H);
       grosor = Math.max(1, (vb.w / W) * 0.9);
       radioBlanco = (Math.hypot(vb.w, vb.h) / 2 / 0.9) * 1.02;
-      attr(svg, "viewBox", `${n1(vb.x)} ${n1(vb.y)} ${n1(vb.w)} ${n1(vb.h)}`);
-      attr(svg, "preserveAspectRatio", "xMidYMid meet");
+      for (const svg of svgs) {
+        attr(svg, "viewBox", `${n1(vb.x)} ${n1(vb.y)} ${n1(vb.w)} ${n1(vb.h)}`);
+        attr(svg, "preserveAspectRatio", "xMidYMid meet");
+      }
       attr(cielo, "x", n1(vb.x - 10));
       attr(cielo, "y", n1(vb.y - 10));
       attr(cielo, "width", n1(vb.w + 20));
@@ -219,6 +270,7 @@ export function ViajeEstelar({ children }: { children: ReactNode }) {
       return true;
     };
 
+    // Un cuadro de la película a los t segundos
     const dibujar = (t: number) => {
       const antes = t < LLEGADA;
       const cierre = t >= CIERRE;
@@ -247,9 +299,9 @@ export function ViajeEstelar({ children }: { children: ReactNode }) {
         attr(nucleo, "opacity", e.nucleo.toFixed(3));
         attr(halo, "r", n1(320 * e.halo));
         attr(halo, "opacity", e.haloA.toFixed(3));
-        rayos.forEach((r, i) => {
-          attr(r, "transform", rayoTransform(RAYOS[i].a, e.rot, e.rayo * RAYOS[i].k));
-          attr(r, "opacity", e.rayoA.toFixed(3));
+        rayos.forEach((el, i) => {
+          attr(el, "transform", rayoTransform(RAYOS[i].a, e.rot, e.rayo * RAYOS[i].k));
+          attr(el, "opacity", e.rayoA.toFixed(3));
         });
         attr(disco, "opacity", (t < VIAJE ? 0 : seg(v, 3.75, 3.95)).toFixed(3));
         return;
@@ -271,7 +323,7 @@ export function ViajeEstelar({ children }: { children: ReactNode }) {
         return;
       }
 
-      // El cierre: el logo sube un poco, entra el lema y el punto azul destella una vez
+      // El cierre: el logo sube un poco y entra el lema
       const c = t - CIERRE;
       const m = eio(seg(c, 0.15, 1));
       const cy = lerp(CY, 470, m);
@@ -290,150 +342,240 @@ export function ViajeEstelar({ children }: { children: ReactNode }) {
       for (const b of brillos) attr(b, "transform", tr);
     };
 
-    const pintar = (self: ScrollTrigger) => {
-      const cambio = encuadrar();
-      const H = escena.clientHeight || window.innerHeight;
-      const u = (self.progress * (self.end - self.start)) / H; // pantallas recorridas
-      const s = clamp01(u / SCRUB);
-      const c = clamp01((u - SCRUB) / COVER);
-      const t = s * FIN;
-      if (cambio || t !== ultimo) {
-        dibujar(t);
-        ultimo = t;
-      }
-      // Mientras el contenido siguiente sube, la escena se queda atrás a un tercio de su velocidad
-      capa.style.transform = `translate3d(0, ${(-c * H * 0.3).toFixed(1)}px, 0)`;
-      sombra.style.opacity = (c * 0.2).toFixed(3);
-      cue.style.opacity = (1 - clamp01(s / 0.04)).toFixed(3);
+    // Hacia dónde vuela el logo: sus letras terminan encima de las del logo de la barra
+    const medirVuelo = () => {
+      const c = letras.getBoundingClientRect();
+      const n = logoBarra?.getBoundingClientRect();
+      if (!n || !n.width || !c.width) return null;
+      const sc = (n.width * LETRAS_EN_BARRA.w) / c.width;
+      return {
+        sc,
+        tx: n.left + n.width * LETRAS_EN_BARRA.x - c.left * sc,
+        ty: n.top + n.height * LETRAS_EN_BARRA.y - c.top * sc,
+      };
     };
 
-    const st = ScrollTrigger.create({ trigger: pista, start: "top top", end: "bottom bottom", onUpdate: pintar, onRefresh: pintar });
-    pintar(st);
+    // El hero estuvo tapado mientras sus animaciones de entrada (ScrollReveal) corrían: se repiten aquí,
+    // con los mismos movimientos, para que entre cuando se va la escena
+    const entrarHero = () => {
+      const alto = window.innerHeight;
+      const enPantalla = <T extends HTMLElement>(els: T[]) => els.filter((el) => el.getBoundingClientRect().top < alto);
+      const palabras = enPantalla(Array.from(siguiente.querySelectorAll<HTMLElement>("[data-split-word]")));
+      gsap.fromTo(
+        palabras,
+        { y: 0, yPercent: 110 },
+        { y: 0, yPercent: 0, duration: 1.1, ease: "expo.out", stagger: 0.06, delay: 0.15, overwrite: "auto" },
+      );
+      for (const el of enPantalla(Array.from(siguiente.querySelectorAll<HTMLElement>("[data-reveal]")))) {
+        const tipo = el.dataset.reveal;
+        const desde = tipo === "scale" ? { scale: 0.94, opacity: 0 } : tipo === "fade" ? { opacity: 0 } : { y: 36, opacity: 0 };
+        gsap.fromTo(el, desde, {
+          x: 0,
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          delay: 0.15 + Number(el.dataset.revealDelay ?? 0),
+          clearProps: "transform",
+          overwrite: "auto",
+        });
+      }
+    };
+
+    const restaurar = () => {
+      gsap.ticker.remove(tick);
+      window.removeEventListener("wheel", adelantar);
+      window.removeEventListener("keydown", tecla);
+      intro.removeEventListener("pointerdown", adelantar);
+      html.style.overflow = "";
+      getLenis()?.start();
+      if (logoBarra) logoBarra.style.opacity = "";
+    };
+
+    const terminar = () => {
+      terminado = true;
+      intro.style.display = "none";
+      restaurar();
+    };
+
+    const pintar = () => {
+      encuadrar();
+      if (r < SALIDA) {
+        dibujar(pelicula(r));
+        return;
+      }
+      if (!preparado) {
+        // Primer cuadro de la salida (también al saltar): el logo armado, y desde ahí se mide el vuelo
+        preparado = true;
+        dibujar(pelicula(SALIDA));
+        destino = medirVuelo();
+        entrarHero();
+      }
+      // La salida: se apaga el lema, el logo vuela a la barra y la escena se desvanece
+      const s = r - SALIDA;
+      attr(lema, "opacity", (1 - seg(s, 0, 0.2)).toFixed(3));
+      const f = eio(seg(s, 0.05, 0.85));
+      const velo = 1 - eio(seg(s, 0.15, 0.75));
+      fondo.style.opacity = velo.toFixed(3);
+      saltar.style.opacity = velo.toFixed(3);
+      if (destino) {
+        const { sc, tx, ty } = destino;
+        vuelo.style.transform = `translate3d(${(tx * f).toFixed(1)}px, ${(ty * f).toFixed(1)}px, 0) scale(${lerp(1, sc, f).toFixed(4)})`;
+      } else {
+        vuelo.style.opacity = velo.toFixed(3);
+      }
+      if (s >= VUELO) terminar();
+    };
+
+    function tick(_time: number, deltaMs: number) {
+      // Pasos cortos: si la pestaña estuvo en segundo plano, la intro no se salta de golpe
+      r += Math.min(deltaMs / 1000, 1 / 15);
+      const lenis = getLenis();
+      if (lenis && !lenis.isStopped) lenis.stop();
+      pintar();
+    }
+
+    // Saltar: va directo a la salida (el logo armado volando a la barra)
+    function adelantar() {
+      if (r < SALIDA) r = SALIDA;
+    }
+    function tecla(e: KeyboardEvent) {
+      if (e.key !== "Tab") adelantar();
+    }
+
+    html.style.overflow = "hidden";
+    if (logoBarra) logoBarra.style.opacity = "0";
+    encuadrar();
+    dibujar(pelicula(0));
+    gsap.ticker.add(tick);
+    window.addEventListener("wheel", adelantar, { passive: true });
+    window.addEventListener("keydown", tecla);
+    intro.addEventListener("pointerdown", adelantar);
 
     return () => {
-      st.kill();
+      if (!terminado) restaurar();
     };
   }, []);
 
   return (
-    <div ref={root} data-viaje>
+    <div ref={root}>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
+      <script dangerouslySetInnerHTML={{ __html: SCRIPT }} />
 
-      {/* La pista mide el scroll de la animación más el del cruce con el contenido, más la pantalla de la escena */}
-      <div data-viaje-pista className="relative" style={{ height: `${(SCRUB + COVER + 1) * 100}svh` }}>
-        <div data-escena className="sticky top-0 h-svh overflow-hidden bg-white">
-          <div data-capa className="absolute inset-0">
-            <svg
-              data-svg
-              className="absolute inset-0 size-full"
-              viewBox="0 0 1920 1080"
-              preserveAspectRatio="xMidYMid slice"
-              role="img"
-              aria-label="Sirius Regenerative Solutions"
-            >
-              <defs>
-                <radialGradient id="viaje-cielo" cx="0.5" cy="0.5" r="0.6">
-                  <stop offset="0" stopColor={CIELO_CENTRO} />
-                  <stop offset="1" stopColor={CIELO_BORDE} />
-                </radialGradient>
-                <radialGradient id="viaje-halo">
-                  <stop offset="0" stopColor={COLOR.estrella} stopOpacity="0.6" />
-                  <stop offset="0.55" stopColor={COLOR.estrella} stopOpacity="0.16" />
-                  <stop offset="1" stopColor={COLOR.estrella} stopOpacity="0" />
-                </radialGradient>
-                <linearGradient id="viaje-rayo">
-                  <stop offset="0" stopColor={LUZ} stopOpacity="0" />
-                  <stop offset="0.5" stopColor={LUZ} />
-                  <stop offset="1" stopColor={LUZ} stopOpacity="0" />
-                </linearGradient>
-                <radialGradient id="viaje-blanco">
-                  <stop offset="0" stopColor="#fff" />
-                  <stop offset="0.9" stopColor="#fff" />
-                  <stop offset="1" stopColor="#fff" stopOpacity="0" />
-                </radialGradient>
-              </defs>
+      {/* Por encima de la barra (z-50) y de la línea de progreso (z-55); por debajo del cursor (z-60) */}
+      <div data-intro className="fixed inset-0 z-[58] cursor-pointer select-none">
+        <div data-fondo className="absolute inset-0 bg-white">
+          <svg className="absolute inset-0 size-full" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden>
+            <defs>
+              <radialGradient id="viaje-cielo" cx="0.5" cy="0.5" r="0.6">
+                <stop offset="0" stopColor={CIELO_CENTRO} />
+                <stop offset="1" stopColor={CIELO_BORDE} />
+              </radialGradient>
+              <radialGradient id="viaje-halo">
+                <stop offset="0" stopColor={COLOR.estrella} stopOpacity="0.6" />
+                <stop offset="0.55" stopColor={COLOR.estrella} stopOpacity="0.16" />
+                <stop offset="1" stopColor={COLOR.estrella} stopOpacity="0" />
+              </radialGradient>
+              <linearGradient id="viaje-rayo">
+                <stop offset="0" stopColor={LUZ} stopOpacity="0" />
+                <stop offset="0.5" stopColor={LUZ} />
+                <stop offset="1" stopColor={LUZ} stopOpacity="0" />
+              </linearGradient>
+              <radialGradient id="viaje-blanco">
+                <stop offset="0" stopColor="#fff" />
+                <stop offset="0.9" stopColor="#fff" />
+                <stop offset="1" stopColor="#fff" stopOpacity="0" />
+              </radialGradient>
+            </defs>
 
-              <rect data-cielo x="-10" y="-10" width="1940" height="1100" fill="url(#viaje-cielo)" />
-              <g data-campo stroke={POLVO} strokeLinecap="round">
-                {LINEAS0.map((g, i) => (
-                  <line key={i} x1={n1(g.x1)} y1={n1(g.y1)} x2={n1(g.x2)} y2={n1(g.y2)} strokeWidth={g.w.toFixed(2)} opacity={g.o.toFixed(3)} />
-                ))}
-              </g>
-              <circle data-revelado cx={CX} cy={CY} r="0" fill="url(#viaje-blanco)" />
+            <rect data-cielo x="-10" y="-10" width="1940" height="1100" fill="url(#viaje-cielo)" />
+            <g data-campo stroke={POLVO} strokeLinecap="round">
+              {LINEAS0.map((g, i) => (
+                <line key={i} x1={n1(g.x1)} y1={n1(g.y1)} x2={n1(g.x2)} y2={n1(g.y2)} strokeWidth={g.w.toFixed(2)} opacity={g.o.toFixed(3)} />
+              ))}
+            </g>
+            <circle data-revelado cx={CX} cy={CY} r="0" fill="url(#viaje-blanco)" />
 
-              <g data-astro>
-                <circle data-halo cx={CX} cy={CY} r={n1(320 * E0.halo)} opacity={E0.haloA} fill="url(#viaje-halo)" />
-                {RAYOS.map((r) => (
-                  <rect
-                    key={r.a}
-                    data-rayo
-                    x="-800"
-                    y="-2"
-                    width="1600"
-                    height="4"
-                    rx="2"
-                    fill="url(#viaje-rayo)"
-                    opacity={E0.rayoA}
-                    transform={rayoTransform(r.a, E0.rot, E0.rayo * r.k)}
-                  />
-                ))}
-                <g data-chispa transform={estrellaTransform(E0.rot, E0.s)}>
-                  <path data-punta d={destello(60, E0.k)} fill={COLOR.estrella} />
-                  <path data-nucleo d={destello(24, 0.22)} fill="#fff" />
-                </g>
+            <g data-astro>
+              <circle data-halo cx={CX} cy={CY} r={n1(320 * E0.halo)} opacity={E0.haloA.toFixed(3)} fill="url(#viaje-halo)" />
+              {RAYOS.map((ry) => (
+                <rect
+                  key={ry.a}
+                  data-rayo
+                  x="-800"
+                  y="-2"
+                  width="1600"
+                  height="4"
+                  rx="2"
+                  fill="url(#viaje-rayo)"
+                  opacity={E0.rayoA}
+                  transform={rayoTransform(ry.a, E0.rot, E0.rayo * ry.k)}
+                />
+              ))}
+              <g data-chispa transform={estrellaTransform(E0.rot, E0.s)}>
+                <path data-punta d={destello(60, E0.k)} fill={COLOR.estrella} />
+                <path data-nucleo d={destello(24, 0.22)} fill="#fff" />
               </g>
-              <circle data-disco cx={CX} cy={CY} r={n1(RADIO_DISCO)} fill={COLOR.estrella} opacity="0" />
-
-              {/* Cierre: un destello azul por detrás del punto y uno blanco por delante */}
-              <g data-brillo display="none">
-                <path d={destello(84, 0.11)} fill={COLOR.estrella} />
-              </g>
-              <g data-camara display="none">
-                <g transform={`translate(${n1(LOGO_X)} ${n1(LOGO_Y)}) scale(${ESCALA})`}>
-                  <g data-letras fill={COLOR.tinta}>
-                    {Object.entries(LETRAS).map(([k, d]) => (
-                      <path key={k} d={d} />
-                    ))}
-                  </g>
-                  <circle cx={PUNTO_AZUL[0]} cy={PUNTO_AZUL[1]} r={RADIO_PUNTO} fill={COLOR.estrella} />
-                  <circle data-verde r={RADIO_PUNTO} fill={COLOR.hoja} transform={`translate(${PUNTO_VERDE[0]} ${PUNTO_VERDE[1]})`} />
-                </g>
-              </g>
-              <g data-brillo display="none">
-                <path d={destello(30, 0.2)} fill="#fff" />
-              </g>
-              <text
-                data-lema
-                display="none"
-                x={CX + 7.8}
-                y={LEMA_Y}
-                textAnchor="middle"
-                fontSize="46"
-                fontWeight="600"
-                letterSpacing="15.6"
-                fill={COLOR.tinta}
-                style={{ fontFamily: "var(--font-sans)" }}
-              >
-                REGENERATIVE SOLUTIONS
-              </text>
-            </svg>
-          </div>
-          <div data-sombra className="bg-imperial pointer-events-none absolute inset-0 opacity-0" />
-          <div
-            data-desliza
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-10 flex flex-col items-center gap-3 text-xs font-semibold tracking-[0.3em] text-white/80 uppercase"
-          >
-            Desliza
-            <span className="h-10 w-px animate-pulse bg-white/60" />
-          </div>
+            </g>
+            <circle data-disco cx={CX} cy={CY} r={n1(RADIO_DISCO)} fill={COLOR.estrella} opacity="0" />
+          </svg>
         </div>
+
+        {/* El logo va en su propia capa: al final vuela (transform) hasta el logo de la barra */}
+        <div data-vuelo className="absolute inset-0 origin-top-left">
+          <svg
+            className="absolute inset-0 size-full"
+            viewBox="0 0 1920 1080"
+            preserveAspectRatio="xMidYMid slice"
+            role="img"
+            aria-label="Sirius Regenerative Solutions"
+          >
+            {/* Cierre: un destello azul por detrás del punto y uno blanco por delante */}
+            <g data-brillo display="none">
+              <path d={destello(84, 0.11)} fill={COLOR.estrella} />
+            </g>
+            <g data-camara display="none">
+              <g transform={`translate(${n1(LOGO_X)} ${n1(LOGO_Y)}) scale(${ESCALA})`}>
+                <g data-letras fill={COLOR.tinta}>
+                  {Object.entries(LETRAS).map(([k, d]) => (
+                    <path key={k} d={d} />
+                  ))}
+                </g>
+                <circle cx={PUNTO_AZUL[0]} cy={PUNTO_AZUL[1]} r={RADIO_PUNTO} fill={COLOR.estrella} />
+                <circle data-verde r={RADIO_PUNTO} fill={COLOR.hoja} transform={`translate(${PUNTO_VERDE[0]} ${PUNTO_VERDE[1]})`} />
+              </g>
+            </g>
+            <g data-brillo display="none">
+              <path d={destello(30, 0.2)} fill="#fff" />
+            </g>
+            <text
+              data-lema
+              display="none"
+              x={CX + 7.8}
+              y={LEMA_Y}
+              textAnchor="middle"
+              fontSize="46"
+              fontWeight="600"
+              letterSpacing="15.6"
+              fill={COLOR.tinta}
+              style={{ fontFamily: "var(--font-sans)" }}
+            >
+              REGENERATIVE SOLUTIONS
+            </text>
+          </svg>
+        </div>
+
+        <button
+          type="button"
+          data-saltar
+          className="absolute right-5 bottom-5 rounded-full bg-[#0A2C57]/55 px-4 py-2 text-xs font-semibold tracking-[0.2em] text-white uppercase backdrop-blur-sm transition-colors hover:bg-[#0A2C57]/75 sm:right-8 sm:bottom-8"
+        >
+          Saltar intro
+        </button>
       </div>
 
-      {/* El contenido arranca una pantalla antes de que termine la pista, así sube por encima de la escena */}
-      <div data-viaje-siguiente className="relative z-10">
-        {children}
-      </div>
+      <div data-siguiente>{children}</div>
     </div>
   );
 }
