@@ -5,7 +5,7 @@ export const hero = {
   greeting: "¡Buenos días en alegría!",
   // El titular se arma en la página para poner "regenera" en la cursiva de marca
   text: "Bioinsumos y biochar para devolverle la vida al suelo. Desde Barranca de Upía, Meta.",
-  // Video en bucle dentro del marco orgánico; el poster es su primer fotograma, para que no salte al arrancar
+  // Video en bucle dentro del marco; el poster es su primer fotograma, para que no salte al arrancar
   video: "/video/web/biochar-en-mano.mp4",
   poster: "/video/web/biochar-en-mano.webp",
   imageAlt: "Mano sosteniendo biochar sobre un cultivo",

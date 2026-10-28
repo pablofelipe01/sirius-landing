@@ -105,7 +105,7 @@ export function ButtonLink({ href, children, variant = "primary", external, clas
 type Tint = "sutileza" | "cotiledon" | "retono";
 const tints: Record<Tint, string> = { sutileza: "bg-sutileza", cotiledon: "bg-cotiledon", retono: "bg-retono" };
 
-// Cabecera de las páginas internas: fondo claro en gradiente, titular grande y, si hay, foto en marco orgánico
+// Cabecera de las páginas internas: fondo claro en gradiente, titular grande y, si hay, foto enmarcada
 export function PageHero({
   label,
   title,
@@ -143,9 +143,9 @@ export function PageHero({
         {image && (
           <div className="lg:col-span-5">
             {/* La foto se descubre como una cortina que sube dentro del marco y luego acompaña el scroll */}
-            <div className="organic relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden bg-white/50 ring-8 ring-white/60 lg:max-w-none">
+            <div className="frame relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden bg-white/50 ring-8 ring-white/60 lg:max-w-none">
               <div data-reveal-mask data-reveal-delay="0.2" className="absolute inset-0">
-                <div data-parallax="7" className="absolute -inset-y-[9%] inset-x-0">
+                <div data-parallax="7" data-zoom className="absolute -inset-y-[9%] inset-x-0">
                   <Image src={image} alt={imageAlt} fill priority quality={90} sizes="(min-width: 1024px) 38vw, 90vw" className="object-cover" />
                 </div>
               </div>

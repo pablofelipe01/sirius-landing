@@ -15,6 +15,8 @@ import { PLAY_ONCE } from "@/components/motion/play-once";
 //   data-reveal-mask                          marco que se abre como cortina mientras su <img> se aleja
 //                                             (acepta data-reveal-delay)
 //   data-parallax="12"                        se desplaza ±12 % mientras se hace scroll
+//   data-zoom                                 foto que se aleja despacio (de 1,14 a 1) mientras cruza la
+//                                             pantalla (scrub); va dentro de un marco con overflow-hidden
 //   data-counter="1973"                       el número sube hasta el valor al entrar
 //     data-counter-from="1943"                valor inicial (por defecto 0)
 //     data-counter-decimals="1"               decimales; el formato es es-CO (1.650 / 10,7)
@@ -194,6 +196,14 @@ export function ScrollReveal() {
           el.querySelectorAll("[data-scrub-word]"),
           { opacity: 0.14 },
           { opacity: 1, ease: "none", stagger: 0.1, scrollTrigger: { trigger: el, start: "top 82%", end: "bottom 50%", scrub: true } },
+        );
+      });
+
+      document.querySelectorAll<HTMLElement>("[data-zoom]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { scale: 1.14 },
+          { scale: 1, ease: "none", scrollTrigger: { trigger: el.parentElement ?? el, start: "top bottom", end: "bottom top", scrub: true } },
         );
       });
 

@@ -5,7 +5,7 @@ import type { Pilar } from "@/lib/content/biofabrica";
 import { LoopVideo } from "./LoopVideo";
 
 // Pilares de la biofábrica como pestañas: la lista a la izquierda y, a la derecha, el video
-// del pilar activo en un marco orgánico. Se activa con clic, con el teclado (flechas) o al pasar
+// del pilar activo en un marco de esquinas suaves. Se activa con clic, con el teclado (flechas) o al pasar
 // el cursor. `detailed` agrega el texto largo y el recuadro de detalle (página /biofabrica).
 export function PillarTabs({ items, detailed = false }: { items: Pilar[]; detailed?: boolean }) {
   const [active, setActive] = useState(0);
@@ -69,19 +69,21 @@ export function PillarTabs({ items, detailed = false }: { items: Pilar[]; detail
 
       {/* En celular el video va arriba de la lista: así se ve al tocar cada pilar */}
       <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${active}`} className="order-first lg:order-none lg:col-span-6">
-        <div className="organic relative mx-auto aspect-[4/3] w-full max-w-md sm:aspect-[4/5] overflow-hidden bg-sutileza shadow-[0_30px_60px_-30px_rgba(1,84,172,0.45)]">
-          {/* Un video por pilar, apilados: cambiar de pestaña solo cruza la opacidad */}
-          {items.map((p, i) => (
-            <LoopVideo
-              key={p.id}
-              src={p.video}
-              poster={p.poster}
-              paused={i !== active}
-              className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${i === active ? "opacity-100" : "opacity-0"}`}
-            />
-          ))}
-          {/* Centrado abajo: en las esquinas la curva del marco orgánico lo recortaría */}
-          <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-xl bg-white/90 px-3 py-1.5 text-sm font-bold text-barranca backdrop-blur">
+        <div className="frame relative mx-auto aspect-[4/3] w-full max-w-md sm:aspect-[4/5] overflow-hidden bg-sutileza shadow-[0_30px_60px_-30px_rgba(1,84,172,0.45)]">
+          {/* Un video por pilar, apilados: cambiar de pestaña solo cruza la opacidad. El zoom con el
+              scroll va en la capa que los contiene */}
+          <div data-zoom className="absolute inset-0">
+            {items.map((p, i) => (
+              <LoopVideo
+                key={p.id}
+                src={p.video}
+                poster={p.poster}
+                paused={i !== active}
+                className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${i === active ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
+          </div>
+          <span className="absolute bottom-5 left-5 rounded-xl bg-white/90 px-3 py-1.5 text-sm font-bold text-barranca backdrop-blur">
             {current.name}
           </span>
         </div>

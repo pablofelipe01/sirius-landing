@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       {/* Intro del logo (viaje estelar, 6 s, una vez por sesión) y al terminar entra el hero claro:
-          gradiente Sutileza, titular que sube palabra por palabra y video en marco orgánico. Con mouse, el marco,
+          gradiente Sutileza, titular que sube palabra por palabra y video enmarcado. Con mouse, el marco,
           el sello y la tarjeta flotan a distinta profundidad */}
       <ViajeEstelar>
         <section data-depth-scene className="bg-sutileza relative flex min-h-svh flex-col justify-center overflow-hidden">
@@ -50,8 +50,8 @@ export default function Home() {
 
             <div data-reveal="scale" data-reveal-delay="0.2" className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
               <div data-depth="10">
-                <div className="organic relative aspect-[4/5] overflow-hidden bg-sutileza-50 ring-8 ring-white/70">
-                  <div data-parallax="6" className="absolute -inset-y-[8%] inset-x-0">
+                <div className="frame relative aspect-[4/5] overflow-hidden bg-sutileza-50 ring-8 ring-white/70">
+                  <div data-parallax="6" data-zoom className="absolute -inset-y-[8%] inset-x-0">
                     <LoopVideo src={hero.video} poster={hero.poster} eager className="size-full object-cover object-[64%_50%]" />
                   </div>
                   <span className="sr-only">{hero.imageAlt}</span>
@@ -83,9 +83,12 @@ export default function Home() {
 
       <Ticker words={ticker} />
 
-      {/* Origen: el biochar a todo lo ancho y el texto encima, visible desde que se llega (sin pin ni scroll) */}
-      <section className="bg-imperial relative flex min-h-[80svh] items-center overflow-hidden py-24">
-        <LoopVideo src={ventana.video} poster={ventana.poster} className="absolute inset-0 size-full object-cover" />
+      {/* Origen: el biochar a pantalla completa y el texto encima, visible desde que se llega (sin pin ni scroll).
+          Mide lo mismo que la pantalla (svh: sin contar las barras del navegador del celular); solo crece si
+          el texto no cabe, como en un celular acostado */}
+      <section className="bg-imperial relative flex min-h-svh items-center overflow-hidden py-24">
+        {/* En celular la pantalla vertical recorta los lados: se corre el encuadre hacia la flor */}
+        <LoopVideo src={ventana.video} poster={ventana.poster} className="absolute inset-0 size-full object-cover object-[72%_50%] sm:object-center" />
         {/* Velo para leer el texto sobre el video: Imperial desde la izquierda, como el gradiente del manual */}
         <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(26,26,51,0.88)_0%,rgba(26,26,51,0.55)_45%,rgba(26,26,51,0.05)_80%)]" />
         <div className="container-page relative text-white">
@@ -144,7 +147,7 @@ export default function Home() {
               </span>
             </div>
             <div className="relative m-4 min-h-64 overflow-hidden rounded-[1.5rem] sm:ml-0">
-              <div data-parallax="7" className="absolute -inset-y-[10%] inset-x-0">
+              <div data-parallax="7" data-zoom className="absolute -inset-y-[10%] inset-x-0">
                 <Image src={bento.biochar.image} alt="" fill quality={90} sizes="(min-width: 1024px) 30vw, 90vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             </div>
@@ -158,15 +161,15 @@ export default function Home() {
                 Ver biológicos <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </span>
             </div>
-            <div className="organic-alt relative mx-8 mt-auto mb-8 min-h-72 flex-1 overflow-hidden">
-              <div data-parallax="7" className="absolute -inset-y-[10%] inset-x-0">
+            <div className="frame relative mx-8 mt-auto mb-8 min-h-72 flex-1 overflow-hidden">
+              <div data-parallax="7" data-zoom className="absolute -inset-y-[10%] inset-x-0">
                 <LoopVideo src={bento.biologicos.video} poster={bento.biologicos.poster} className="size-full object-cover transition-transform duration-700 group-hover:scale-105" />
               </div>
             </div>
           </Link>
 
           <Link href={bento.siriusChar.href} className="group flex items-center gap-6 rounded-[2rem] border border-line bg-white p-8 sm:p-10">
-            <span className="relative size-28 shrink-0 overflow-hidden rounded-full ring-4 ring-sutileza-50">
+            <span className="frame relative size-28 shrink-0 overflow-hidden ring-4 ring-sutileza-50">
               <Image src={bento.siriusChar.image} alt="" fill sizes="112px" className="object-cover transition-transform duration-700 group-hover:scale-110" />
             </span>
             <span>

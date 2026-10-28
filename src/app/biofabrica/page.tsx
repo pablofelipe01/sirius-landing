@@ -14,13 +14,13 @@ export const metadata: Metadata = {
 
 // Collage de dos filas: campo y laboratorio arriba, laboratorio y biochar abajo. Un marco lleva un
 // clip del video de marca en vez de foto (su poster es el primer fotograma).
-const galeria: { image: string; alt: string; shape: string; speed: number; video?: string }[] = [
-  { image: '/img/campo/aplicacion.webp', alt: 'Persona aplicando un producto Sirius al suelo', shape: 'organic', speed: 4 },
-  { image: '/img/laboratorio/petri.webp', alt: 'Colonias de microorganismos en una caja de Petri', shape: 'rounded-[2rem]', speed: -6 },
-  { image: '/img/procesos/plantulas.webp', alt: 'Plántulas en hileras sobre suelo oscuro', shape: 'rounded-full', speed: 9 },
-  { image: '/img/laboratorio/microscopio-detalle.webp', alt: 'Objetivo de microscopio de 100 aumentos sobre una lámina', shape: 'rounded-full', speed: 6 },
-  { image: '/video/web/biochar-piezas.webp', video: '/video/web/biochar-piezas.mp4', alt: 'Trozos de biochar en blanco y negro', shape: 'organic-alt', speed: -4 },
-  { image: '/img/laboratorio/equipo.webp', alt: 'Mano con guante manejando un equipo de laboratorio', shape: 'rounded-[2rem]', speed: 8 },
+const galeria: { image: string; alt: string; speed: number; video?: string }[] = [
+  { image: '/img/campo/aplicacion.webp', alt: 'Persona aplicando un producto Sirius al suelo', speed: 4 },
+  { image: '/img/laboratorio/petri.webp', alt: 'Colonias de microorganismos en una caja de Petri', speed: -6 },
+  { image: '/img/procesos/plantulas.webp', alt: 'Plántulas en hileras sobre suelo oscuro', speed: 9 },
+  { image: '/img/laboratorio/microscopio-detalle.webp', alt: 'Objetivo de microscopio de 100 aumentos sobre una lámina', speed: 6 },
+  { image: '/video/web/biochar-piezas.webp', video: '/video/web/biochar-piezas.mp4', alt: 'Trozos de biochar en blanco y negro', speed: -4 },
+  { image: '/img/laboratorio/equipo.webp', alt: 'Mano con guante manejando un equipo de laboratorio', speed: 8 },
 ];
 
 export default function BiofabricaPage() {
@@ -69,7 +69,7 @@ export default function BiofabricaPage() {
         <div className="grid gap-5 md:grid-cols-3 md:py-12">
           {galeria.map((g, i) => (
             <div key={g.image} data-parallax={g.speed} className={i % 3 === 1 ? 'md:mt-16' : i % 3 === 2 ? 'md:mt-8' : ''}>
-              <div className={`relative aspect-[3/4] overflow-hidden ${g.shape}`}>
+              <div className="frame relative aspect-[3/4] overflow-hidden">
                 <div data-reveal-mask data-reveal-delay={(i % 3) * 0.12} className="absolute inset-0">
                   {g.video ? (
                     <>

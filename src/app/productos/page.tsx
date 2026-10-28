@@ -63,9 +63,9 @@ export default function ProductosPage() {
                 >
                   <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
                     <div className={`lg:col-span-5 ${reverse ? 'lg:order-2' : ''}`}>
-                      <div className={`${i % 2 ? 'organic-alt' : 'organic'} group relative mx-auto aspect-[4/5] max-w-sm overflow-hidden bg-white/50 ring-8 ring-white/70 lg:max-w-none`}>
+                      <div className="frame group relative mx-auto aspect-[4/5] max-w-sm overflow-hidden bg-white/50 ring-8 ring-white/70 lg:max-w-none">
                         <div data-reveal-mask className="absolute inset-0">
-                          <div data-parallax="8" className="absolute -inset-y-[10%] inset-x-0">
+                          <div data-parallax="8" data-zoom className="absolute -inset-y-[10%] inset-x-0">
                             <Image src={p.image} alt={p.alt} fill quality={90} sizes="(min-width: 1024px) 36vw, 90vw" className="object-cover" />
                           </div>
                         </div>
