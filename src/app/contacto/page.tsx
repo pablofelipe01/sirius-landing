@@ -3,11 +3,14 @@ import { Chat, Clock, Mail, MapPin, Phone, Plus } from '@/components/icons';
 import { Accent, PageHero, SectionHeading } from '@/components/ui';
 import { faqs } from '@/lib/content/productos';
 import { contact } from '@/lib/content/site';
+import { MOSTRAR_PRODUCTOS } from '@/lib/visibilidad';
 import { ContactForm } from './ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contacto',
-  description: 'Escríbenos para saber más sobre nuestros productos, programar una visita a la biofábrica o recibir asesoría para tu cultivo.',
+  description: MOSTRAR_PRODUCTOS
+    ? 'Escríbenos para saber más sobre nuestros productos, programar una visita a la biofábrica o recibir asesoría para tu cultivo.'
+    : 'Escríbenos para programar una visita a la biofábrica o recibir asesoría para tu cultivo.',
 };
 
 export default function ContactoPage() {
@@ -69,22 +72,25 @@ export default function ContactoPage() {
         </ul>
       </section>
 
-      <section className="bg-sutileza py-20 sm:py-28">
-        <div className="container-page max-w-4xl">
-          <SectionHeading label="Preguntas frecuentes" title="Respuestas a lo que más nos preguntan" align="center" />
-          <div data-reveal-stagger className="faq mt-12 space-y-3">
-            {faqs.map((f) => (
-              <details key={f.q} className="group rounded-2xl border border-white bg-white/90 open:shadow-[0_16px_30px_-20px_rgba(1,84,172,0.5)]">
-                <summary className="flex cursor-pointer items-center justify-between gap-4 p-6 font-bold text-barranca">
-                  {f.q}
-                  <Plus className="size-5 shrink-0 text-alegria-700 transition-transform duration-300 group-open:rotate-45" />
-                </summary>
-                <p className="px-6 pb-6 leading-relaxed text-muted">{f.a}</p>
-              </details>
-            ))}
+      {/* Las preguntas frecuentes son todas de producto: se ocultan con ellos */}
+      {MOSTRAR_PRODUCTOS && (
+        <section className="bg-sutileza py-20 sm:py-28">
+          <div className="container-page max-w-4xl">
+            <SectionHeading label="Preguntas frecuentes" title="Respuestas a lo que más nos preguntan" align="center" />
+            <div data-reveal-stagger className="faq mt-12 space-y-3">
+              {faqs.map((f) => (
+                <details key={f.q} className="group rounded-2xl border border-white bg-white/90 open:shadow-[0_16px_30px_-20px_rgba(1,84,172,0.5)]">
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 p-6 font-bold text-barranca">
+                    {f.q}
+                    <Plus className="size-5 shrink-0 text-alegria-700 transition-transform duration-300 group-open:rotate-45" />
+                  </summary>
+                  <p className="px-6 pb-6 leading-relaxed text-muted">{f.a}</p>
+                </details>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

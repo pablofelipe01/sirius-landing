@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Figtree, Instrument_Serif } from 'next/font/google';
 import ChromeSitio from '@/components/ChromeSitio';
+import { MOSTRAR_PRODUCTOS } from '@/lib/visibilidad';
 import './globals.css';
 
 // Marca <html class="js"> antes de hidratar: así los elementos con data-reveal arrancan
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   },
   description:
     'Transformamos la agricultura convencional con soluciones regenerativas que nutren el suelo y potencian tus cultivos: biochar, biológicos y formulaciones a la medida.',
-  keywords: ['biochar', 'agricultura regenerativa', 'bioinsumos', 'biológicos', 'pirólisis', 'Biochar Blend', 'Sirius Bacter'],
+  keywords: ['biochar', 'agricultura regenerativa', 'bioinsumos', 'biológicos', 'pirólisis', ...(MOSTRAR_PRODUCTOS ? ['Biochar Blend', 'Sirius Bacter'] : [])],
   openGraph: {
     type: 'website',
     locale: 'es_CO',

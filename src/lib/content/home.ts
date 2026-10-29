@@ -1,6 +1,8 @@
 // Inicio. Fuentes: Manual de Marca 2023 (saludo, misión), fichas técnicas de septiembre de 2026
 // (productos) y las respuestas de Sirius sobre su origen.
 
+import { MOSTRAR_PRODUCTOS } from "@/lib/visibilidad";
+
 export const hero = {
   greeting: "¡Buenos días en alegría!",
   // El titular se arma en la página para poner "regenera" en la cursiva de marca
@@ -9,7 +11,9 @@ export const hero = {
   video: "/video/web/biochar-en-mano.mp4",
   poster: "/video/web/biochar-en-mano.webp",
   imageAlt: "Mano sosteniendo biochar sobre un cultivo",
-  facts: ["7 productos con ficha técnica", "Sirius Char con Registro ICA 14623", "Acompañamiento en desarrollos técnicos"],
+  facts: MOSTRAR_PRODUCTOS
+    ? ["7 productos con ficha técnica", "Sirius Char con Registro ICA 14623", "Acompañamiento en desarrollos técnicos"]
+    : ["Acompañamiento en desarrollos técnicos"],
   product: {
     name: "Biochar Blend",
     text: "Biochar, compost enriquecido y un consorcio bacteriano vivo",
@@ -76,7 +80,10 @@ export const origen = {
   text: "Sirius nació para aprovechar los residuos agrícolas de la palma y para contrarrestar los efectos negativos del cambio climático.",
   puntos: [
     { title: "Materia prima", text: "Cascarilla de palma de aceite, un residuo agroindustrial." },
-    { title: "Pirólisis controlada", text: "La transforma en biochar: la base de Sirius Char y Sirius Char (F)." },
+    {
+      title: "Pirólisis controlada",
+      text: MOSTRAR_PRODUCTOS ? "La transforma en biochar: la base de Sirius Char y Sirius Char (F)." : "La transforma en biochar.",
+    },
     { title: "Fermentación", text: "De materias primas naturales salen nuestros bioinsumos vivos." },
   ],
 };

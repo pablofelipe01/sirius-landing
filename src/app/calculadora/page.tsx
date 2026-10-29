@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { Accent, ButtonLink, Label, PageHero } from '@/components/ui';
 import { optionalEnv } from '@/lib/env';
+import { MOSTRAR_PRODUCTOS } from '@/lib/visibilidad';
 
 export const metadata: Metadata = {
   title: 'Calculadora de carbono',
@@ -22,7 +23,7 @@ export default function CalculadoraPage() {
             Calcula tu <Accent tone="alegria">huella</Accent> de carbono
           </>
         }
-        text="Conócela y descubre cómo nuestros productos pueden ayudarte a compensarla."
+        text={MOSTRAR_PRODUCTOS ? "Conócela y descubre cómo nuestros productos pueden ayudarte a compensarla." : "Conócela y descubre cómo compensarla."}
         tint="retono"
       />
 

@@ -1,6 +1,8 @@
 // Somos Sirius. Misión, visión y valores del Manual de Marca 2023 (pp. 6-7);
 // hitos del sitio anterior (HistorySection).
 
+import { MOSTRAR_PRODUCTOS } from "@/lib/visibilidad";
+
 export const FOUNDED = 2018;
 
 export const about = {
@@ -72,7 +74,9 @@ export const timeline: Milestone[] = [
   {
     year: "2025",
     title: "Proyección",
-    text: "Nos propusimos ampliar la capacidad de pirólisis y consolidar el portafolio de biológicos y Biochar Blend.",
+    text: MOSTRAR_PRODUCTOS
+      ? "Nos propusimos ampliar la capacidad de pirólisis y consolidar el portafolio de biológicos y Biochar Blend."
+      : "Nos propusimos ampliar la capacidad de pirólisis y consolidar el portafolio de biológicos.",
     image: "/img/campo/palma-aerea.webp",
     alt: "Vista aérea de un cultivo de palma",
   },

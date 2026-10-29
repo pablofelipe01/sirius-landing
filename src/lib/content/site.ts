@@ -10,6 +10,7 @@ import {
   WHATSAPP_URL,
   TELEFONO_PRINCIPAL,
 } from "@/lib/contacto";
+import { MOSTRAR_PRODUCTOS } from "@/lib/visibilidad";
 
 export type NavItem = {
   label: string;
@@ -17,7 +18,7 @@ export type NavItem = {
   children?: { label: string; href: string }[];
 };
 
-export const navigation: NavItem[] = [
+const menu: NavItem[] = [
   {
     label: "Somos Sirius",
     href: "/somos-sirius",
@@ -50,6 +51,8 @@ export const navigation: NavItem[] = [
   { label: "Contacto", href: "/contacto" },
 ];
 
+export const navigation = MOSTRAR_PRODUCTOS ? menu : menu.filter((item) => item.href !== "/productos");
+
 export const contact = {
   address: DIRECCION,
   phones: TELEFONOS.map((t) => ({ label: t.etiqueta, href: `tel:+${t.numero}` })),
@@ -65,7 +68,9 @@ export const contact = {
 
 export const footer = {
   title: "La tierra está esperando. Regeneremos juntos.",
-  text: "Bioinsumos y biochar con ficha técnica pública, y acompañamiento en desarrollos técnicos. Desde Barranca de Upía, Meta.",
+  text: MOSTRAR_PRODUCTOS
+    ? "Bioinsumos y biochar con ficha técnica pública, y acompañamiento en desarrollos técnicos. Desde Barranca de Upía, Meta."
+    : "Bioinsumos y biochar, y acompañamiento en desarrollos técnicos. Desde Barranca de Upía, Meta.",
 };
 
 // Empresas del grupo (las mismas de /directorio). width/height: tamaño intrínseco del archivo;

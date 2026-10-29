@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { Download, FileText } from '@/components/icons';
 import { SplitWords } from '@/components/motion/SplitWords';
 import { ProductNav } from '@/components/ProductNav';
 import { Accent, ButtonLink, Label, PageHero, SectionHeading } from '@/components/ui';
 import { lineas, productos, productosIntro } from '@/lib/content/productos';
+import { MOSTRAR_PRODUCTOS } from '@/lib/visibilidad';
 
-export const metadata: Metadata = {
-  title: 'Productos',
-  description: productosIntro,
-};
+// Con los productos ocultos la página responde 404 y no publica su título ni su descripción
+export const metadata: Metadata = MOSTRAR_PRODUCTOS ? { title: 'Productos', description: productosIntro } : {};
 
 // Los bioinsumos en los gradientes azules del manual y el biochar en los verdes
 const tints: Record<string, string[]> = {
@@ -18,6 +18,8 @@ const tints: Record<string, string[]> = {
 };
 
 export default function ProductosPage() {
+  if (!MOSTRAR_PRODUCTOS) notFound();
+
   return (
     <>
       <PageHero
