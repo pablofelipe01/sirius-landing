@@ -9,7 +9,7 @@ export const hero = {
   video: "/video/web/biochar-en-mano.mp4",
   poster: "/video/web/biochar-en-mano.webp",
   imageAlt: "Mano sosteniendo biochar sobre un cultivo",
-  facts: ["7 productos con ficha técnica", "Sirius Char con Registro ICA 14623", "Acompañamiento agronómico en campo"],
+  facts: ["7 productos con ficha técnica", "Sirius Char con Registro ICA 14623", "Acompañamiento en desarrollos técnicos"],
   product: {
     name: "Biochar Blend",
     text: "Biochar, compost enriquecido y un consorcio bacteriano vivo",
@@ -19,7 +19,7 @@ export const hero = {
 };
 
 // Cinta de palabras bajo el hero
-export const ticker = ["Biochar", "Bioinsumos", "Pirólisis controlada", "Cascarilla de palma", "Fermentación", "Acompañamiento en campo"];
+export const ticker = ["Biochar", "Bioinsumos", "Pirólisis controlada", "Cascarilla de palma", "Fermentación", "Acompañamiento en desarrollos técnicos"];
 
 export const bento = {
   biochar: {
@@ -43,8 +43,8 @@ export const bento = {
     href: "/productos#sirius-char",
   },
   acompanamiento: {
-    title: "Acompañamiento en campo",
-    text: "Acompañamiento agronómico con agendamiento previo. La dosis de los acondicionadores se define con el análisis de suelo.",
+    title: "Acompañamiento en desarrollos técnicos",
+    text: "La dosis de los acondicionadores se define con el análisis de suelo.",
     href: "/contacto",
   },
 };

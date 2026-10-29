@@ -65,7 +65,7 @@ export const contact = {
 
 export const footer = {
   title: "La tierra está esperando. Regeneremos juntos.",
-  text: "Bioinsumos y biochar con ficha técnica pública, y acompañamiento agronómico en campo. Desde Barranca de Upía, Meta.",
+  text: "Bioinsumos y biochar con ficha técnica pública, y acompañamiento en desarrollos técnicos. Desde Barranca de Upía, Meta.",
 };
 
 // Empresas del grupo (las mismas de /directorio). width/height: tamaño intrínseco del archivo;

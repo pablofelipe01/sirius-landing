@@ -145,7 +145,7 @@ export default function ProductosPage() {
               ¿No sabes qué necesita <Accent>tu suelo</Accent>?
             </h2>
             <p className="mt-4 text-lg text-ink/80">
-              Nuestras fichas incluyen acompañamiento agronómico en campo con agendamiento previo. Escríbenos y lo coordinamos.
+              Ofrecemos acompañamiento en desarrollos técnicos. Escríbenos y lo coordinamos.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

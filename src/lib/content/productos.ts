@@ -156,7 +156,7 @@ export const productos = lineas.flatMap((l) => l.productos);
 export const faqs = [
   {
     q: "¿Cómo empiezo a usar sus productos?",
-    a: "Escríbenos y cuéntanos tu cultivo. Las fichas técnicas incluyen acompañamiento agronómico en campo con agendamiento previo, y la dosis de los acondicionadores se define según el análisis de suelo.",
+    a: "Escríbenos y cuéntanos tu cultivo. Ofrecemos acompañamiento en desarrollos técnicos, y la dosis de los acondicionadores se define según el análisis de suelo.",
   },
   {
     q: "¿Cómo se despachan los bioinsumos?",
