@@ -39,7 +39,8 @@ export const WHATSAPP_URL = `https://wa.me/${TELEFONO_PRINCIPAL.numero}`;
 export const MAILTO_URL = `mailto:${EMAIL_CONTACTO}`;
 
 export const HORARIO = {
-  semana: 'Lunes a Viernes: 9am - 6pm',
-  sabado: 'Sábados: 9am - 1pm',
-  resumen: 'Lun-Vie: 9am-6pm, Sáb: 9am-1pm',
+  lunesAMiercoles: 'Lunes a Miércoles: 7am - 5pm',
+  jueves: 'Jueves: 7am - 4pm',
+  viernes: 'Viernes: 7am - 3pm',
+  resumen: 'Lun-Mié: 7am-5pm, Jue: 7am-4pm, Vie: 7am-3pm',
 } as const;

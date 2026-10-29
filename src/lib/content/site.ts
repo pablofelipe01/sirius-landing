@@ -56,7 +56,7 @@ export const contact = {
   whatsapp: { label: TELEFONO_PRINCIPAL.etiqueta, href: WHATSAPP_URL },
   email: EMAIL_CONTACTO,
   mailto: MAILTO_URL,
-  schedule: [HORARIO.semana, HORARIO.sabado],
+  schedule: [HORARIO.lunesAMiercoles, HORARIO.jueves, HORARIO.viernes],
   social: [
     { label: "Instagram", href: "https://www.instagram.com/sirius.colombia" },
     { label: "LinkedIn", href: "https://www.linkedin.com/company/sirius-regenerative" },
